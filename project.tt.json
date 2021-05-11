@@ -1,0 +1,13 @@
+{
+  "miniprogramRoot": "./",
+  "projectname": "zc0511",
+  "description": "志愿填报",
+  "appid": "touristappid",
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "postcss": false,
+    "minified": false
+  },
+  "compileType": "miniprogram"
+}
