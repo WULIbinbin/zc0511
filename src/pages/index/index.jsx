@@ -8,39 +8,26 @@ import './index.less'
 @inject('store')
 @observer
 class Index extends Component {
-  componentWillMount () { }
-
-  componentDidMount () { }
-
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
-
-  increment = () => {
-    const { counterStore } = this.props.store
-    counterStore.increment()
+  config = {
+    navigationStyle: 'custom',
+    usingComponents: {
+      'navbar': '../../components/CustomNavigator/index'
+    },
   }
+  componentWillMount() { }
 
-  decrement = () => {
-    const { counterStore } = this.props.store
-    counterStore.decrement()
-  }
+  componentDidMount() { }
 
-  incrementAsync = () => {
-    const { counterStore } = this.props.store
-    counterStore.incrementAsync()
-  }
+  componentWillUnmount() { }
 
-  render () {
-    const { counterStore: { counter } } = this.props.store
+  componentDidShow() { }
+
+  componentDidHide() { }
+
+  render() {
     return (
       <View className='index'>
-        <Button onClick={this.increment}>+</Button>
-        <Button onClick={this.decrement}>-</Button>
-        <Button onClick={this.incrementAsync}>Add Async</Button>
-        <Text>{counter}</Text>
+        <navbar />
       </View>
     )
   }
