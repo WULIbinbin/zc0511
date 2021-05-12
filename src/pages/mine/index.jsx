@@ -1,19 +1,12 @@
 import { Component } from 'react'
-import { View, Button, Text } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { observer, inject } from 'mobx-react'
-
-import './index.less'
-
+import './index.scss'
 
 @inject('store')
 @observer
 class Index extends Component {
-  config = {
-    navigationStyle: 'custom',
-    usingComponents: {
-      'navbar': '../../components/CustomNavigator/index'
-    },
-  }
+
   componentWillMount() { }
 
   componentDidMount() { }
@@ -26,11 +19,10 @@ class Index extends Component {
 
   render() {
     return (
-      <View className='index'>
-        <navbar />
-      </View>
+      <View></View>
     )
   }
+
 }
 
 export default Index

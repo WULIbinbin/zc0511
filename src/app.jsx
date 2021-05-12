@@ -3,7 +3,7 @@ import { Provider } from 'mobx-react'
 
 import Store from './store/index'
 
-import './app.less'
+import './app.scss'
 
 class App extends Component {
   componentDidMount () {}

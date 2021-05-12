@@ -1,7 +1,7 @@
 import { View, Text } from '@tarojs/components'
 import { Component } from 'react'
 
-import './index.less'
+import './index.scss'
 
 function CustomNavigator() {
   const { statusBarHeight, system } = wx.getSystemInfoSync()
@@ -14,10 +14,11 @@ function CustomNavigator() {
   return (
     <View className='b-custom-navbar' style={style}>
       <View className='left'>
-        <Text>2333</Text>
+        <Text>自定义标题</Text>
       </View>
     </View>
   )
 }
 
 export default CustomNavigator
+

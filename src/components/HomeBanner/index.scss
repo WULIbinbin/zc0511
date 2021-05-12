@@ -1,0 +1,10 @@
+.b-custom-navbar{
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  .left{
+    margin-left:32px;
+  }
+}

@@ -2,7 +2,7 @@
   "miniprogramRoot": "./dist",
   "projectname": "zc0511",
   "description": "志愿填报",
-  "appid": "touristappid",
+  "appid": "wx2b20075ec7ec6359",
   "setting": {
     "urlCheck": true,
     "es6": false,
