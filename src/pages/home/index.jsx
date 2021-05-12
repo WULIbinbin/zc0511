@@ -1,7 +1,7 @@
 import { Component } from 'react'
-import { View, ScrollView } from '@tarojs/components'
+import { View, ScrollView,Image } from '@tarojs/components'
 import { observer, inject } from 'mobx-react'
-import { HomeBanner } from '../../components/index'
+import { HomeBanner, HomeTitle, HomeNavigator } from '../../components/index'
 
 import './index.scss'
 
@@ -21,11 +21,15 @@ class Index extends Component {
   componentDidHide() { }
 
   render() {
+    const items = new Array(4).fill({})
     return (
       <ScrollView scrollY className='b-home-main'>
         <nav-bar />
         <View className='b-home-body'>
           <HomeBanner />
+          <HomeNavigator items={items} />
+          <HomeTitle title='人工智能指导' />
+          <Image className='b-home-poster'></Image>
         </View>
       </ScrollView>
     )

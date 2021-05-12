@@ -1,11 +1,10 @@
 import { View, SwiperItem, Swiper } from '@tarojs/components'
-import { Component } from 'react'
 
 import './index.scss'
 
 function HomeBanner() {
   return (
-    <View className=''>
+    <View className='b-home-banner'>
       <Swiper>
         <SwiperItem></SwiperItem>
       </Swiper>
