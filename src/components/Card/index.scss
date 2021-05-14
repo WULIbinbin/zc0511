@@ -1,0 +1,37 @@
+@import '../../styles/mixin.scss';
+
+.b-card{
+  &-main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 5px 8px 19px 0px rgba(203, 203, 203, 0.3);
+    border-radius: 13px;
+  }
+  &-options{
+    width: 100%;
+    height: 76px;
+    @include flex-row-center-between();
+    .left{
+      @include flex-row-center();
+      margin-left:40px;
+      .icon{
+        $icon:37px;
+        height: $icon;
+        width:$icon;
+        margin-right:8px;
+      }
+      .label{
+        font-size: 27px;
+        font-family: PingFang SC;
+        font-weight: bold;
+        color: #333333;
+      }
+    }
+  }
+  &-content{
+    width: 100%;
+    box-sizing: border-box;
+    padding:32px 40px;
+  }
+}

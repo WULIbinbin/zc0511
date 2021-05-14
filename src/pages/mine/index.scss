@@ -1,0 +1,116 @@
+@import "../../styles/mixin.scss";
+
+$icon:37px;
+       
+.b-mine{
+
+  &-numbers{
+    width: 100%;
+    @include flex-row();
+    padding:60px 0;
+    .items{
+      flex:1;
+      @include flex-column-center-center();
+      .num{
+        font-size: 31px;
+        font-family: PingFang SC;
+        font-weight: bold;
+        color: #333333;
+      }
+      .label{
+        font-size: 27px;
+        font-family: PingFang SC;
+        font-weight: 500;
+        color: #333333;
+      }
+    }
+  }
+
+  &-vip-banner{
+    width: 100%;
+    .vip-banner{
+      width: 100%;
+    }
+    margin-bottom: 52px;
+  }
+
+  &-information{
+    width: 100%;
+    @include flex-column();
+    .info-item{
+      width: 100%;
+      margin-bottom:40px;
+      &:last-of-type{
+        margin-bottom: 0;
+      }
+      @include flex-row();
+      .label{
+        font-size: 31px;
+        font-weight: bold;
+        color: #333333;
+      }
+      .items{
+        font-size: 31px;
+        height: 38px;
+        line-height: 38px;
+        background: #EEEEEE;
+        border-radius: 18px;
+        padding:3px 18px;
+        margin:0 10px;
+        color:#333333;
+      }
+    }
+  }
+
+  &-twice-enter{
+    margin-top:32px;
+    width: 100%;
+    @include flex-row-center-between();
+    .enter-item{
+      height: 170px;
+      box-shadow: 5px 8px 19px 0px rgba(203, 203, 203, 0.3);
+      border-radius: 13px;
+      flex:1;
+      @include flex-column-center-center();
+      &:last-of-type{
+        margin-left:20px;
+      }
+      .num{
+        font-size: 37px;
+        font-family: PingFang SC;
+        font-weight: bold;
+        color: #EA4438;
+        margin-bottom:10px;
+        @include flex-row-center-center();
+        .plus{
+          font-size: 26px;
+          text-indent: 4px;
+          line-height: 20px;
+        }
+      }
+      .label{
+        @include flex-row-center-center();
+        .icon{
+          height: $icon;
+          width: $icon;
+          margin-right:8px;
+        }
+        .text{
+          font-size: 27px;
+          font-family: PingFang SC;
+          font-weight: bold;
+          color: #333333;
+        }
+      }
+    }
+  }
+  &-contact{
+    font-size: 27px;
+    color: #333333;
+    @include flex-row-center-center();
+    margin-top:100px;
+    .copy{
+      font-size: 18px;
+    }
+  }
+}

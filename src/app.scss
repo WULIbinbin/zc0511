@@ -1,6 +1,38 @@
-$bg-color:#fff;
+@import './styles/mixin.scss';
 
 page{
   background-color: $bg-color;
   height: 100vh;
+}
+
+.b-left-line{
+  position: relative;
+  &::before{
+    @include column-line();
+    left:0;
+  }
+}
+.b-right-line{
+  position: relative;
+  &::after{
+    @include column-line();
+    right:0;
+  }
+}
+
+.b-bottom-line{
+  position: relative;
+  &::after{
+    @include row-line();
+    bottom:0;
+  }
+}
+
+.b-arrow-right{
+  $arrow:37px;
+  height: 37px;
+  width: 37px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url(./static/image/arrow-right.png);
 }

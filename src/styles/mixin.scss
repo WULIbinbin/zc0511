@@ -1,0 +1,58 @@
+@import './var.scss';
+
+@mixin flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin flex-row-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+@mixin flex-row-center-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-row-center-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-column-center-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin row-line {
+  position: absolute;
+  content:'';
+  background: $line-color;
+  left:0;
+  right:0;
+  height: 1PX;
+  transform: scaleY(0.5);
+}
+
+@mixin column-line {
+  position: absolute;
+  content:'';
+  background: $line-color;
+  top:0;
+  bottom:0;
+  width: 1PX;
+  transform: scaleX(0.5);
+}
