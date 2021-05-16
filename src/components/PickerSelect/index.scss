@@ -1,0 +1,26 @@
+@import '../../styles/mixin.scss';
+
+.b-picker-item{
+  position: relative;
+  .picker-view{
+    padding:30px 12px;
+    @include flex-row-center-center();
+    .label{
+      font-size: 28px;
+      font-weight: 500;
+      color: #333333;
+      margin-right:5px;
+    }
+    .icon{
+      width: 20px;
+      height: 20px;
+      transition: all 0.2s ease;
+      &.up{
+        transform: rotate(-180deg);
+      }
+    }
+  }
+  .picker-content{
+    position: absolute;
+  } 
+}

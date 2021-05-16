@@ -1,0 +1,108 @@
+@import '../../styles/mixin.scss';
+
+@mixin linear-bg{
+  content:'';
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  left:0;
+  right:0;
+  top:0;
+  height: 106px;
+  border-radius: 20px 20px 0px 0px;
+}
+
+.b-home-server{
+  width: 100%;
+  @include flex-column();
+  .server-item{
+    width: 100%;
+    background: #FFFFFF;
+    box-shadow: 8px 13px 30px 0px rgba(203, 203, 203, 0.2);
+    border-radius: 20px;
+    margin-bottom:32px;
+    overflow: hidden;
+    position: relative;
+    @include flex-row();
+    &.linear-bg1{
+      &::before{
+        @include linear-bg();
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0), rgba(252, 120, 138, 0.1));
+      }
+    }
+    &.linear-bg2{
+      &::before{
+        @include linear-bg();
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0), rgba(81, 210, 210, 0.1));
+      }
+    }  
+    &.linear-bg3{
+      &::before{
+        @include linear-bg();
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0), rgba(244, 196, 67, 0.2));
+      }
+    }
+    .icon{
+      height: 44px;
+      width: 45px;
+      margin: 38px 7px 0 13px;
+    }
+    .content{
+      flex:1;
+      position: relative;
+      @include flex-column();
+      .title{
+        font-size: 30px;
+        font-weight: bold;
+        color: #666666;
+        margin:38px 0 36px;
+      }
+      .desc{
+        font-size: 24px;
+        font-weight: 500;
+        color: #333333;
+        line-height: 37px;
+        opacity: 0.5;
+        flex:1;
+        width: 100%;
+        position: relative;
+        z-index: 1;
+        padding-right:60px;
+        box-sizing: border-box;
+      }
+      .bottom{
+        @include flex-row-end-between();
+      }
+      .label{
+        padding:8px 0;
+        width: 116px;
+        text-align: center;
+        background: #EEEEEE;
+        border-radius: 10px;
+        font-size: 22px;
+        font-weight: 500;
+        color: #999999;
+        margin-bottom:29px;
+      }
+      .bg{
+        height: 126px;
+        margin-right:32px;
+      }
+      .right-top{
+        position: absolute;
+        z-index: 1;
+        right: 0;
+        top:0;
+        width: 91px;
+        height: 45px;
+        background: linear-gradient(-90deg, #F46767, #EA4438);
+        border-radius: 0px 20px 0px 20px;
+        @include flex-row-center-center();
+        .lock{
+          height: 30px;
+          width:30px;
+        }
+      }
+    }
+  }
+}

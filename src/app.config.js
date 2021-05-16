@@ -2,18 +2,23 @@ export default {
   pages: [
     'pages/home/index',
     'pages/mine/index',
+    'pages/college/lib/index',
   ],
-  tabBar:{
-    color:'',
-    selectedColor:'',
-    backgroundColor:'',
-    list:[
+  tabBar: {
+    color: '#333333',
+    selectedColor: '#EA4438',
+    backgroundColor: '#ffffff',
+    list: [
       {
-        text:'首页',
+        iconPath: 'static/image/home-nor.png',
+        selectedIconPath: 'static/image/home-sel.png',
+        text: '首页',
         pagePath: 'pages/home/index',
       },
       {
-        text:'我的',
+        iconPath: 'static/image/mine-nor.png',
+        selectedIconPath: 'static/image/mine-sel.png',
+        text: '我的',
         pagePath: 'pages/mine/index',
       },
     ]

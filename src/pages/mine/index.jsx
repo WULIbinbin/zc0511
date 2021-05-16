@@ -52,72 +52,73 @@ class Index extends Component {
     const enter1 = {
       text: '适合我的大学',
       num: 99,
-      icon:IconUniversity
+      icon: IconUniversity
     }
     const enter2 = {
       text: '我的综合报告',
       num: 0,
-      icon:IconReport
+      icon: IconReport
     }
 
     return (
       <PageView>
+        <View className='b-mine'>
+          <UserProfile />
 
-        <UserProfile />
-
-        <View className='b-mine-numbers'>
-          {
-            numbers.map((n, i) => (
-              <View className={['items', i === 0 && 'b-right-line']}>
-                <View className='num'>{n.num}</View>
-                <View className='label'>{n.label}</View>
-              </View>
-            ))
-          }
-        </View>
-
-        <View className='b-mine-vip-banner'>
-          <Image className='vip-banner' src={VipBanner} mode="widthFix"></Image>
-        </View>
-
-        <Card
-          label='录入信息'
-          icon={IconSave}
-        >
-          <View className='b-mine-information'>
+          <View className='b-mine-numbers'>
             {
-              infos.map(la => (
-                <View className='info-item'>
-                  <View className='label'>{la.label}</View>
-                  {
-                    la.info.length && la.info.map(items => (
-                      <View className='items'>{items}</View>
-                    ))
-                  }
+              numbers.map((n, i) => (
+                <View className={['items', i === 0 && 'b-right-line']}>
+                  <View className='num'>{n.num}</View>
+                  <View className='label'>{n.label}</View>
                 </View>
               ))
             }
           </View>
-        </Card>
 
-        <View className='b-mine-twice-enter'>
-          <View className='enter-item'>
-            <View className='num'>{enter1.num}<View className='plus'>+</View></View>
-            <View className='label'>
-              <Image className='icon' src={enter1.icon}></Image>
-              <View className='text'>{enter1.text}</View>
+          <View className='b-mine-vip-banner'>
+            <Image className='vip-banner' src={VipBanner} mode="widthFix"></Image>
+          </View>
+
+          <Card
+            label='录入信息'
+            icon={IconSave}
+          >
+            <View className='b-mine-information'>
+              {
+                infos.map(la => (
+                  <View className='info-item'>
+                    <View className='label'>{la.label}</View>
+                    {
+                      la.info.length && la.info.map(items => (
+                        <View className='items'>{items}</View>
+                      ))
+                    }
+                  </View>
+                ))
+              }
+            </View>
+          </Card>
+
+          <View className='b-mine-twice-enter'>
+            <View className='enter-item'>
+              <View className='num'>{enter1.num}<View className='plus'>+</View></View>
+              <View className='label'>
+                <Image className='icon' src={enter1.icon}></Image>
+                <View className='text'>{enter1.text}</View>
+              </View>
+            </View>
+            <View className='enter-item'>
+              <View className='num'>{enter2.num}</View>
+              <View className='label'>
+                <Image className='icon' src={enter2.icon}></Image>
+                <View className='text'>{enter2.text}</View>
+              </View>
             </View>
           </View>
-          <View className='enter-item'>
-            <View className='num'>{enter2.num}</View>
-            <View className='label'>
-              <Image className='icon' src={enter2.icon}></Image>
-              <View className='text'>{enter2.text}</View>
-            </View>
-          </View>
+
+          <View className='b-mine-contact'>联系我们：szcy_666<View className='copy'>复制</View></View>
         </View>
-
-        <View className='b-mine-contact'>联系我们：szcy_666<View className='copy'>复制</View></View>
       </PageView>
     )
   }
