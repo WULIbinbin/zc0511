@@ -1,0 +1,70 @@
+@import '../../../styles/mixin.scss';
+page{
+  background-color: #f7f7f7;
+}
+.b-college-detail{
+  .body{
+    .tab-bar{
+      $tabH:86px;
+      @include flex-row-center-center();
+      margin: 20px 25px;
+      height: $tabH;
+      background: #FFFFFF;
+      box-shadow: 5px 9px 20px 0px rgba(203, 203, 203, 0.2);
+      border-radius: 20px;
+      .tab-item{
+        padding:0 5px;
+        margin:0 40px;
+        height: $tabH;
+        line-height: $tabH;
+        font-size: 28px;
+        font-weight: 500;
+        color: #666666;
+        position: relative;
+        &.active{
+          color: #333333;
+          &::after{
+            @include row-line();
+            height: 6px;
+            top:53px;
+            background: #EA4438;
+          }
+        }
+      }
+    }
+    .tab-pane{
+      @include flex-column();
+      margin:0 25px 30px;
+      .video-view{
+        @include shadow-radius();
+        overflow: hidden;
+        width: 100%;
+        height: 390px;
+        background: rgba(0,0,0,0.5);
+        margin-bottom:20px;
+        video{
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .details{
+        padding:30px;
+        font-size: 26px;
+        font-weight: 500;
+        color: #666666;
+        line-height: 40px;
+        background-color: #fff;
+        @include shadow-radius();
+      }
+      .admission{
+        @include shadow-radius();
+        @include flex-column();
+        background-color: #fff;
+        .filter{
+          @include flex-row-center-between();
+          padding:0 195px;
+        }
+      }
+    }
+  }
+}

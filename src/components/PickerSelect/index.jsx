@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
 import { View, Image, ScrollView } from '@tarojs/components'
+import PickerLabel from '../PickerLabel/index'
 import './index.scss'
 
 import SelectIcon from '../../static/image/select.png'
 
-function PickerSelect({ placeHolder = '请选择', value = '', items = [], onChange = null }) {
+function PickerSelect({ placeHolder = '请选择', onChange = null }) {
   const mapItems = new Array(50).fill(null).map((item, i) => {
     return {
       name: '北京' + i,
@@ -12,12 +13,32 @@ function PickerSelect({ placeHolder = '请选择', value = '', items = [], onCha
       selected: false
     }
   })
-  const [isShow, setShow] = useState(false)
+  const pickers = [
+    {
+      label: '地区',
+      range: mapItems
+    },
+    {
+      label: '层次',
+      range: []
+    },
+    {
+      label: '类型',
+      range: []
+    },
+  ]
   const [selected, setSelect] = useState(new Set())
-  const [maps, setMaps] = useState(mapItems)
+  const [currentShow, setPicker] = useState(-1)
+  const [maps, setMaps] = useState([])
 
-  const showPicker = (e) => {
-    setShow(!isShow)
+  const showPicker = (whichShow) => {
+    if (whichShow === currentShow) {
+      setPicker(-1)
+      return
+    }
+    setPicker(whichShow)
+    setMaps(pickers[whichShow].range)
+    onChange && onChange()
   }
 
   const handleSelect = (sel) => {
@@ -46,28 +67,41 @@ function PickerSelect({ placeHolder = '请选择', value = '', items = [], onCha
   })
 
   const handleSubmit = useCallback(() => {
-    onChange && onChange(selected)
+    const result = maps.filter(m => !!m.selected)
+    onChange && onChange(result)
   })
 
-  const iconDirection = isShow ? 'up' : ''
+  const { screenWidth } = wx.getSystemInfoSync()
+  const selectViewStyle = { width: screenWidth + 'PX' }
   return (
     <View className='b-picker-item'>
-      <View className='picker-view' onClick={showPicker}>
-        <View className='label'>{value || placeHolder}</View>
-        <Image className={`icon ${iconDirection}`} src={SelectIcon}></Image>
+      <View className='picker-group'>
+        {
+          pickers.map((p, pdx) => (
+            <PickerLabel 
+              value={p.label}
+              onChange={()=>{
+                showPicker(pdx)
+              }}
+            />
+          ))
+        }
       </View>
       {
-        isShow &&
-        <View className='select-view'>
+        currentShow >= 0 &&
+        <View className='select-view' style={selectViewStyle}>
           <View className='select-content'>
             <ScrollView scrollY className='select-wrap'>
               <View className='select-items'>
                 {
                   maps.map((item, idx) => (
-                    <View className={`item ${item.selected ? 'selected' : ''}`} onClick={() => {
-                      handleSelect(idx)
-                    }}>{item.name}</View>
-                  )).slice()
+                    <View
+                      className={`item ${item.selected && 'selected'}`}
+                      onClick={() => {
+                        handleSelect(idx)
+                      }}
+                    >{item.name}</View>
+                  ))
                 }
               </View>
             </ScrollView>
@@ -76,7 +110,9 @@ function PickerSelect({ placeHolder = '请选择', value = '', items = [], onCha
               <View className='submit btn' onClick={handleSubmit}>确定</View>
             </View>
           </View>
-          <View className='select-mark'></View>
+          <View className='select-mark' onClick={() => {
+            setPicker(-1)
+          }}></View>
         </View>
       }
     </View>

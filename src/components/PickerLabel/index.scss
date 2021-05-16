@@ -1,0 +1,23 @@
+@import '../../styles/mixin.scss';
+
+.picker-view{
+  padding:30px 12px;
+  @include flex-row-center-center();
+  .label{
+    font-size: 28px;
+    font-weight: 500;
+    color: #333333;
+    margin-right:5px;
+    &.on-show{
+      color:#EA4438;
+    }
+  }
+  .icon{
+    width: 20px;
+    height: 20px;
+    transition: all 0.2s ease;
+    &.up{
+      transform: rotate(-180deg);
+    }
+  }
+}

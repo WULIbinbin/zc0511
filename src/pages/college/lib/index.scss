@@ -1,7 +1,5 @@
 @import '../../../styles/mixin.scss';
 
-$bg-color:#fff;
-
 .b-lib-search{
   background-color: #f7f7f7;
   width: 100%;
@@ -28,5 +26,12 @@ $bg-color:#fff;
         flex:1;
       }
     }
+    .pickers{
+      @include flex-row-center-between();
+      padding:0 25px;
+    }
+  }
+  .result{
+    flex:1
   }
 }

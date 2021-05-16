@@ -2,6 +2,11 @@
 
 .b-picker-item{
   position: relative;
+  width: 100%;
+  .picker-group{
+    width: 100%;
+    @include flex-row-center-between();
+  }
   .picker-view{
     padding:30px 12px;
     @include flex-row-center-center();
@@ -10,6 +15,9 @@
       font-weight: 500;
       color: #333333;
       margin-right:5px;
+      &.on-show{
+        color:#EA4438;
+      }
     }
     .icon{
       width: 20px;
@@ -21,11 +29,15 @@
     }
   }
   .select-view{
-    position: absolute;
+    position: fixed;
+    z-index: 999;
     height: 100%;
     width: 100%;
-    top:100%;
+    top:192px;
+    left:0;
+    right:0;
     bottom:0;
+    @include flex-column();
     &::before{
       @include row-line();
       top:0;
@@ -33,6 +45,7 @@
   }
   .select-mark{
     background: rgba(0, 0, 0, 0.1);
+    flex:1;
   }
   .select-content{
     background-color: #fff;

@@ -36,3 +36,48 @@ page{
   background-repeat: no-repeat;
   background-image: url(./static/image/arrow-right.png);
 }
+
+.college-item{
+  @include flex-row-center-between();
+  padding:48px 32px;
+  margin:20px 25px 0;
+  background: #FFFFFF;
+  box-shadow: 5px 9px 20px 0px rgba(203, 203, 203, 0.2);
+  border-radius: 20px;
+  &:last-of-type{
+    margin:20px 25px 30px;
+  }
+  .logo{
+    width: 90px;
+    height: 90px;
+    background: #F9F9F9;
+    border-radius: 50%;
+  }
+  .info{
+    @include flex-column();
+    flex:1;
+    margin:0 30px;
+    .name{
+      font-size: 32px;
+      font-weight: 500;
+      color: #333333;
+      margin-bottom:18px;
+    }
+    .labels{
+      @include flex-row-center();
+      .label{
+        background: #F5F5F5;
+        padding:8px 10px;
+        font-size: 24px;
+        font-weight: 500;
+        color: #666666;
+        margin-right:10px;
+      }
+    }
+  }
+  .local{
+    font-size: 26px;
+    font-weight: 500;
+    color: #EA4438;
+  }
+}

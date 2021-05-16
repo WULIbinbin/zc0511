@@ -3,6 +3,7 @@ export default {
     'pages/home/index',
     'pages/mine/index',
     'pages/college/lib/index',
+    'pages/college/detail/index',
   ],
   tabBar: {
     color: '#333333',
