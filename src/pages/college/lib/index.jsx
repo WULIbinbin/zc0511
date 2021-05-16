@@ -20,6 +20,10 @@ class Index extends Component {
 
   componentDidHide() { }
 
+  handlePicker(e){
+    console.log(e)
+  }
+
   render() {
     return (
       <View className='b-lib-search'>
@@ -29,7 +33,7 @@ class Index extends Component {
             <Input className='input' placeholder='搜索大学'></Input>
           </View> 
           <View className='pickers'>
-            <PickerSelect />
+            <PickerSelect onChange={this.handlePicker}/>
           </View> 
         </View>  
         <ScrollView className='result'></ScrollView>  
