@@ -1,0 +1,15 @@
+@import "../../../styles/mixin.scss";
+
+.b-subject{
+  @include flex-column();
+  height: 100%;
+  .main{
+    @include flex-row();
+    flex:1;
+    width: 100%;
+    .left{
+      width: 200px;
+      background-color: #f7f7f7;
+    }
+  }
+}

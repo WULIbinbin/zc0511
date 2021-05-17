@@ -3,6 +3,9 @@ export { default as PageView } from './PageView/index'
 export { default as Card } from './Card/index'
 export { default as PickerSelect } from './PickerSelect/index'
 export { default as PickerLabel } from './PickerLabel/index'
+export { default as Table } from './Table/index'
+export { default as Search } from './Search/index'
+export { default as Tabbar } from './Tabbar/index'
 
 
 

@@ -5,32 +5,9 @@ page{
 .b-college-detail{
   .body{
     .tab-bar{
-      $tabH:86px;
-      @include flex-row-center-center();
       margin: 20px 25px;
-      height: $tabH;
-      background: #FFFFFF;
-      box-shadow: 5px 9px 20px 0px rgba(203, 203, 203, 0.2);
-      border-radius: 20px;
-      .tab-item{
-        padding:0 5px;
-        margin:0 40px;
-        height: $tabH;
-        line-height: $tabH;
-        font-size: 28px;
-        font-weight: 500;
-        color: #666666;
-        position: relative;
-        &.active{
-          color: #333333;
-          &::after{
-            @include row-line();
-            height: 6px;
-            top:53px;
-            background: #EA4438;
-          }
-        }
-      }
+      overflow: hidden;
+      @include shadow-radius();
     }
     .tab-pane{
       @include flex-column();

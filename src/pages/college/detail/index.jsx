@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import { View, Image, ScrollView, Video } from '@tarojs/components'
 import { observer, inject } from 'mobx-react'
-import { PickerLabel } from '../../../components/index'
+import { PickerLabel, Table, Tabbar } from '../../../components/index'
 import './index.scss'
 
 @inject('store')
@@ -23,6 +23,7 @@ class Index extends Component {
   componentDidHide() { }
 
   handleTabChange(activeTab) {
+    console.log(activeTab)
     this.setState({
       activeTab
     })
@@ -30,6 +31,50 @@ class Index extends Component {
 
   render() {
     const tabs = ['学校简介', '录取情况']
+    const thead = [
+      {
+        key: 'year',
+        name: '年份'
+      },
+      {
+        key: 'batch',
+        name: '批次'
+      },
+      {
+        key: 'score',
+        name: '最低分/位次'
+      },
+      {
+        key: 'subject',
+        name: '选科要求'
+      },
+    ]
+    const tbody = [
+      {
+        year: '2020',
+        batch: '提前批',
+        score: '686',
+        subject: '物理/化学'
+      },
+      {
+        year: '2020',
+        batch: '提前批',
+        score: '668',
+        subject: '英语'
+      },
+      {
+        year: '2020',
+        batch: '提前批',
+        score: '682',
+        subject: '不限'
+      },
+      {
+        year: '2020',
+        batch: '提前批',
+        score: '688',
+        subject: '数学必选'
+      },
+    ]
     const { activeTab } = this.state
     return (
       <ScrollView scrollY className='b-college-detail'>
@@ -46,15 +91,9 @@ class Index extends Component {
         </View>
         <View className='body'>
           <View className='tab-bar'>
-            {
-              tabs.map(t => (
-                <View
-                  className={`tab-item ${t === activeTab && 'active'}`}
-                  onClick={this.handleTabChange.bind(this, t)}>
-                  {t}
-                </View>
-              ))
-            }
+            <Tabbar tabs={tabs} activeTab={activeTab} onChange={({ target }) => {
+              this.handleTabChange(target)
+            }} />
           </View>
           {
             activeTab === '学校简介' &&
@@ -76,7 +115,9 @@ class Index extends Component {
                   <PickerLabel />
                   <PickerLabel />
                 </View>
-                <View className='table'></View>
+                <View className='table'>
+                  <Table thead={thead} tbody={tbody} />
+                </View>
               </View>
             </View>
           }

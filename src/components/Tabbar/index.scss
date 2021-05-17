@@ -1,0 +1,28 @@
+@import '../../styles/mixin.scss';
+
+.b-tab-bar{
+  width: 100%;
+  $tabH:86px;
+  @include flex-row-center-center();
+  height: $tabH;
+  background: #FFFFFF;
+  .tab-item{
+    padding:0 5px;
+    margin:0 40px;
+    height: $tabH;
+    line-height: $tabH;
+    font-size: 28px;
+    font-weight: 500;
+    color: #666666;
+    position: relative;
+    &.active{
+      color: #333333;
+      &::after{
+        @include row-line();
+        height: 6px;
+        top:53px;
+        background: #EA4438;
+      }
+    }
+  }
+}

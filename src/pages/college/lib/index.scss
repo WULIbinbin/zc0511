@@ -9,23 +9,6 @@
     width: 100%;
     background-color: #fff;
     @include flex-column();
-    .search{
-      margin:17px 25px 0;
-      height: 80px;
-      background: #F9F9F9;
-      border-radius: 40px;
-      padding:0 50px;
-      box-sizing: border-box;
-      @include flex-row-center-between();
-      .icon{
-        height: 38px;
-        width: 38px;
-        margin-right:11px;
-      }
-      .input{
-        flex:1;
-      }
-    }
     .pickers{
       @include flex-row-center-between();
       padding:0 25px;
