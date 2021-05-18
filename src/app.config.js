@@ -7,6 +7,7 @@ export default {
     'pages/subject/lib/index',
     'pages/subject/list/index',
     'pages/subject/detail/index',
+    'pages/choose/index/index',
   ],
   tabBar: {
     color: '#333333',

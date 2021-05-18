@@ -1,0 +1,133 @@
+@import "../../../styles/mixin.scss";
+
+.b-choose {
+  @include flex-column();
+  width: 100%;
+  height: 100vh;
+  background-color: $white-color;
+  .top-bar {
+    @include flex-column();
+    width: 100%;
+    position: relative;
+    &::after {
+      @include row-line();
+      bottom: 0;
+    }
+    .position {
+      @include flex-row-center();
+      padding: 38px 25px;
+      .icon {
+        height: 38px;
+        width: 38px;
+      }
+      .label {
+        font-size: 32px;
+        font-weight: bold;
+        color: #333333;
+        margin-left: 2px;
+      }
+      .province {
+        font-size: 32px;
+        color: $primary-color;
+        padding: 4px 18px;
+        background-color: rgba(251, 218, 215, 0.2);
+        margin-left: 16px;
+      }
+    }
+  }
+  .main {
+    @include flex-column();
+    flex: 1;
+    background-color: $white-color;
+    .choose-subject {
+      @include flex-column();
+      border-top: 20px solid $bg-color;
+      .sub {
+        &-select {
+          @include flex-column();
+          padding: 30px 5px 30px 25px;
+          position: relative;
+          &::after {
+            @include row-line();
+            left: 25px;
+            right: 25px;
+            bottom: 0;
+          }
+          &:last-of-type::after {
+            display: none;
+          }
+        }
+        &-title {
+          font-size: 32px;
+          font-weight: bold;
+          color: #333333;
+          margin-bottom: 30px;
+        }
+        &-list {
+          @include flex-row();
+          flex-wrap: wrap;
+        }
+        &-item {
+          width: 218px;
+          height: 90px;
+          margin-right: 20px;
+          line-height: 90px;
+          text-align: center;
+          font-size: 28px;
+          color: #666666;
+          background: $bg-color;
+          &.selected {
+            color: #ea4438;
+            background: rgba(234, 68, 56, 0.2);
+          }
+        }
+      }
+    }
+    .search-bar {
+      background-color: $white-color;
+      padding-bottom: 20px;
+      position: relative;
+      &::after {
+        @include row-line();
+        bottom: 0;
+      }
+    }
+    .search-list {
+      @include flex-column();
+      flex: 1;
+      background-color: $bg-color;
+    }
+    .search-bar2 {
+      background-color: $white-color;
+      padding-bottom: 20px;
+    }
+    .history-option {
+      @include flex-row-center-between();
+      margin-top: 10px;
+      padding: 0 25px;
+      .title {
+        font-size: 28px;
+        color: #333333;
+      }
+      .remove {
+        height: 38px;
+        width: 38px;
+        padding-left: 20px;
+      }
+    }
+    .history-list {
+      @include flex-row();
+      flex-wrap: wrap;
+      padding: 20px 25px;
+      .item {
+        font-size: 24px;
+        color: #333333;
+        padding: 10px 24px;
+        background: #f9f9f9;
+        border-radius: 25px;
+        text-align: center;
+        margin-right: 20px;
+      }
+    }
+  }
+}

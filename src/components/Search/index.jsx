@@ -1,15 +1,15 @@
-import { View, Input,Image } from '@tarojs/components'
+import { View, Input, Image } from "@tarojs/components";
 
-import './index.scss'
-import SearchIcon from '../../static/image/search.png'
+import "./index.scss";
+import SearchIcon from "../../static/image/search.png";
 
-function Search() {
+function Search({ placeholder = "搜索大学" }) {
   return (
-    <View className='b-search'>
-      <Image className='icon' src={SearchIcon}></Image>
-      <Input className='input' placeholder='搜索大学'></Input>
+    <View className="b-search">
+      <Image className="icon" src={SearchIcon}></Image>
+      <Input className="input" placeholder={placeholder}></Input>
     </View>
-  )
+  );
 }
 
-export default Search
+export default Search;
