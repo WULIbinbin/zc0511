@@ -1,63 +1,63 @@
 @import "../../../styles/mixin.scss";
 
-.b-subject-lib{
+.b-subject-lib {
   @include flex-column();
   height: 100vh;
-  .main{
+  .main {
     @include flex-row();
-    border-top:20px solid #f7f7f7;
-    flex:1;
+    border-top: 20px solid #f7f7f7;
+    flex: 1;
     width: 100%;
-    .left{
+    .left {
       width: 200px;
       background-color: #f7f7f7;
-      .info{
+      .info {
         width: 100%;
         @include flex-column();
-        .item{
-          padding:25px 10px;
+        .item {
+          padding: 25px 10px;
           @include flex-row-center-center();
-          .value{
+          .value {
             text-align: center;
           }
-          &.selected{
-            background: #FFFFFF;
-            .value{
-              &::after{
-                content:'';
+          &.selected {
+            background: #ffffff;
+            .value {
+              &::after {
+                content: "";
                 display: block;
                 height: 4px;
                 width: auto;
-                padding:0 4px;
+                padding: 0 4px;
                 transform: translateY(-8px);
-                background: #EA4438;
+                background: #ea4438;
               }
-            } 
+            }
           }
         }
       }
     }
-    .right{
-      flex:1;
+    .right {
+      flex: 1;
       background-color: #fff;
-      .title{
+      .title {
         text-align: center;
-        padding:26px 0;
+        padding: 26px 0;
         font-size: 32px;
-        
+
         color: #333333;
       }
-      .info{
+      .info {
         width: 100%;
         @include flex-row();
         flex-wrap: wrap;
-        .item{
+        .item {
           @include flex-row-center-center();
           width: 243px;
-          margin:20px 0 0 20px;
+          margin: 20px 0 0 20px;
           height: 120px;
           background-color: #f7f7f7;
-          .value{
+          .value {
             font-size: 28px;
             color: #333333;
           }

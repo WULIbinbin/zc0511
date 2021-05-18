@@ -1,4 +1,4 @@
-@import './var.scss';
+@import "./var.scss";
 
 @mixin flex-row {
   display: flex;
@@ -46,21 +46,21 @@
 
 @mixin row-line {
   position: absolute;
-  content:'';
+  content: "";
   background: $line-color;
-  left:0;
-  right:0;
-  height: 1PX;
+  left: 0;
+  right: 0;
+  height: 1px;
   transform: scaleY(0.5);
 }
 
 @mixin column-line {
   position: absolute;
-  content:'';
+  content: "";
   background: $line-color;
-  top:0;
-  bottom:0;
-  width: 1PX;
+  top: 0;
+  bottom: 0;
+  width: 1px;
   transform: scaleX(0.5);
 }
 
