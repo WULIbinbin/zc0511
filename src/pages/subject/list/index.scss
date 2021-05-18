@@ -1,5 +1,55 @@
 @import "../../../styles/mixin.scss";
 
 .b-subject-list{
-  
+  height: 100vh;
+  background-color: $bg-color;
+  .main{
+    @include flex-column();
+    width: 100%;
+    .topic{
+      @include flex-column();
+      @include shadow-radius();
+      margin:20px 25px;
+      padding:50px 30px;
+      background-color: $white-color;
+      .title{
+        font-size: 36px;
+        font-weight: bold;
+        color: #333333;
+        margin-bottom:28px;
+      }
+    }
+    .list{
+      @include flex-column();
+      @include shadow-radius();
+      margin:0 25px 60px;
+      overflow: hidden;
+      .item{
+        @include flex-row-center-between();
+        padding:50px 10px 50px 30px;
+        background-color: $white-color;
+        .arrow{
+          height: 34px;
+          width: 34px;
+        }
+        .info{
+          @include flex-column();
+          .title{
+            font-size: 32px;
+            color: #333333;
+            margin-bottom:20px;
+          }
+          .desc{
+            @include flex-row();
+            .year{
+              margin-left:30px;
+              font-size: 24px;
+              color: #666666;
+              min-width: 120px;
+            }
+          }
+        }
+      }
+    }
+  }
 }

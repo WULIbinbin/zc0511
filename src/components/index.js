@@ -6,6 +6,8 @@ export { default as PickerLabel } from './PickerLabel/index'
 export { default as Table } from './Table/index'
 export { default as Search } from './Search/index'
 export { default as Tabbar } from './Tabbar/index'
+export { default as Bread } from './Bread/index'
+export { default as Describe } from './Describe/index'
 
 
 

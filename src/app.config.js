@@ -6,6 +6,7 @@ export default {
     'pages/college/detail/index',
     'pages/subject/lib/index',
     'pages/subject/list/index',
+    'pages/subject/detail/index',
   ],
   tabBar: {
     color: '#333333',

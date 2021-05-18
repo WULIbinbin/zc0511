@@ -1,5 +1,5 @@
-import counterStore from './counter'
+import common from './common'
 
 export default {
-  counterStore
+  common
 }

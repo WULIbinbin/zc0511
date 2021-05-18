@@ -1,0 +1,18 @@
+@import '../../styles/mixin.scss';
+
+.b-bread{
+  width: 100%;
+  .bread{
+    @include flex-row-center();
+    &-item{
+      font-size: 24px;
+      font-weight: 500;
+      color: #666666;
+    }
+    &-arrow{
+      height: 28px;
+      width: 28px;
+      margin:0 2px;
+    }
+  }
+}
