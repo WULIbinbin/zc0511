@@ -1,35 +1,35 @@
-@import './styles/mixin.scss';
+@import "./styles/mixin.scss";
 
-page{
+page {
   background-color: $bg-color;
   height: 100vh;
 }
 
-.b-left-line{
+.b-left-line {
   position: relative;
-  &::before{
+  &::before {
     @include column-line();
-    left:0;
+    left: 0;
   }
 }
-.b-right-line{
+.b-right-line {
   position: relative;
-  &::after{
+  &::after {
     @include column-line();
-    right:0;
+    right: 0;
   }
 }
 
-.b-bottom-line{
+.b-bottom-line {
   position: relative;
-  &::after{
+  &::after {
     @include row-line();
-    bottom:0;
+    bottom: 0;
   }
 }
 
-.b-arrow-right{
-  $arrow:37px;
+.b-arrow-right {
+  $arrow: 37px;
   height: 37px;
   width: 37px;
   background-size: cover;
@@ -37,47 +37,62 @@ page{
   background-image: url(./static/image/arrow-right.png);
 }
 
-.college-item{
+.college-item {
   @include flex-row-center-between();
-  padding:48px 32px;
-  margin:20px 25px 0;
-  background: #FFFFFF;
+  padding: 48px 32px;
+  margin: 20px 25px 0;
+  background: #ffffff;
   box-shadow: 5px 9px 20px 0px rgba(203, 203, 203, 0.2);
   border-radius: 20px;
-  &:last-of-type{
-    margin:20px 25px 30px;
+  &:last-of-type {
+    margin: 20px 25px 30px;
   }
-  .logo{
+  .logo {
     width: 90px;
     height: 90px;
-    background: #F9F9F9;
+    background: #f9f9f9;
     border-radius: 50%;
   }
-  .info{
+  .info {
     @include flex-column();
-    flex:1;
-    margin:0 30px;
-    .name{
+    flex: 1;
+    margin: 0 30px;
+    .name {
       font-size: 32px;
       font-weight: 500;
       color: #333333;
-      margin-bottom:18px;
+      margin-bottom: 18px;
     }
-    .labels{
+    .labels {
       @include flex-row-center();
-      .label{
-        background: #F5F5F5;
-        padding:8px 10px;
+      .label {
+        background: #f5f5f5;
+        padding: 8px 10px;
         font-size: 24px;
         font-weight: 500;
         color: #666666;
-        margin-right:10px;
+        margin-right: 10px;
       }
     }
   }
-  .local{
+  .local {
     font-size: 26px;
     font-weight: 500;
-    color: #EA4438;
+    color: #ea4438;
+  }
+}
+
+.b-underline-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333333;
+  position: relative;
+  &::after {
+    @include row-line();
+    height: 6px;
+    bottom: 7px;
+    left:-4px;
+    right:-4px;
+    background-color: $primary-color;
   }
 }

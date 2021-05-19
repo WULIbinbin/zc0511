@@ -2,23 +2,22 @@
 
 .b-select-view {
   @include flex-row-center();
-  margin-bottom: 20px;
-  .label {
+  .b-select-label {
     font-size: 28px;
     color: #333;
     margin-right: 5px;
   }
-  .content {
+  .b-select-content {
     @include flex-row-center-between();
     background-color: $bg-color;
-    padding: 10px 20px;
+    padding: 30px;
     flex: 1;
-    .value {
+    .b-select-value {
       font-size: 28px;
-      color: #999;
+      color: #666666;
       margin-right: 5px;
     }
-    .icon {
+    .b-select-icon {
       width: 20px;
       height: 20px;
       transition: all 0.2s ease;

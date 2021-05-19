@@ -34,6 +34,47 @@
         }
       }
     }
+    .step-content {
+      @include flex-column();
+      width: 100%;
+      background-color: $white-color;
+      .main {
+        @include flex-column();
+        padding: 50px 0 50px 50px;
+        .step-input {
+          padding: 30px;
+          width: 420px;
+          font-size: 28px;
+          height: 28px;
+          color: #666666;
+          background: #f9f9f9;
+        }
+        .step-select {
+          &-item {
+            @include flex-row-center-center();
+            width: 200px;
+            //min-width: 200rpx;
+            padding: 30px 0;
+            background: #f9f9f9;
+            margin-right: 20px;
+            &:nth-of-type(even) {
+              margin-right: 0;
+            }
+            &:nth-of-type(n+3) {
+              margin-top: 30px;
+            }
+            &-text {
+              font-size: 28px;
+              color: #666666;
+            }
+            &.checked {
+              background-color: rgba(234, 68, 56, 0.2);
+              color: $primary-color;
+            }
+          }
+        }
+      }
+    }
   }
   .btn {
     @include flex-row-center-center();

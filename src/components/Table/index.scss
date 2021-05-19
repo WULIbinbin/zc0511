@@ -1,37 +1,44 @@
-@import '../../styles/mixin.scss';
+@import "../../styles/mixin.scss";
 
-.b-table{
+.b-table {
   @include flex-column();
   width: 100%;
-  .thead{
+  &-thead {
     @include flex-row-center();
     width: 100%;
-    background: #EA4438;
-    .th{
+    background: #ea4438;
+    .th {
       font-size: 24px;
-      flex:1;
-      padding:30px 5px;
-      color:#fff;
+      flex: 1;
+      padding: 30px 5px;
+      color: #fff;
       text-align: center;
     }
   }
-  .tbody{
+  &-tbody {
     @include flex-column();
     width: 100%;
-    .tr{
+    .tr {
       @include flex-row-center();
       width: 100%;
-      background-color: #fff;
-      &:nth-of-type(2n-1){
-        background-color:#F9F9F9;
+      background-color: $bg-color;
+      &:nth-of-type(2n-1) {
+        background-color: #fff;
       }
-      .td{
+      .td {
         font-size: 24px;
         text-align: center;
-        flex:1;
-        padding:30px 5px;
+        flex: 1;
+        padding: 30px 5px;
         color: #333333;
       }
+    }
+  }
+  &-default {
+    background-color: $bg-color;
+    .th,
+    .td {
+      color: #666666;
     }
   }
 }

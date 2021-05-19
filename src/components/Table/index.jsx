@@ -1,17 +1,21 @@
 import { View } from '@tarojs/components'
 import './index.scss'
 
-function Table({ thead = [], tbody = [] }) {
+function Table({ thead = [], tbody = [],theadType='primary' }) {
+  const theadClassType = {
+    primary:'',
+    default:'b-table-default'
+  }
   return (
     <View className='b-table'>
-      <View className='thead'>
+      <View className={`b-table-thead ${theadClassType[theadType]}`}>
         {
           [...thead].map(th => (
             <View className='th'>{th.name}</View>
           ))
         }
       </View>
-      <View className='tbody'>
+      <View className='b-table-tbody'>
         {
           tbody.map(item => (
             <View className='tr'>

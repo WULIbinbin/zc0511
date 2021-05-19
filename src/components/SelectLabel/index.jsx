@@ -12,10 +12,10 @@ function SelectLabel({
 }) {
   return (
     <View className="b-select-view" style={{ width: `${width}rpx` }}>
-      <View className="label">{label}</View>
-      <View className="content">
-        <View className={`value`}>{value || placeHolder}</View>
-        <Image className={`icon`} src={SelectIcon}></Image>
+      <View className="b-select-label">{label}</View>
+      <View className="b-select-content">
+        <View className={`b-select-value`}>{value || placeHolder}</View>
+        <Image className={`b-select-icon`} src={SelectIcon}></Image>
       </View>
     </View>
   );

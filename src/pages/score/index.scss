@@ -8,6 +8,9 @@
     background-color: $white-color;
     padding:45px 0 25px;
     margin:20px 25px;
+    .b-select-view{
+      margin-bottom: 20px;
+    }
   }
   .body-table{
     @include flex-column();

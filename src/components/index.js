@@ -9,6 +9,8 @@ export { default as Tabbar } from "./Tabbar/index";
 export { default as Bread } from "./Bread/index";
 export { default as Describe } from "./Describe/index";
 export { default as SelectLabel } from "./SelectLabel/index";
+export { default as FormItem } from "./FormItem/index";
+
 
 
 //业务组件
