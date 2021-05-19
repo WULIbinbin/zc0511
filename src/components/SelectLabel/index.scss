@@ -1,0 +1,27 @@
+@import "../../styles/mixin.scss";
+
+.b-select-view {
+  @include flex-row-center();
+  margin-bottom: 20px;
+  .label {
+    font-size: 28px;
+    color: #333;
+    margin-right: 5px;
+  }
+  .content {
+    @include flex-row-center-between();
+    background-color: $bg-color;
+    padding: 10px 20px;
+    flex: 1;
+    .value {
+      font-size: 28px;
+      color: #999;
+      margin-right: 5px;
+    }
+    .icon {
+      width: 20px;
+      height: 20px;
+      transition: all 0.2s ease;
+    }
+  }
+}

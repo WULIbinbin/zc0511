@@ -8,6 +8,8 @@ export default {
     'pages/subject/list/index',
     'pages/subject/detail/index',
     'pages/choose/index/index',
+    'pages/choose/college/index',
+    'pages/score/index',
   ],
   tabBar: {
     color: '#333333',

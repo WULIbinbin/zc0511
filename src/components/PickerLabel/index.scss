@@ -1,6 +1,6 @@
 @import '../../styles/mixin.scss';
 
-.picker-view{
+.b-picker-view{
   padding:30px 12px;
   @include flex-row-center-center();
   .label{

@@ -8,6 +8,8 @@ export { default as Search } from "./Search/index";
 export { default as Tabbar } from "./Tabbar/index";
 export { default as Bread } from "./Bread/index";
 export { default as Describe } from "./Describe/index";
+export { default as SelectLabel } from "./SelectLabel/index";
+
 
 //业务组件
 export { default as HomeBanner } from "./HomeBanner/index";

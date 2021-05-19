@@ -1,0 +1,23 @@
+
+@import '../../styles/mixin.scss';
+
+.b-score-search{
+  .top-select{
+    @include flex-column-center-center();
+    @include shadow-radius();
+    background-color: $white-color;
+    padding:45px 0 25px;
+    margin:20px 25px;
+  }
+  .body-table{
+    @include flex-column();
+    @include shadow-radius();
+    background-color: $white-color;
+    margin:20px 25px;
+    .title{
+      padding:25px;
+      color:#333;
+      font-size: 30px;
+    }
+  }
+}

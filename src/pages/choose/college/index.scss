@@ -1,0 +1,23 @@
+@import "../../../styles/mixin.scss";
+
+.b-choose-college {
+  @include flex-column();
+  .top-bar {
+    @include flex-row-center-between();
+    padding: 0 200px;
+    background-color: $white-color;
+    position: relative;
+    &::after {
+      @include row-line();
+      bottom: 0;
+    }
+  }
+  .main {
+    flex: 1;
+    background-color: $bg-color;
+    .list {
+      @include shadow-radius();
+      margin: 20px 25px 60px;
+    }
+  }
+}
