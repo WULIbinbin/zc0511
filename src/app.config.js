@@ -10,6 +10,8 @@ export default {
     'pages/choose/index/index',
     'pages/choose/college/index',
     'pages/score/index',
+    'pages/guide/index',
+    'pages/user/record/index',
   ],
   tabBar: {
     color: '#333333',

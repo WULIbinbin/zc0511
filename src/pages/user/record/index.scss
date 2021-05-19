@@ -1,0 +1,54 @@
+@import "../../../styles/mixin.scss";
+
+.b-user-record {
+  .step-view {
+    @include flex-column();
+    @include shadow-radius();
+    margin: 20px 25px 100px;
+    border-radius: 20px;
+    overflow: hidden;
+    .step-items {
+      @include flex-row();
+      height: 86px;
+      .item {
+        @include flex-row-center-center();
+        flex: 1;
+        background-color: rgba(234, 68, 56, 0.5);
+        &.checked {
+          background-color: #ea4438;
+        }
+        .index {
+          width: 40px;
+          height: 40px;
+          line-height: 40px;
+          text-align: center;
+          background: #ffffff;
+          border-radius: 50%;
+          font-size: 32px;
+          color: #ea4438;
+          margin-right: 6px;
+        }
+        .name {
+          font-size: 28px;
+          color: #ffffff;
+        }
+      }
+    }
+  }
+  .btn {
+    @include flex-row-center-center();
+    margin: 0 25px 60px;
+    height: 100px;
+    background: rgba(234, 68, 56, 1);
+    border-radius: 20px;
+    opacity: 0.5;
+    &.can-click {
+      opacity: 1;
+    }
+    .text {
+      font-size: 32px;
+      font-weight: bold;
+      color: #ffffff;
+    }
+  }
+}
