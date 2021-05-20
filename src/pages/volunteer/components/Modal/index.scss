@@ -101,31 +101,59 @@
       &-arrow {
         height: 24px;
         width: 24px;
-        margin-left:6px;
+        margin-left: 6px;
       }
     }
   }
-  &-detail-tab {
-    @include flex-row-center();
-    flex-wrap: wrap;
-    &-item {
-      flex: 1;
-      padding: 18px 30px;
-      background: #f7f7f7;
-      border-radius: 20px;
-      margin-right: 20px;
-      font-size: 26px;
+  &-detail {
+    &-tab {
+      @include flex-row-center();
+      flex-wrap: wrap;
+      &-item {
+        flex: 1;
+        padding: 18px 0;
+        background: #f7f7f7;
+        border-radius: 20px;
+        margin-right: 20px;
+        font-size: 26px;
+        font-weight: bold;
+        color: #666666;
+        white-space: nowrap;
+        text-align: center;
+        &.actived {
+          background: #d0ac58;
+          color: #ffffff;
+        }
+        &:last-of-type {
+          margin-right: 0;
+        }
+      }
+    }
+    &-content {
+      @include flex-column();
+    }
+    &-title {
+      margin: 40px 0 16px 0;
+      font-size: 32px;
       font-weight: bold;
+      color: #333333;
+      position: relative;
+      height: 30px;
+      line-height: 30px;
+      &::before {
+        @include column-line();
+        position: absolute;
+        left: -10px;
+        top: 0;
+        bottom: 0;
+        width: 6px;
+        background: #ea4438;
+      }
+    }
+    &-desc {
+      font-size: 28px;
       color: #666666;
-      white-space: nowrap;
-      text-align: center;
-      &.actived {
-        background: #d0ac58;
-        color: #ffffff;
-      }
-      &:last-of-type {
-        margin-right: 0;
-      }
+      line-height: 40px;
     }
   }
 }

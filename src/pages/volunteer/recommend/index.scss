@@ -1,2 +1,10 @@
 @import "../../../styles/mixin.scss";
 
+.b-vol-page{
+  &-bottom-desc {
+    font-size: 24px;
+    color: #999999;
+    line-height: 36px;
+    margin:20px 25px 50px;
+  }
+}

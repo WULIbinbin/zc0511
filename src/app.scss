@@ -99,8 +99,42 @@ page {
     @include row-line();
     height: 6px;
     bottom: 7px;
-    left:-4px;
-    right:-4px;
+    left: -4px;
+    right: -4px;
     background-color: $primary-color;
+  }
+}
+
+.b-vol-page {
+  &-button-group {
+    @include flex-row-center();
+    margin: 0 25px 20px;
+    height: 100px;
+    border-radius: 50px;
+    overflow: hidden;
+  }
+  &-button {
+    flex: 1;
+    text-align: center;
+    height: 100px;
+    line-height: 100px;
+    color: #ffffff;
+    &-right {
+      background: #000000;
+    }
+    &-left {
+      @include flex-row-center-center();
+      background: rgba(208, 172, 88, 1);
+    }
+    &-money {
+      font-size: 22px;
+      margin-top: 4px;
+    }
+  }
+  &-bottom-example {
+    font-size: 28px;
+    color: #333333;
+    text-align: center;
+    margin-bottom: 70px;
   }
 }
