@@ -1,0 +1,77 @@
+@import "../../../../styles/mixin.scss";
+
+.b-vol-remd {
+  @include flex-column-center-center();
+  @include shadow-radius();
+  margin: 20px 25px 0;
+  background-color: $white-color;
+  &-options {
+    @include flex-column-center-center();
+    padding: 30px 0;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  &-main-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 10px;
+  }
+  &-sub-title {
+    font-size: 26px;
+    color: #666666;
+  }
+  &-content {
+    @include flex-column();
+    padding: 0 25px;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  &-ctn-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333333;
+    width: 100%;
+    margin: 30px 0;
+    position: relative;
+    height: 27px;
+    line-height: 27px;
+    &::before {
+      @include column-line();
+      position: absolute;
+      left: -8px;
+      top: 0;
+      bottom: 0;
+      width: 8px;
+      background: #ea4438;
+    }
+  }
+  &-college {
+    &-main {
+      @include flex-column();
+      width: 100%;
+      margin-bottom:30px;
+    }
+    &-title {
+      @include flex-row-center-between();
+      font-size: 28px;
+      margin-bottom:20px;
+    }
+    &-name {
+      color: #333333;
+    }
+    &-score {
+      color: #999999;
+    }
+    &-labels {
+      @include flex-row-center();
+    }
+    &-label {
+      margin-right:10px;
+      font-size: 24px;
+      color: #ea4438;
+      padding: 4px 10px;
+      background-color: $primary-bg;
+    }
+  }
+}

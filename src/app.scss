@@ -106,6 +106,14 @@ page {
 }
 
 .b-vol-page {
+  @include flex-column();
+  padding-bottom: 120px;
+  &-bottom-desc {
+    font-size: 24px;
+    color: #999999;
+    line-height: 36px;
+    margin: 20px 25px 50px;
+  }
   &-button-group {
     @include flex-row-center();
     margin: 0 25px 20px;
@@ -119,6 +127,9 @@ page {
     height: 100px;
     line-height: 100px;
     color: #ffffff;
+    font-weight: bold;
+    color: #fffffe;
+    font-size: 32px;
     &-right {
       background: #000000;
     }
@@ -135,6 +146,5 @@ page {
     font-size: 28px;
     color: #333333;
     text-align: center;
-    margin-bottom: 70px;
   }
 }

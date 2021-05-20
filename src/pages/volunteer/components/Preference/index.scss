@@ -10,11 +10,6 @@
     position: relative;
     padding: 30px 0;
     width: 100%;
-    &::after {
-      @include row-line();
-      bottom: 0;
-      background-color: #ccc;
-    }
   }
   &-edit {
     height: 38px;

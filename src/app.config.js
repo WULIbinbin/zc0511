@@ -12,7 +12,7 @@ export default {
     'pages/score/index',
     'pages/guide/index',
     'pages/user/record/index',
-    'pages/volunteer/recommend/index',
+    'pages/volunteer/tutor/index',
   ],
   tabBar: {
     color: '#333333',

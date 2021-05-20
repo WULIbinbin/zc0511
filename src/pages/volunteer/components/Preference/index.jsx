@@ -31,7 +31,7 @@ export default function ({}) {
   ];
   return (
     <View className="b-vol-pref">
-      <View className="b-vol-pref-options">
+      <View className="b-vol-pref-options b-bottom-line">
         <View className="b-underline-title">我的课程偏好</View>
         <Image className="b-vol-pref-edit"></Image>
       </View>

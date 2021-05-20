@@ -73,7 +73,7 @@ export default function ({}) {
   ]
   return (
     <View className="b-vol-test">
-      <View className="b-vol-test-options">
+      <View className="b-vol-test-options b-bottom-line">
         <View className="b-underline-title">我的考试信息</View>
         <Image className="b-vol-test-edit"></Image>
       </View>
