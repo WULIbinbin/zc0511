@@ -6,7 +6,8 @@ import SelectNor from "../../../../static/image/select.png";
 import SelectSel from "../../../../static/image/select-sel.png";
 
 export default function ({ echart = null }) {
-  const [folded,setFold] = useState(false)
+  const [folded, setFold] = useState(false);
+  const detailTabs = ["艺术型（A）", "企业型（E）", "艺术型（C）"];
   return (
     <View className="b-vol-modal">
       <View className="b-vol-modal-options">
@@ -29,17 +30,29 @@ export default function ({ echart = null }) {
       </View>
       <View className="b-vol-modal-unlock">
         <View className="b-vol-modal-unlock-text">解锁说明：</View>
-        <View className="b-vol-modal-unlock-fold" onClick={()=>{
-          setFold(!folded)
-        }}>
+        <View
+          className="b-vol-modal-unlock-fold"
+          onClick={() => {
+            setFold(!folded);
+          }}
+        >
           <View className="b-vol-modal-unlock-text">展开</View>
           <Image
             className="b-vol-modal-unlock-fold-arrow"
-            src={SelectNor}
+            src={!folded ? SelectNor : SelectSel}
           ></Image>
         </View>
       </View>
-      {folded&&<View className="b-vol-modal-content b-top-line">2333</View>}
+      {folded && (
+        <View className="b-vol-modal-content b-top-line">
+          <View className="b-vol-modal-detail-tab">
+            {detailTabs.map((n) => (
+              <View className="b-vol-modal-detail-tab-item">{n}</View>
+            ))}
+          </View>
+          
+        </View>
+      )}
     </View>
   );
 }
