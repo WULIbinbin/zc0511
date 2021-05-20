@@ -1,0 +1,38 @@
+@import "../../../../styles/mixin.scss";
+
+.b-vol-pref {
+  @include flex-column-center-center();
+  @include shadow-radius();
+  margin: 20px 25px 0;
+  background-color: $white-color;
+  &-options {
+    @include flex-row-center-center();
+    position: relative;
+    padding: 30px 0;
+    width: 100%;
+    &::after {
+      @include row-line();
+      bottom: 0;
+      background-color: #ccc;
+    }
+  }
+  &-edit {
+    height: 38px;
+    width: 38px;
+  }
+  &-all-score {
+    @include flex-row-center-between();
+    box-sizing: border-box;
+    width: 100%;
+    padding:30px;
+    &-item {
+      @include flex-column-center-center();
+      font-size: 28px;
+      color: #333333;
+      & > view:nth-of-type(1) {
+        color: #666666;
+        margin-bottom: 12px;
+      }
+    }
+  }
+}

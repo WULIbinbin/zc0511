@@ -2,7 +2,7 @@ import { View, Image } from "@tarojs/components";
 import { Table } from "../../../../components/index";
 import "./index.scss";
 
-import Recommend from "../../../../static/image/recommend.png";
+//import Recommend from "../../../../static/image/recommend.png";
 
 export default function ({}) {
   const subject = ["物理", "生物", "化学"];

@@ -1,0 +1,107 @@
+@import "../../../../styles/mixin.scss";
+
+.b-vol-modal {
+  @include flex-column-center-center();
+  @include shadow-radius();
+  margin: 20px 25px 0;
+  background-color: $white-color;
+  &-options {
+    @include flex-row-center-center();
+    position: relative;
+    padding: 30px 0;
+    width: 100%;
+    &::after {
+      @include row-line();
+      bottom: 0;
+      background-color: #ccc;
+    }
+  }
+  &-edit {
+    height: 38px;
+    width: 38px;
+  }
+  &-content {
+    @include flex-column();
+    box-sizing: border-box;
+    width: 100%;
+    padding: 30px;
+    .b-bottom-line{
+      &::after{
+        background-color: #cccccc;
+      }
+    }
+  }
+  &-chart-title {
+    font-size: 28px;
+    color: #333333;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  &-chart-desc {
+    @include flex-column-center-center();
+    width: 340px;
+    height: 140px;
+    border: 4px solid #d0ac58;
+    border-radius: 20px;
+    margin: 0 auto;
+  }
+  &-chart-code {
+    font-size: 32px;
+    font-weight: bold;
+    color: #d0ac58;
+    margin-bottom: 16;
+  }
+  &-chart-value {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333333;
+  }
+  &-chart-view {
+    @include flex-row-center-center();
+    height: 400px;
+    margin: 20px 0;
+    //position: relative;
+    & > .leida-canvas {
+      //position: absolute;
+      width: 400px;
+      height: 400px;
+    }
+  }
+
+  &-chart-type {
+    height: 80px;
+    background: #d0ac58;
+    border-radius: 20px;
+    line-height: 80px;
+    width: 360px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 0 auto;
+    &-desc {
+      font-size: 28px;
+      color: #666666;
+      line-height: 40px;
+      margin: 30px 0 0;
+    }
+  }
+  &-unlock {
+    @include flex-row-center-between();
+    box-sizing: border-box;
+    width: 100%;
+    padding: 20px 30px;
+    &-text {
+      font-size: 28px;
+      font-weight: bold;
+      color: #333333;
+    }
+    &-fold {
+      @include flex-row-center-center();
+      &-arrow {
+        height: 24px;
+        width: 24px;
+      }
+    }
+  }
+}

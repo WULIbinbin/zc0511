@@ -28,6 +28,14 @@ page {
   }
 }
 
+.b-top-line {
+  position: relative;
+  &::before {
+    @include row-line();
+    top: 0;
+  }
+}
+
 .b-arrow-right {
   $arrow: 37px;
   height: 37px;

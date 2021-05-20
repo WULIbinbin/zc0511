@@ -39,6 +39,7 @@
     "@tarojs/react": "3.2.8",
     "@tarojs/runtime": "3.2.8",
     "@tarojs/taro": "3.2.8",
+    "echarts-taro3-react": "^1.0.13",
     "mobx": "^4.8.0",
     "mobx-react": "^6.1.4",
     "react": "^17.0.0",
