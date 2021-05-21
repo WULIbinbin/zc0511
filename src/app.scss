@@ -36,6 +36,19 @@ page {
   }
 }
 
+.b-sub-title{
+  position: relative;
+  &::before {
+    @include column-line();
+    position: absolute;
+    left: -8px;
+    top: 0;
+    bottom: 0;
+    width: 8px;
+    background: #ea4438;
+  }
+}
+
 .b-arrow-right {
   $arrow: 37px;
   height: 37px;
