@@ -1,17 +1,79 @@
-@import '../../../styles/mixin.scss';
+@import "../../../styles/mixin.scss";
 
-.b-eva-readme{
-  &-bg{
+.b-eva-readme {
+  &-bg {
     width: 100%;
   }
-  &-bottom-btn{
+  &-bottom-btn {
     margin: 0 50px;
     height: 90px;
     line-height: 90px;
     text-align: center;
     border-radius: 45px;
-    border:2px solid $primary-color;
-    color:$primary-color;
+    border: 2px solid $primary-color;
+    color: $primary-color;
     font-size: 30px;
+  }
+  &-dialog {
+    @include flex-column-center-center();
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    &-body {
+      display: inline-block;
+      background: #fefefe;
+      border-radius: 20px;
+      margin: 0 90px 20px;
+      //height: 590px;
+      padding: 27px;
+    }
+    &-main {
+      border: 3px solid rgba(234, 68, 56, 0.4);
+      border-radius: 20px;
+      padding: 27px;
+    }
+    &-top {
+      @include flex-row-center-center();
+    }
+    &-top-title {
+      font-size: 32px;
+      font-weight: bold;
+      color: #333333;
+      margin: 20px 0 47px;
+    }
+    &-content {
+      @include flex-column();
+      font-size: 28px;
+      color: #333333;
+      line-height: 40px;
+      & > text {
+        margin-bottom: 20px;
+      }
+    }
+    &-btn {
+      width: 350px;
+      height: 80px;
+      background: #ea4438;
+      border-radius: 40px;
+      line-height: 80px;
+      text-align: center;
+      color: $white-color;
+      margin: 27px auto;
+    }
+    &-close {
+      @include flex-row-center-center();
+      width: 84px;
+      height: 84px;
+      background: rgba(102, 102, 102, 0.6);
+      border-radius: 50%;
+      &-icon {
+        height: 28px;
+        width: 28px;
+      }
+    }
   }
 }
