@@ -1,19 +1,42 @@
 import { View, Image } from "@tarojs/components";
-import './index.scss'
+import { useCallback, useState } from "react";
+import "./index.scss";
 
-import Recommend from '../../../../static/image/recommend.png'
+import StarSel from "../../image/star-sel.png";
+import StarNor from "../../image/star-nor.png";
 
-export default function ({ type = "recommend", title = "", desc = "" }) {
-  const icons = {
-    recommend:Recommend
-  };
+export default function ({ icon = "", name = "" }) {
+  const [num, setNum] = useState(0);
+  const stars = new Array(5).fill(false);
+  const [mapStar, setStar] = useState(stars);
+  const handleChange = useCallback(
+    (n) => {
+      const newStars = mapStar.map((m, i) => {
+        return i <= n;
+      });
+      setStar(newStars);
+      setNum(n + 1);
+    },
+    [mapStar]
+  );
   return (
-    <View className="b-vol-title">
-      <View className="b-vol-title-options">
-        <Image className="b-vol-title-icon" src={icons[type]}></Image>
-        <View className="b-vol-title-name">{title}</View>
+    <View className="b-vol-star">
+      <View className="b-vol-star-prepend">
+        <Image className="b-vol-star-icon" mode="widthFix" src={icon}></Image>
+        <View className="b-vol-star-name">{name}：</View>
       </View>
-      <View className="b-vol-title-desc">{desc}</View>
+      <View className="b-vol-star-content">
+        {mapStar.map((n,idx) => (
+          <Image
+            className="b-vol-star-img"
+            src={n ? StarSel : StarNor}
+            onClick={() => {
+              handleChange(idx);
+            }}
+          ></Image>
+        ))}
+      </View>
+      <View className="b-vol-star-num">{num}</View>
     </View>
   );
 }

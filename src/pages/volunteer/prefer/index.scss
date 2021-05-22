@@ -1,5 +1,22 @@
 @import "../../../styles/mixin.scss";
 
-.b-vol-page{
-  
+.b-vol-star {
+  &-sure {
+    margin: 100px 25px 0;
+    height: 100px;
+    background: #ea4438;
+    border-radius: 20px;
+    line-height: 100px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    color: #ffffff;
+    &.disabled{
+      opacity: 0.4;
+    }
+  }
+  &-bottom{
+    width: 247px;
+    margin:45px auto 120px;
+  }
 }
