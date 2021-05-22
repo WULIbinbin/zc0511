@@ -1,0 +1,86 @@
+@import "../../../../styles/mixin.scss";
+
+.b-vol-subject {
+  @include flex-column-center-center();
+  @include shadow-radius();
+  margin: 20px 25px 0;
+  background-color: $white-color;
+  &-options {
+    @include flex-column-center-center();
+    padding: 30px 0;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  &-main-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 10px;
+  }
+  &-sub-title {
+    font-size: 26px;
+    color: #666666;
+  }
+  &-content {
+    @include flex-column();
+    padding: 0 25px 25px;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  &-item {
+    @include flex-column();
+    margin-top: 25px;
+    &-title {
+      height: 90px;
+      padding: 0 30px;
+      line-height: 92px;
+      background: rgba(208, 172, 88, 0.2);
+      border-radius: 20px;
+      font-size: 32px;
+      font-weight: 500;
+      color: #c09632;
+      margin-bottom: 18px;
+    }
+    &-degree {
+      font-size: 28px;
+      color: #666666;
+      line-height: 42px;
+      padding: 0 20px;
+    }
+    &-job {
+      @include flex-column();
+      font-size: 28px;
+      color: #666666;
+      line-height: 42px;
+      padding: 0 20px;
+    }
+    &-desc {
+      @include flex-column();
+      font-size: 28px;
+      color: #666666;
+      line-height: 42px;
+      padding: 0 20px;
+      margin: 46px 0 20px;
+      & > text:nth-of-type(1) {
+        font-size: 32px;
+        font-weight: bold;
+        color: #333333;
+      }
+      & > text:nth-of-type(2) {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        &.checkall {
+          overflow: auto;
+          text-overflow: initial;
+          display: block;
+        }
+      }
+      & > text:nth-of-type(3) {
+        color: #ea4438;
+      }
+    }
+  }
+}

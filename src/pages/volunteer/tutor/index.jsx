@@ -8,6 +8,7 @@ import {
   VolPreference,
   VolModal,
   VolRecommend,
+  VolSubject
 } from "../components/index";
 import "./index.scss";
 
@@ -36,6 +37,7 @@ class Index extends Component {
         <View className="b-vol-page-bottom-desc">
           注：由于该理论1959年提出，有些职业在这几十年间发生了很大的变化，甚至已经消失，我们本着尊重全球性著名专家的原则，并未删除或更改，直接展示给测试者。
         </View>
+        <VolSubject />
         <View className="b-vol-page-button-group">
           <View className="b-vol-page-button b-vol-page-button-left">
             <View className="b-vol-page-button-money">￥</View>99.00

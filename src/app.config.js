@@ -16,11 +16,11 @@ export default {
   subpackages: [
     {
       root: "pages/volunteer/",
-      pages: ["tutor/index"],
+      pages: ["tutor/index", "prefer/index"],
     },
     {
       root: "pages/evaluation/",
-      pages: ["readme/index"],
+      pages: ["readme/index", "exam/index"],
     },
   ],
   tabBar: {

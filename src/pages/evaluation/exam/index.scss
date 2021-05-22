@@ -1,0 +1,88 @@
+@import "../../../styles/mixin.scss";
+
+.b-eva-exam {
+  &-main {
+    @include flex-column();
+    @include shadow-radius();
+    margin: 20px 25px 0;
+    padding: 50px;
+    background-color: $white-color;
+  }
+  &-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333333;
+    line-height: 40px;
+    margin-bottom: 30px;
+  }
+  &-options {
+    @include flex-column();
+    width: 100%;
+  }
+  &-option {
+    margin-top: 20px;
+    padding: 30px 50px;
+    font-size: 28px;
+    color: #333333;
+    background-color: #f7f7f7;
+    &.checked {
+      background-color: $primary-bg;
+    }
+  }
+  &-bottom {
+    @include flex-column();
+    @include shadow-radius();
+    margin: 20px 25px 0;
+    padding: 30px 50px 50px;
+    background-color: $white-color;
+  }
+  &-process {
+    @include flex-column();
+    width: 100%;
+    margin-bottom: 50px;
+    &-top {
+      @include flex-row-center-between();
+      width: 100%;
+    }
+    &-title {
+      font-size: 28px;
+      color: #333333;
+    }
+    &-desc {
+      font-size: 28px;
+      color: #333333;
+      & > text {
+        color: $primary-color;
+      }
+    }
+    $processH: 10px;
+    &-bg {
+      margin-top: 10px;
+      width: 100%;
+      height: $processH;
+      border-radius: 5px;
+      background-color: #ccc;
+      position: relative;
+      overflow: hidden;
+    }
+    &-bar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: $processH;
+      border-radius: 5px;
+      background-color: $primary-color;
+    }
+  }
+  &-button {
+    margin: 0 auto;
+    width: 300px;
+    height: 70px;
+    border-radius: 35px;
+    font-size: 28px;
+    color: #333333;
+    line-height: 70px;
+    text-align: center;
+    background-color: $bg-color;
+  }
+}
