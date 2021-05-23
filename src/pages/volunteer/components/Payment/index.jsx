@@ -46,6 +46,7 @@ export default function ({}) {
           </FormItem>
         </View>
       </View>
+      <View className='b-vol-payment-btn'>立即支付</View>
     </View>
   );
 }
