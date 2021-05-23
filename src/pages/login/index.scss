@@ -1,0 +1,12 @@
+@import '../../styles/mixin.scss';
+
+
+.b-home{
+  padding:30px 26px 80px;
+  &-poster{
+    height: 320px;
+    width: 100%;
+    background-color: #f2f2f2;
+    border-radius: 8px;
+  }
+}

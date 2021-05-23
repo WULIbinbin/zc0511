@@ -6,6 +6,7 @@ import "./index.scss";
 
 import ReadMePng from "../image/readme.png";
 import ClosePng from "../image/close.png";
+import titlePng from "../image/tihsi.png";
 
 @inject("store")
 @observer
@@ -38,17 +39,28 @@ class Index extends Component {
           src={ReadMePng}
           mode="widthFix"
         ></Image>
-        <View className="b-eva-readme-bottom-btn" onClick={this.handleToggle.bind(this, true)}>共60题，约耗时10分钟</View>
+        <View
+          className="b-eva-readme-bottom-btn"
+          onClick={this.handleToggle.bind(this, true)}
+        >
+          共60题，约耗时10分钟
+        </View>
         {showDialog && (
           <View className="b-eva-readme-dialog">
             <View className="b-eva-readme-dialog-body">
               <View className="b-eva-readme-dialog-main">
                 <View className="b-eva-readme-dialog-top">
-                  <View className="b-eva-readme-dialog-icon"></View>
+                  <Image
+                    className="b-eva-readme-dialog-icon"
+                    src={titlePng}
+                  ></Image>
                   <View className="b-eva-readme-dialog-top-title">
                     温馨提示
                   </View>
-                  <View className="b-eva-readme-dialog-icon"></View>
+                  <Image
+                    className="b-eva-readme-dialog-icon"
+                    src={titlePng}
+                  ></Image>
                 </View>
                 <View className="b-eva-readme-dialog-content" decode>
                   <Text>

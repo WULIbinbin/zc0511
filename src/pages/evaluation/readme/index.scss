@@ -23,6 +23,13 @@
     bottom: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.2);
+    &-icon{
+      width: 13px;
+      height: 19px;
+      &:last-of-type{
+        transform: rotateY(180deg);
+      }
+    }
     &-body {
       display: inline-block;
       background: #fefefe;
@@ -38,12 +45,13 @@
     }
     &-top {
       @include flex-row-center-center();
+      margin: 20px 0 47px;
     }
     &-top-title {
       font-size: 32px;
       font-weight: bold;
       color: #333333;
-      margin: 20px 0 47px;
+      margin:0 20px;
     }
     &-content {
       @include flex-column();

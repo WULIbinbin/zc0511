@@ -1,5 +1,8 @@
-import common from './common'
+import Common from './common'
+import Account from './account'
+
 
 export default {
-  common
+  Common,
+  Account
 }
