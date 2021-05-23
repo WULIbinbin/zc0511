@@ -37,6 +37,7 @@ export default function ({}) {
           </View>
         ))}
       </View>
+      <View className='b-vol-subject-btn'>查看主修课程</View>
     </View>
   );
 }

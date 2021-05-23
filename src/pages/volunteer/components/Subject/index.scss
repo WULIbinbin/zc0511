@@ -27,6 +27,17 @@
     box-sizing: border-box;
     width: 100%;
   }
+  &-btn {
+    margin: 50px auto 0;
+    width: 360px;
+    height: 80px;
+    background: rgba(208, 172, 88, 0.2);
+    border-radius: 40px;
+    line-height: 80px;
+    text-align: center;
+    color:$primary-color;
+    margin-bottom:25px;
+  }
   &-item {
     @include flex-column();
     margin-top: 25px;

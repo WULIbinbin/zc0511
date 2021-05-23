@@ -16,7 +16,7 @@ export default {
   subpackages: [
     {
       root: "pages/volunteer/",
-      pages: ["tutor/index", "prefer/index"],
+      pages: ["tutor/index", "prefer/index", "review/index"],
     },
     {
       root: "pages/evaluation/",

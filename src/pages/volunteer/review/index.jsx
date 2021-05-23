@@ -4,6 +4,7 @@ import { observer, inject } from "mobx-react";
 import {
   VolTitle,
   VolTestInfo,
+  VolPayment
 } from "../components/index";
 import "./index.scss";
 
@@ -26,7 +27,7 @@ class Index extends Component {
       <View className="b-vol-page">
         <VolTitle title="志愿审核报告" desc="报告单号：CYZY-0000001"></VolTitle>
         <VolTestInfo />
-       
+        <VolPayment />
       </View>
     );
   }

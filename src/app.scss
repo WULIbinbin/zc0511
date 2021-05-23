@@ -129,7 +129,7 @@ page {
   }
   &-button-group {
     @include flex-row-center();
-    margin: 0 25px 20px;
+    margin: 50px 25px 20px;
     height: 100px;
     border-radius: 50px;
     overflow: hidden;
@@ -160,4 +160,13 @@ page {
     color: #333333;
     text-align: center;
   }
+}
+
+.b-form-input {
+  padding: 30px;
+  width: 420px;
+  font-size: 28px;
+  height: 28px;
+  color: #666666;
+  background: #f9f9f9;
 }

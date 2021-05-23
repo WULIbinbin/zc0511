@@ -114,7 +114,7 @@ class Index extends Component {
                   </Picker>
                 </FormItem>
                 <FormItem label="姓名：">
-                  <Input className="step-input" value="张三"></Input>
+                  <Input className="b-form-input" value="张三"></Input>
                 </FormItem>
                 <FormItem label="性别：">
                   {sex.map((n) => (
@@ -143,7 +143,7 @@ class Index extends Component {
               <View className="main">
                 {scoreItem.map((n) => (
                   <FormItem label={n.label}>
-                    <Input className="step-input" value=""></Input>
+                    <Input className="b-form-input" value=""></Input>
                   </FormItem>
                 ))}
               </View>
