@@ -7,7 +7,6 @@
     margin: 20px 25px 0;
     background-color: $white-color;
   }
-
   &-options {
     @include flex-row-center-center();
     position: relative;
@@ -18,9 +17,8 @@
     height: 38px;
     width: 38px;
     position: absolute;
-    right:10px;
+    right: 10px;
   }
-
   &-content {
     @include flex-column();
     width: 100%;
