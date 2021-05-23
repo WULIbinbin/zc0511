@@ -76,6 +76,7 @@ export default function ({}) {
           <Table thead={thead} tbody={tbody}></Table>
         </View>
       </View>
+      <View className="b-vol-table-chance">还有2次智能审核机会</View>
       <View className="b-vol-table-btn">提交审核</View>
     </View>
   );

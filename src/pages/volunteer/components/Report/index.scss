@@ -1,0 +1,83 @@
+@import "../../../../styles/mixin.scss";
+
+.b-vol-report {
+  @include flex-column();
+  @include shadow-radius();
+  margin: 20px 25px 0;
+  background-color: $white-color;
+  &-options {
+    @include flex-column-center-center();
+    padding: 30px 0;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  &-main-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 10px;
+  }
+  &-sub-title {
+    font-size: 26px;
+    color: #666666;
+  }
+  &-content {
+    @include flex-column-center-center();
+    padding: 25px;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  &-btn {
+    margin: 30px;
+    height: 80px;
+    background: #d0ac58;
+    border-radius: 20px;
+    line-height: 80px;
+    text-align: center;
+    color: $white-color;
+  }
+  &-result {
+    &-desc {
+      font-size: 28px;
+      font-weight: bold;
+      color: #d0ac58;
+    }
+    &-num {
+      margin: 50px 0 25px;
+      width: 200px;
+      height: 200px;
+      background: #ffeab9;
+      border-radius: 50%;
+      font-size: 90px;
+      font-weight: 800;
+      color: #ea4438;
+      line-height: 200px;
+      text-align: center;
+    }
+  }
+  &-suggest {
+    @include flex-row-center-between();
+    margin: 0 25px;
+    &-title {
+      height: 28px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #333333;
+      line-height: 28px;
+      position: relative;
+      padding-left: 28px;
+      &::before {
+        @include column-line();
+        left: 10px;
+        height: 28px;
+        width: 8px;
+
+        background: #d0ac58;
+      }
+    }
+    &-desc {
+      font-size: 26px;
+      color: #666666;
+    }
+  }
+}

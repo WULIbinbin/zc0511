@@ -1,8 +1,10 @@
 @import "../../../styles/mixin.scss";
 
 .b-vol-batch {
+  @include flex-column();
   &-main {
     @include flex-column();
+    flex:1;
   }
   &-type {
     @include flex-column();
@@ -56,7 +58,7 @@
         @include column-line();
         left: 30px;
         top: 30px;
-        width: 6px;
+        width: 8px;
         height: 28px;
         background-color: $primary-color;
       }
@@ -71,7 +73,7 @@
   }
   &-plus {
     @include flex-row-center-center();
-    margin: 40px auto 50px;
+    margin: 40px auto 220px;
     width: 380px;
     height: 90px;
     border: 2px solid #ea4438;
@@ -86,6 +88,34 @@
     }
     & > text {
       margin-right: 12px;
+    }
+  }
+  &-btn {
+    flex: 1;
+    height: 80px;
+    font-size: 32px;
+    border-radius: 20px;
+    line-height: 80px;
+    text-align: center;
+    &-group {
+      @include flex-row-center-between();
+      width: 100%;
+      box-sizing: border-box;
+      padding: 25px 45px 60px;
+      position: fixed;
+      bottom:0;
+      left:0;
+      background-color: #f7f7f7;
+      z-index: 999;
+    }
+    &-default {
+      margin-right: 20px;
+      background: #ffffff;
+      color: #333333;
+    }
+    &-submit {
+      background: #ea4438;
+      color: #ffffff;
     }
   }
 }
