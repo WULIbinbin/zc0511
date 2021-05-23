@@ -8,7 +8,7 @@ function SelectLabel({
   label = "",
   placeHolder = "请选择",
   value = "",
-  width = 480,
+  width = 400,
 }) {
   return (
     <View className="b-select-view" style={{ width: `${width}rpx` }}>

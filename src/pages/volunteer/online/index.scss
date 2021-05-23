@@ -1,0 +1,20 @@
+@import "../../../styles/mixin.scss";
+
+.b-vol-online {
+  &-top {
+    margin: 20px 25px 0;
+  }
+  &-bg {
+    width: 100%;
+  }
+  &-btn {
+    margin: 20px 25px 0;
+    height: 90px;
+    background: #ea4438;
+    border-radius: 45px;
+    line-height: 90px;
+    text-align: center;
+    font-size: 28px;
+    color: #ffffff;
+  }
+}

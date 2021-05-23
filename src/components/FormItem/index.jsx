@@ -3,7 +3,7 @@ import "./index.scss";
 
 function FormItem({
   label = "",
-  contentWidth = 420,
+  contentWidth = 400,
   labelWidth = 150,
   children = null,
 }) {

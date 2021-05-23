@@ -1,0 +1,91 @@
+@import "../../../styles/mixin.scss";
+
+.b-vol-batch {
+  &-main {
+    @include flex-column();
+  }
+  &-type {
+    @include flex-column();
+    @include shadow-radius();
+    margin: 20px 25px 0;
+    background-color: $white-color;
+    &-title {
+      @include flex-row-center-center();
+      padding: 30px 0;
+      width: 100%;
+    }
+    &-content {
+      @include flex-row-center-center();
+      padding: 30px 0;
+    }
+    &-item {
+      height: 80px;
+      background: #f9f9f9;
+      border-radius: 20px;
+      line-height: 80px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      color: #333333;
+      padding: 0 45px;
+      min-width: 226px;
+      box-sizing: border-box;
+      &:nth-of-type(1) {
+        margin-right: 26px;
+      }
+      &.actived {
+        background: $primary-color;
+        color: $white-color;
+      }
+    }
+  }
+  &-item {
+    @include flex-column();
+    @include shadow-radius();
+    margin: 20px 25px 0;
+    background-color: $white-color;
+    &-title {
+      font-size: 28px;
+      font-weight: bold;
+      color: #333333;
+      line-height: 28px;
+      height: 28px;
+      padding: 30px 44px;
+      position: relative;
+      &::before {
+        @include column-line();
+        left: 30px;
+        top: 30px;
+        width: 6px;
+        height: 28px;
+        background-color: $primary-color;
+      }
+    }
+    &-content {
+      @include flex-column-center-center();
+      padding: 30px 0;
+    }
+    &-picker {
+      width: 400px;
+    }
+  }
+  &-plus {
+    @include flex-row-center-center();
+    margin: 40px auto 50px;
+    width: 380px;
+    height: 90px;
+    border: 2px solid #ea4438;
+    border-radius: 45px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #ea4438;
+    &-icon {
+      height: 32px;
+      width: 32px;
+      margin-right: 12px;
+    }
+    & > text {
+      margin-right: 12px;
+    }
+  }
+}
