@@ -3,6 +3,7 @@
 .b-subject-lib {
   @include flex-column();
   height: 100vh;
+  background-color: #ffffff;
   .main {
     @include flex-row();
     border-top: 20px solid #f7f7f7;
@@ -10,19 +11,26 @@
     width: 100%;
     .left {
       width: 200px;
+      height: 100%;
       background-color: #f7f7f7;
       .info {
         width: 100%;
         @include flex-column();
         .item {
-          padding: 25px 10px;
+          padding: 25px 20px;
           @include flex-row-center-center();
+          &:last-of-type {
+            margin-bottom: 60px;
+          }
           .value {
             text-align: center;
+            font-size: 26px;
+            color: #666666;
           }
           &.selected {
             background: #ffffff;
             .value {
+              color: #000000;
               &::after {
                 content: "";
                 display: block;
@@ -39,6 +47,7 @@
     }
     .right {
       flex: 1;
+      height: 100%;
       background-color: #fff;
       .title {
         text-align: center;
@@ -49,6 +58,7 @@
       }
       .info {
         width: 100%;
+        padding-bottom: 60px;
         @include flex-row();
         flex-wrap: wrap;
         .item {
@@ -57,6 +67,9 @@
           margin: 20px 0 0 20px;
           height: 120px;
           background-color: #f7f7f7;
+          text-align: center;
+          padding: 0 20px;
+          box-sizing: border-box;
           .value {
             font-size: 28px;
             color: #333333;

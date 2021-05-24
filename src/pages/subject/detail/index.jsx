@@ -1,8 +1,9 @@
 import { Component } from 'react'
+import Taro from "@tarojs/taro";
 import { View, ScrollView } from '@tarojs/components'
 import { observer, inject } from 'mobx-react'
 import { Describe } from '../../../components/index'
-
+import { GetSubjectDetail } from "../../../request/apis/college";
 import './index.scss'
 
 @inject('store')
@@ -11,7 +12,14 @@ class Index extends Component {
 
   componentWillMount() { }
 
-  componentDidMount() { }
+  componentDidMount() {
+    const {
+      options: { code },
+    } = getCurrentPages()[getCurrentPages().length - 1];
+    GetSubjectDetail(code).then(res=>{
+      
+    })
+   }
 
   componentWillUnmount() { }
 

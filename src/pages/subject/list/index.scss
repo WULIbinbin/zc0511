@@ -28,6 +28,11 @@
         @include flex-row-center-between();
         padding:50px 10px 50px 30px;
         background-color: $white-color;
+        &:last-of-type{
+          &::after{
+            display: none;
+          }
+        }
         .arrow{
           height: 34px;
           width: 34px;

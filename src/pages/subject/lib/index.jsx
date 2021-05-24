@@ -1,7 +1,9 @@
 import { Component } from "react";
+import Taro from "@tarojs/taro";
 import { View, ScrollView } from "@tarojs/components";
 import { observer, inject } from "mobx-react";
 import { Search, Tabbar } from "../../../components/index";
+import { GetSubjectTypeList } from "../../../request/apis/college";
 import "./index.scss";
 
 @inject("store")
@@ -9,11 +11,30 @@ import "./index.scss";
 class Index extends Component {
   state = {
     activeTab: "本科专业",
+    curLeft: "",
+    left: [],
+    right: [],
   };
 
+  allSubject = [];
+  allClassify = [];
   componentWillMount() {}
 
-  componentDidMount() {}
+  componentDidMount() {
+    Taro.showLoading();
+    GetSubjectTypeList().then((res) => {
+      Taro.hideLoading();
+      this.allSubject = res.data.c;
+      this.allClassify = res.data.s;
+      const left = this.filterSubjectByType(true);
+      const right = this.filterSubjectByCateName(left[0].subjectName);
+      this.setState({
+        curLeft: left[0].subjectName,
+        left,
+        right,
+      });
+    });
+  }
 
   componentWillUnmount() {}
 
@@ -22,19 +43,88 @@ class Index extends Component {
   componentDidHide() {}
 
   handleTabChange(activeTab) {
+    this.setState(
+      {
+        activeTab,
+      },
+      () => {
+        this.handleConfirm({
+          value: this.state.searchName,
+        });
+      }
+    );
+  }
+
+  handleChangeSubject(subjectName) {
+    const right = this.filterSubjectByCateName(subjectName);
     this.setState({
-      activeTab,
+      curLeft: subjectName,
+      right,
+    });
+  }
+
+  filterSubjectByType(type = true, data = this.allClassify) {
+    return data.filter((item) => item.type === type);
+  }
+
+  filterSubjectByCateName(subjectName = "", data = this.allSubject) {
+    return data.filter((item) => item.subjectName === subjectName);
+  }
+
+  goList(n) {
+    Taro.navigateTo({
+      url: `/pages/subject/list/index?subjectName=${
+        n.subjectName
+      }&categoryName=${n.categoryName}&type=${!!n.type ? "本科" : "专科"}`,
+    });
+  }
+
+  filterSubjectLikeName(name) {
+    if (!name) {
+      return this.allSubject;
+    } else {
+      return this.allSubject.filter(
+        (item) => item.categoryName.indexOf(name) > -1
+      );
+    }
+  }
+
+  handleConfirm(e) {
+    const { activeTab } = this.state;
+    const filterSubject = this.filterSubjectLikeName(e.value);
+    const filterSubjectByType = this.filterSubjectByType(
+      activeTab === "本科专业",
+      filterSubject
+    );
+    const left = [];
+    filterSubjectByType.forEach((item) => {
+      if (left.findIndex((f) => f.subjectName === item.subjectName) === -1) {
+        left.push({
+          subjectName: item.subjectName,
+        });
+      }
+    });
+    const curLeft = left[0].subjectName;
+    const right = this.filterSubjectByCateName(curLeft);
+    this.setState({
+      searchName: e.value,
+      left,
+      right,
+      curLeft,
     });
   }
 
   render() {
     const tabs = ["本科专业", "专科专业"];
-    const left = ["法学", "经济学", "教育学", "管理学", "理学"];
-    const right = ["财政学类", "经济学类", "金融学类", "其他"];
-    const { activeTab } = this.state;
+    const { activeTab, left, right, curLeft } = this.state;
+    const { windowHeight } = wx.getSystemInfoSync();
+    const scrollViewHeight = windowHeight - 96;
     return (
       <View className="b-subject-lib">
-        <Search />
+        <Search
+          placeholder="搜索专业"
+          onConfirm={this.handleConfirm.bind(this)}
+        />
         <Tabbar
           tabs={tabs}
           activeTab={activeTab}
@@ -43,21 +133,32 @@ class Index extends Component {
           }}
         />
         <View className="main">
-          <ScrollView className="left">
+          <ScrollView
+            scrollY={true}
+            style={{ height: scrollViewHeight }}
+            className="left"
+          >
             <View className="info">
               {left.map((n, i) => (
-                <View className={`item ${i === 0 && "selected"}`}>
-                  <View className={`value`}>{n}</View>
+                <View
+                  className={`item ${n.subjectName === curLeft && "selected"}`}
+                  onClick={this.handleChangeSubject.bind(this, n.subjectName)}
+                >
+                  <View className={`value`}>{n.subjectName}</View>
                 </View>
               ))}
             </View>
           </ScrollView>
-          <ScrollView className="right">
-            <View className="b-bottom-line title">经济学</View>
+          <ScrollView
+            scrollY={true}
+            style={{ height: scrollViewHeight }}
+            className="right"
+          >
+            <View className="b-bottom-line title">{curLeft}</View>
             <View className="info">
               {right.map((n) => (
-                <View className="item">
-                  <View className="value">{n}</View>
+                <View className="item" onClick={this.goList.bind(this, n)}>
+                  <View className="value">{n.categoryName}</View>
                 </View>
               ))}
             </View>

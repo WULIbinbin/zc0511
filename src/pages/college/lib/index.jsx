@@ -14,7 +14,9 @@ class Index extends Component {
     isShowPicker: false,
     pickerRange: [],
     currentData: [],
-    currentPage: 1,
+    currentPage: 0,
+    params: {},
+    isGetList: false,
   };
   allData = [];
   pageSize = 50;
@@ -30,19 +32,68 @@ class Index extends Component {
 
   componentDidHide() {}
 
-  handlePicker(e) {
-    console.log(e);
+  handlePicker(data) {
+    if (!data) return;
+    const params = {};
+
+    if (data.hasOwnProperty("层次")) {
+      const level = data["层次"];
+      if (level.length > 0) {
+        if (level.includes("双一流")) {
+          params.tag1 = 1;
+        } else {
+          params.tag1 = 0;
+        }
+        if (level.includes("985")) {
+          params.tag2 = 1;
+        } else {
+          params.tag2 = 0;
+        }
+        if (level.includes("211")) {
+          params.tag3 = 1;
+        } else {
+          params.tag3 = 0;
+        }
+        if (level.includes("本科") && !level.includes("专科")) {
+          params.schoolType = "本科";
+        } else if (!level.includes("本科") && level.includes("专科")) {
+          params.schoolType = "专科";
+        } else {
+          params.schoolType = "";
+        }
+      }
+      if (data["地区"]) {
+        params.province = data["地区"].join(",");
+      }
+      if (data["类型"]) {
+        params.category = data["类型"].join(",");
+      }
+    } else if (data.hasOwnProperty("schoolName")) {
+      params.schoolName = data.schoolName;
+    }
+    console.log(params);
+    this.setState({ params }, () => {
+      this.getList();
+    });
   }
 
   getList() {
     Taro.showLoading();
-    GetCollegeList({}).then((res) => {
+    this.setState({
+      isGetList: false,
+    });
+    const { params } = this.state;
+    GetCollegeList(params).then((res) => {
       Taro.hideLoading();
       const { list } = res.data;
-      this.allData = list;
-      const currentData = list.slice(0, this.pageSize);
+      let currentData = [];
+      if (list.length > 0) {
+        this.allData = list;
+        currentData = list.slice(0, this.pageSize);
+      }
       this.setState({
         currentData,
+        isGetList: true,
       });
     });
   }
@@ -59,21 +110,27 @@ class Index extends Component {
     });
   }
 
+  goDetail(name) {
+    Taro.navigateTo({
+      url: `/pages/college/detail/index?name=${name}`,
+    });
+  }
+
   render() {
-    const { currentData, currentPage } = this.state;
+    const { currentData, isGetList } = this.state;
     const {
       Common: { province, category, level },
     } = this.props.store;
     return (
       <View className="b-lib-search">
         <View className="options">
-          <Search />
+          <Search name='schoolName' onConfirm={this.handlePicker.bind(this)} />
           <View className="pickers">
             <PickerSelect
               province={province}
               category={category}
               level={level}
-              onChange={this.handlePicker}
+              onChange={this.handlePicker.bind(this)}
             />
           </View>
         </View>
@@ -90,12 +147,16 @@ class Index extends Component {
                 name={n.college_name}
                 labels={(n.college_category && [n.college_category]) || []}
                 local={n.province}
+                goto={this.goDetail.bind(this, n.college_name)}
               />
             ))}
-            {currentPage > 1 && (
+            {currentData.length > this.pageSize && (
               <View className="loadmore" onClick={this.addListData.bind(this)}>
                 点击加载更多
               </View>
+            )}
+            {isGetList && currentData.length === 0 && (
+              <View className="nomore">没有查询到相关院校</View>
             )}
           </View>
         </ScrollView>

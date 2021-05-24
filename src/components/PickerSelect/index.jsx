@@ -61,12 +61,9 @@ function PickerSelect({
 
   const handleReset = useCallback(() => {
     const newMaps = [...maps];
-    pickers.forEach((n) => {
-      selected[n.label].clear();
-    });
-    setSelect(selected);
+    setSelect(defaultSelected);
     setMaps(newMaps);
-    setPicker(-1);
+    //setPicker(-1);
   });
 
   const handleSubmit = useCallback(() => {

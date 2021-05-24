@@ -1,9 +1,19 @@
 import { View, Image } from "@tarojs/components";
+import { useCallback } from "react";
 import "./index.scss";
 
-function CollegeItem({ name = "", labels = [], local = "", icon = "" }) {
+function CollegeItem({
+  name = "",
+  labels = [],
+  local = "",
+  icon = "",
+  goto = null,
+}) {
+  const goDetail = useCallback(() => {
+    goto && goto();
+  });
   return (
-    <View className="college-item">
+    <View className="college-item" onClick={goDetail}>
       <Image className="logo" src={icon}></Image>
       <View className="info">
         <View className="name">{name}</View>

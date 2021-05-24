@@ -65,6 +65,7 @@ const common = observable({
     "985",
     "211",
   ],
+  subtype: ["综合", "文科", "理科"],
 });
 
 export default common;

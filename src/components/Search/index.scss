@@ -1,19 +1,24 @@
-@import '../../styles/mixin.scss';
+@import "../../styles/mixin.scss";
 
-.b-search{
-  margin:17px 25px 0;
-  height: 80px;
-  background: #F9F9F9;
-  border-radius: 40px;
-  padding:0 50px;
+.b-search {
+  width: 100%;
   box-sizing: border-box;
-  @include flex-row-center-between();
-  .icon{
-    height: 38px;
-    width: 38px;
-    margin-right:11px;
-  }
-  .input{
-    flex:1;
+  padding: 0 25px;
+  margin: 17px 0 0;
+  &-main {
+    height: 80px;
+    background: #f9f9f9;
+    border-radius: 40px;
+    padding: 0 50px;
+    box-sizing: border-box;
+    @include flex-row-center-between();
+    .icon {
+      height: 38px;
+      width: 38px;
+      margin-right: 11px;
+    }
+    .input {
+      flex: 1;
+    }
   }
 }
