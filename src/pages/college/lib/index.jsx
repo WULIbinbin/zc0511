@@ -60,7 +60,7 @@ class Index extends Component {
           scrollY
           className="result"
           onScrollToLower={this.getList.bind(this)}
-          lowerThreshold={200}
+          lowerThreshold={50}
         >
           {list.map((n) => (
             <CollegeItem
