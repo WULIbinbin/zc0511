@@ -1,122 +1,147 @@
-import { useCallback, useEffect, useState } from 'react'
-import { View, Image, ScrollView } from '@tarojs/components'
-import PickerLabel from '../PickerLabel/index'
-import './index.scss'
+import { useCallback, useEffect, useState } from "react";
+import { View, Image, ScrollView } from "@tarojs/components";
+import PickerLabel from "../PickerLabel/index";
+import "./index.scss";
 
-import SelectIcon from '../../static/image/select.png'
+import SelectIcon from "../../static/image/select.png";
 
-function PickerSelect({ placeHolder = '请选择', onChange = null }) {
-  const mapItems = new Array(50).fill(null).map((item, i) => {
-    return {
-      name: '北京' + i,
-      value: '北京',
-      selected: false
-    }
-  })
+function PickerSelect({
+  placeHolder = "请选择",
+  province,
+  level,
+  category,
+  onChange = null,
+}) {
   const pickers = [
     {
-      label: '地区',
-      range: mapItems
+      label: "地区",
+      range: province,
     },
     {
-      label: '层次',
-      range: []
+      label: "层次",
+      range: level,
     },
     {
-      label: '类型',
-      range: []
+      label: "类型",
+      range: category,
     },
-  ]
-  const [selected, setSelect] = useState(new Set())
-  const [currentShow, setPicker] = useState(-1)
-  const [maps, setMaps] = useState([])
+  ];
+  const defaultSelected = {
+    地区: new Set(),
+    层次: new Set(),
+    类型: new Set(),
+  };
+  const [selected, setSelect] = useState(defaultSelected);
+  const [currentShow, setPicker] = useState(-1);
+  //刷新picker数组
+  const [maps, setMaps] = useState([]);
+  //当前选中的picker数据
 
   const showPicker = (whichShow) => {
     if (whichShow === currentShow) {
-      setPicker(-1)
-      return
+      setPicker(-1);
+      return;
     }
-    setPicker(whichShow)
-    setMaps(pickers[whichShow].range)
-    onChange && onChange()
-  }
+    setPicker(whichShow);
+    setMaps(pickers[whichShow].range);
+    onChange && onChange();
+  };
 
   const handleSelect = (sel) => {
-    const newMaps = [...maps]
-    if (!selected.has(sel)) {
-      selected.add(sel)
-      newMaps[sel].selected = true
+    const newMaps = [...maps];
+    const curPicker = pickers[currentShow].label;
+    if (!selected[curPicker].has(sel)) {
+      selected[curPicker].add(sel);
     } else {
-      selected.delete(sel)
-      newMaps[sel].selected = false
+      selected[curPicker].delete(sel);
     }
-    setSelect(selected)
-    setMaps(newMaps)
-  }
+    setSelect(selected);
+    setMaps(newMaps);
+  };
 
   const handleReset = useCallback(() => {
-    const newMaps = [...maps].map(item => {
-      return {
-        ...item,
-        selected: false
-      }
-    })
-    selected.clear()
-    setSelect(selected)
-    setMaps(newMaps)
-  })
+    const newMaps = [...maps];
+    pickers.forEach((n) => {
+      selected[n.label].clear();
+    });
+    setSelect(selected);
+    setMaps(newMaps);
+    setPicker(-1);
+  });
 
   const handleSubmit = useCallback(() => {
-    const result = maps.filter(m => !!m.selected)
-    onChange && onChange(result)
-  })
+    console.log(selected);
+    const mapSelected = () => {
+      const result = {};
+      Object.keys(selected).forEach((item) => {
+        const ch = [];
+        selected[item].forEach((child) => {
+          ch.push(child);
+        });
+        result[item] = ch;
+      });
+      return result;
+    };
+    const selectedResult = mapSelected();
+    console.log(selectedResult);
+    setPicker(-1);
+    onChange && onChange(selectedResult);
+  });
 
-  const { screenWidth } = wx.getSystemInfoSync()
-  const selectViewStyle = { width: screenWidth + 'PX' }
+  const { screenWidth } = wx.getSystemInfoSync();
+  const selectViewStyle = { width: screenWidth + "PX" };
   return (
-    <View className='b-picker-item'>
-      <View className='picker-group'>
-        {
-          pickers.map((p, pdx) => (
-            <PickerLabel 
-              value={p.label}
-              onChange={()=>{
-                showPicker(pdx)
-              }}
-            />
-          ))
-        }
+    <View className="b-picker-item">
+      <View className="picker-group">
+        {pickers.map((p, pdx) => (
+          <PickerLabel
+            value={p.label}
+            onChange={() => {
+              showPicker(pdx);
+            }}
+          />
+        ))}
       </View>
-      {
-        currentShow >= 0 &&
-        <View className='select-view' style={selectViewStyle}>
-          <View className='select-content'>
-            <ScrollView scrollY className='select-wrap'>
-              <View className='select-items'>
-                {
-                  maps.map((item, idx) => (
-                    <View
-                      className={`item ${item.selected && 'selected'}`}
-                      onClick={() => {
-                        handleSelect(idx)
-                      }}
-                    >{item.name}</View>
-                  ))
-                }
+      {currentShow >= 0 && (
+        <View className="select-view" style={selectViewStyle}>
+          <View className="select-content">
+            <ScrollView scrollY className="select-wrap">
+              <View className="select-items">
+                {maps.map((item, idx) => (
+                  <View
+                    className={`item ${
+                      selected[pickers[currentShow].label].has(item) &&
+                      "selected"
+                    }`}
+                    onClick={() => {
+                      handleSelect(item);
+                    }}
+                  >
+                    {item}
+                  </View>
+                ))}
               </View>
             </ScrollView>
-            <View className='btn-view'>
-              <View className='reset btn' onClick={handleReset}>重置</View>
-              <View className='submit btn' onClick={handleSubmit}>确定</View>
+            <View className="btn-view">
+              <View className="reset btn" onClick={handleReset}>
+                重置
+              </View>
+              <View className="submit btn" onClick={handleSubmit}>
+                确定
+              </View>
             </View>
           </View>
-          <View className='select-mark' onClick={() => {
-            setPicker(-1)
-          }}></View>
+          <View
+            className="select-mark"
+            // onClick={() => {
+            //   setPicker(-1);
+            //   setSelect(defaultSelected)
+            // }}
+          ></View>
         </View>
-      }
+      )}
     </View>
-  )
+  );
 }
 
-export default PickerSelect
+export default PickerSelect;
