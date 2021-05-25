@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { View, Text, Image } from "@tarojs/components";
+import Taro from "@tarojs/taro";
 import { observer, inject } from "mobx-react";
 import { PageView } from "../../../components/index";
 import "./index.scss";
@@ -28,6 +29,12 @@ class Index extends Component {
     this.setState({
       showDialog,
     });
+  }
+
+  goExam(){
+    Taro.navigateTo({
+      url:'/pages/evaluation/exam/index'
+    })
   }
 
   render() {
@@ -75,7 +82,7 @@ class Index extends Component {
                 </View>
                 <View
                   className="b-eva-readme-dialog-btn"
-                  onClick={this.handleToggle.bind(this, true)}
+                  onClick={this.goExam.bind(this)}
                 >
                   开始测评
                 </View>

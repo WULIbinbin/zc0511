@@ -1,0 +1,127 @@
+@import "../../../styles/mixin.scss";
+
+.b-income-page {
+  position: relative;
+  .b-income {
+    &-bg {
+      //width: 100%;
+      height: 550px;
+      background: #ea4438;
+      border-radius: 0 0 260px 260px;
+      position: absolute;
+      top: 0;
+      left: -100px;
+      right: -100px;
+      z-index: 0;
+    }
+    &-topic {
+      @include flex-column-center();
+      position: relative;
+      z-index: 1;
+      &-title {
+        @include flex-row-center-center();
+        font-size: 30px;
+        font-weight: bold;
+        color: #f9f9f9;
+      }
+      &-desc {
+        font-size: 20px;
+        color: #ffffff;
+        margin: 50px 0 20px;
+      }
+      &-money {
+        font-size: 60px;
+        line-height: 60px;
+        font-weight: bold;
+        color: #ffffff;
+      }
+      &-withdraw {
+        @include flex-row-center-center();
+        width: 180px;
+        height: 50px;
+        background: #f9f9f9;
+        border-radius: 25px;
+        font-size: 28px;
+        color: #ea4438;
+        margin: 50px 0;
+      }
+    }
+    &-middle {
+      @include flex-row-center-between();
+      @include shadow-radius();
+      position: relative;
+      z-index: 1;
+      margin: 0 25px;
+      height: 177px;
+      background-color: $white-color;
+      &-item {
+        @include flex-column-center-between();
+        flex: 1;
+        height: 80px;
+        &:last-of-type {
+          position: relative;
+          &::before {
+            @include column-line();
+            left: 0;
+            height: 80px;
+            width: 2px;
+          }
+        }
+      }
+      &-money {
+        font-size: 42px;
+        font-weight: bold;
+        color: #ea4438;
+        margin-bottom: 10px;
+        line-height: 42px;
+      }
+      &-desc {
+        font-size: 26px;
+        color: #333333;
+      }
+    }
+    &-bottom {
+      @include flex-column();
+      @include shadow-radius();
+      position: relative;
+      z-index: 1;
+      margin: 25px 25px 120px;
+      background-color: $white-color;
+      &-list {
+        @include flex-column();
+        width: 100%;
+      }
+      &-item {
+        @include flex-row-center();
+        padding: 30px 16px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      &-avatar {
+        height: 72px;
+        width: 72px;
+        border-radius: 50%;
+        margin-right: 8px;
+        background-color: #f7f7f7;
+      }
+      &-info {
+        flex: 1;
+      }
+      &-name {
+        font-size: 28px;
+        font-weight: bold;
+        line-height: 28px;
+        color: #333333;
+        margin-bottom: 6px;
+      }
+      &-date {
+        font-size: 24px;
+        color: #666666;
+      }
+      &-money {
+        font-size: 26px;
+        color: #ea4438;
+      }
+    }
+  }
+}

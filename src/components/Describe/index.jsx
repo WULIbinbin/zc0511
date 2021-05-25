@@ -6,7 +6,7 @@ function Describe({ title = '', children = null }) {
     <View className='b-describe'>
       <View className='title'>{title}</View>
       <View className='content'>
-        <Text decode>{children}</Text>
+        <View>{children}</View>
       </View>
     </View>
   )

@@ -12,16 +12,26 @@ export default {
     "pages/choose/college/index",
     "pages/score/index",
     "pages/guide/index",
-    "pages/user/record/index",
   ],
   subpackages: [
     {
       root: "pages/volunteer/",
-      pages: ["tutor/index", "prefer/index", "review/index", "online/index","batch/index","batchInfo/index"],
+      pages: [
+        "tutor/index",
+        "prefer/index",
+        "review/index",
+        "online/index",
+        "batch/index",
+        "batchInfo/index",
+      ],
     },
     {
       root: "pages/evaluation/",
       pages: ["readme/index", "exam/index"],
+    },
+    {
+      root: "pages/user/",
+      pages: ["income/index", "record/index"],
     },
   ],
   tabBar: {

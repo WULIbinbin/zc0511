@@ -23,5 +23,8 @@
         color: #666666;
       }
     }
+    .col{
+      @include flex-column();
+    }
   }
 }
