@@ -35,23 +35,26 @@ class Index extends Component {
   componentDidHide() {}
 
   testPay() {
-    WxPay().then((res) => {
-      const {nonceStr,sign,prepayId,mchId} = res.data;
-      //String(Math.ceil(new Date().getTime()/1000))
-      const payParams = {
-        timeStamp: mchId,
-        nonceStr,
-        package:`prepay_id=${prepayId}`,
-        signType: "MD5",
-        paySign: sign,
-      }
-      console.log(payParams)
-      return Taro.requestPayment(payParams);
-    }).then(res=>{
-      console.log(res)
-    }).catch(err=>{
-      console.log(err)
-    });
+    WxPay()
+      .then((res) => {
+        const { nonceStr, paySign, timeStamp } = res.data;
+        //String(Math.ceil(new Date().getTime()/1000))
+        const payParams = {
+          timeStamp,
+          nonceStr,
+          package:res.data.package,
+          signType: "",
+          paySign,
+        };
+        console.log(payParams);
+        return Taro.requestPayment(payParams);
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   render() {
@@ -61,6 +64,11 @@ class Index extends Component {
       <PageView bgColor="#f7f7f7">
         <View className="b-home">
           <Button onClick={this.testPay.bind(this)}>测试支付</Button>
+          <Button onClick={()=>{
+            Taro.navigateTo({
+              url:'/pages/login/index'
+            })
+          }}>重新登录</Button>
           <HomeBanner banner={banner} />
           <HomeNavigator items={items} />
           <HomeTitle title="人工智能指导" />
