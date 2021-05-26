@@ -5,12 +5,12 @@ export default {
     "pages/mine/index",
     "pages/college/lib/index",
     "pages/college/detail/index",
+    "pages/college/score/index",
     "pages/subject/lib/index",
     "pages/subject/list/index",
     "pages/subject/detail/index",
     "pages/choose/index/index",
     "pages/choose/college/index",
-    "pages/score/index",
     "pages/guide/index",
   ],
   subpackages: [
@@ -55,8 +55,9 @@ export default {
   },
   window: {
     backgroundTextStyle: "light",
-    navigationBarBackgroundColor: "#fff",
-    navigationBarTitleText: "WeChat",
+    navigationBarBackgroundColor: "#ffffff",
     navigationBarTextStyle: "black",
+    // backgroundColor: "#f7f7f7",
+    // navigationBarTitleText: "",
   },
 };

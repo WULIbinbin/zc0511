@@ -8,23 +8,24 @@ import {
   HomeServer,
   PageView,
 } from "../../components/index";
+import Taro from "@tarojs/taro";
 import { GetBanner } from "../../request/apis/home";
+import { WxPay } from "../../request/apis/account";
 import "./index.scss";
 
 @inject("store")
 @observer
 class Index extends Component {
-
   state = {
-    banner:[]
-  }
+    banner: [],
+  };
 
   componentWillMount() {}
 
   componentDidMount() {
-    GetBanner().then(res=>{
-      this.setState({banner:res.data})
-    })
+    GetBanner().then((res) => {
+      this.setState({ banner: res.data });
+    });
   }
 
   componentWillUnmount() {}
@@ -33,13 +34,31 @@ class Index extends Component {
 
   componentDidHide() {}
 
+  testPay() {
+    WxPay().then((res) => {
+      const {} = res.data;
+      return Taro.requestPayment({
+        timeStamp: "",
+        nonceStr: "",
+        package: "",
+        signType: "MD5",
+        paySign: "",
+      });
+    }).then(res=>{
+      console.log(res)
+    }).catch(err=>{
+      console.log(err)
+    });
+  }
+
   render() {
     const items = new Array(4).fill({});
-    const {banner} = this.state
+    const { banner } = this.state;
     return (
       <PageView bgColor="#f7f7f7">
         <View className="b-home">
-          <HomeBanner banner={banner}/>
+          <Button onClick={this.testPay.bind(this)}>测试支付</Button>
+          <HomeBanner banner={banner} />
           <HomeNavigator items={items} />
           <HomeTitle title="人工智能指导" />
           <Image className="b-home-poster"></Image>

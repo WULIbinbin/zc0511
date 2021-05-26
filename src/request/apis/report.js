@@ -5,3 +5,11 @@ export function GetQuestion() {
     url: `/question.json`,
   });
 }
+
+export function SubQuestion(data={}) {
+  return Request({
+    url: `/student/saveHolland`,
+    method:'POST',
+    data
+  });
+}

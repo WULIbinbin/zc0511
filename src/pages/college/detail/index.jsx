@@ -7,6 +7,7 @@ import {
   Picker,
   Video,
 } from "@tarojs/components";
+import Taro from '@tarojs/taro'
 import { observer, inject } from "mobx-react";
 import { PickerLabel, Table, Tabbar } from "../../../components/index";
 import {
@@ -57,7 +58,9 @@ class Index extends Component {
     const {
       options: { name },
     } = getCurrentPages()[getCurrentPages().length - 1];
+    Taro.showLoading()
     GetCollegeDetail(name).then((res) => {
+      Taro.hideLoading()
       let { CollegeTags } = res.data;
       if (!!CollegeTags) {
         CollegeTags = CollegeTags.substring(1, CollegeTags.length - 1)
@@ -85,7 +88,6 @@ class Index extends Component {
   componentDidHide() {}
 
   handleTabChange(activeTab) {
-    console.log(activeTab);
     this.setState({
       activeTab,
     });

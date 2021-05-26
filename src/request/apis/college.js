@@ -39,3 +39,11 @@ export function GetSubjectDetail(code = "") {
     url: `/major/getMajorInfo/${code}`,
   });
 }
+
+export function SearchScoreLine(data={}) {
+  return Request({
+    url: `/score/search`,
+    method:'GET',
+    data
+  });
+}

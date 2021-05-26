@@ -4,7 +4,7 @@ import { GetSid, PhoneRegister, GetToken } from "../request/apis/account";
 
 const account = observable({
   userInfo: {},
-  loginInfo: { phoneNumber: "", access_token: "", token_type: "" },
+  loginInfo: { phoneNumber: "", openId: "", access_token: "", token_type: "" },
   WxLogin({ encryptedData, iv, errMsg }) {
     return this.CheckCode()
       .then((code) => {
@@ -12,19 +12,29 @@ const account = observable({
           code,
         }).then((res) => {
           console.log("wxlogin成功====》", res);
-          const { sessionKey } = res;
+          const { sessionKey, openid } = res.data;
+          const openId = openid;
           return PhoneRegister({
             sessionKey,
             encryptedData,
             iv,
-          }).then((res) => {
-            console.log("获取手机号成功====》", res);
-            this.loginInfo.phoneNumber = res.phoneNumber;
-            return GetToken(res.phoneNumber).then((res) => {
-              console.log(res);
-              wx.setStorageSync("token", res.data);
-            });
-          }).catch(err=>Promise.reject(err));
+            openId,
+          })
+            .then((res) => {
+              console.log("获取手机号成功====》", res);
+              const { phoneNumber } = res.data;
+              return GetToken(phoneNumber).then((res) => {
+                console.log(res);
+                const loginInfo = {
+                  ...res.data,
+                  openId,
+                  phoneNumber,
+                };
+                this.loginInfo = loginInfo;
+                wx.setStorageSync("token", loginInfo);
+              });
+            })
+            .catch((err) => Promise.reject(err));
         });
       })
       .catch((err) => {

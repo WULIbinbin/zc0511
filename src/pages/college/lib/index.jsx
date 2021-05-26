@@ -124,7 +124,7 @@ class Index extends Component {
     return (
       <View className="b-lib-search">
         <View className="options">
-          <Search name='schoolName' onConfirm={this.handlePicker.bind(this)} />
+          <Search name="schoolName" onConfirm={this.handlePicker.bind(this)} />
           <View className="pickers">
             <PickerSelect
               province={province}
@@ -141,15 +141,21 @@ class Index extends Component {
           lowerThreshold={100}
         >
           <View>
-            {currentData.map((n) => (
-              <CollegeItem
-                icon={n.cover_image}
-                name={n.college_name}
-                labels={(n.college_category && [n.college_category]) || []}
-                local={n.province}
-                goto={this.goDetail.bind(this, n.college_name)}
-              />
-            ))}
+            {currentData.map((n) => {
+              const labels = (n.college_category && [n.college_category]) || [];
+              !!n.tag1 && labels.push("双一流");
+              !!n.tag2 && labels.push("985");
+              !!n.tag3 && labels.push("211");
+              return (
+                <CollegeItem
+                  icon={n.cover_image}
+                  name={n.college_name}
+                  labels={labels}
+                  local={n.province}
+                  goto={this.goDetail.bind(this, n.college_name)}
+                />
+              );
+            })}
             {currentData.length > this.pageSize && (
               <View className="loadmore" onClick={this.addListData.bind(this)}>
                 点击加载更多

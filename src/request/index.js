@@ -55,6 +55,7 @@ export function Request({ data = {}, url = "", method = "GET" }) {
       }
     })
     .catch((error) => {
+      Taro.hideLoading()
       console.warn("服务器异常===============》》》", error);
       return Promise.reject(error);
     });

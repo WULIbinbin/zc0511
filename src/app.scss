@@ -36,7 +36,7 @@ page {
   }
 }
 
-.b-sub-title{
+.b-sub-title {
   position: relative;
   &::before {
     @include column-line();
@@ -88,7 +88,7 @@ page {
       @include flex-row-center();
       flex-wrap: wrap;
       .label {
-        margin-top:10px;
+        margin-top: 10px;
         background: #f5f5f5;
         padding: 8px 10px;
         font-size: 24px;
@@ -168,7 +168,8 @@ page {
   padding: 30px;
   width: 420px;
   font-size: 28px;
-  height: 28px;
+  height: 1.4rem;
+  line-height: 1.4rem;
   color: #666666;
   background: #f9f9f9;
 }

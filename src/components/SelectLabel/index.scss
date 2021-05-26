@@ -2,6 +2,9 @@
 
 .b-select-view {
   @include flex-row-center();
+  & + & {
+    margin-left: 20px;
+  }
   .b-select-label {
     font-size: 28px;
     color: #333;
@@ -16,6 +19,12 @@
       font-size: 28px;
       color: #666666;
       margin-right: 5px;
+      height: 1.4rem;
+      line-height: 1.4rem;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
     }
     .b-select-icon {
       width: 20px;

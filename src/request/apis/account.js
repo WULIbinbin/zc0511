@@ -24,3 +24,11 @@ export function GetToken(phoneNum) {
     method:'POST'
   })
 }
+
+export function WxPay() {
+  return Request({
+    url: `/wx/miniprogram/pay`,
+    data:{},
+    method:'POST'
+  })
+}

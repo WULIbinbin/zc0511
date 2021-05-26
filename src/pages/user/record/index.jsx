@@ -4,13 +4,23 @@ import { observer, inject } from "mobx-react";
 import { SelectLabel, FormItem } from "../../../components/index";
 import "./index.scss";
 
-import SelectIcon from "../../../static/image/select.png";
+import MaleNor from "../../../static/image/male-nor.png";
+import MaleSel from "../../../static/image/male.png";
+import FemaleNor from "../../../static/image/female-nor.png";
+import femaleSel from "../../../static/image/female.png";
 
 @inject("store")
 @observer
 class Index extends Component {
   state = {
     checked: "个人信息",
+    formData: {
+      province: "",
+      name: "",
+      sex: "",
+      score: "",
+      subList: [],
+    },
   };
 
   componentWillMount() {}
@@ -29,9 +39,24 @@ class Index extends Component {
     });
   }
 
+  handleChangeProv(e) {
+    console.log(e);
+    const { Common } = this.props.store;
+    const { formData } = this.state;
+    formData.province = e.detail.value.join("-"); //Common.province[e.detail.value];
+    this.setState({
+      formData,
+    });
+  }
+
+  handleInputName(e) {
+    const { formData } = this.state;
+    formData.name = e.detail.value;
+    this.setState({ formData });
+  }
+
   render() {
     const step = ["个人信息", "成绩信息"];
-    const { checked } = this.state;
     const sex = [
       {
         text: "男",
@@ -64,30 +89,32 @@ class Index extends Component {
     ];
     const scoreItem = [
       {
-        label:'语文：',
-        name:'语文',
+        label: "语文：",
+        name: "语文",
       },
       {
-        label:'数学：',
-        name:'数学',
+        label: "数学：",
+        name: "数学",
       },
       {
-        label:'英语：',
-        name:'英语',
+        label: "英语：",
+        name: "英语",
       },
       {
-        label:'物理：',
-        name:'物理',
+        label: "物理：",
+        name: "物理",
       },
       {
-        label:'政治：',
-        name:'政治',
+        label: "政治：",
+        name: "政治",
       },
       {
-        label:'生物：',
-        name:'生物',
+        label: "生物：",
+        name: "生物",
       },
     ];
+    const { Common } = this.props.store;
+    const { checked, formData } = this.state;
     return (
       <View className="b-user-record">
         <View className="step-view">
@@ -105,21 +132,48 @@ class Index extends Component {
           <View className="step-content">
             {checked === "个人信息" && (
               <View className="main">
-                <FormItem label="省份：">
-                  <Picker>
-                    <SelectLabel width={200} placeHolder="北京" />
-                  </Picker>
-                  <Picker style="margin-left:20rpx;">
-                    <SelectLabel width={200} placeHolder="丰台区" />
+                <FormItem contentWidth={400} label="地区：">
+                  <Picker
+                    mode="region"
+                    //range={Common.province}
+                    value={formData.province}
+                    onChange={this.handleChangeProv.bind(this)}
+                  >
+                    <View className="step-select-city">
+                      <SelectLabel
+                        placeHolder="请选择地区"
+                        width={400}
+                        value={formData.province}
+                      />
+                    </View>
                   </Picker>
                 </FormItem>
                 <FormItem label="姓名：">
-                  <Input className="b-form-input" value="张三"></Input>
+                  <Input
+                    className="b-form-input"
+                    placeholder="输入您的姓名"
+                    value={formData.name}
+                    onInput={this.handleInputName.bind(this)}
+                  ></Input>
                 </FormItem>
                 <FormItem label="性别：">
                   {sex.map((n) => (
                     <View className="step-select-item">
-                      <View className="step-select-item-text">{n.text}</View>
+                      <View className="step-select-item-text">
+                        {n.text === "男" && (
+                          <Image
+                            className="step-select-item-sex"
+                            src={MaleNor}
+                          ></Image>
+                        )}
+                        {n.text === "女" && (
+                          <Image
+                            className="step-select-item-sex"
+                            src={FemaleNor}
+                          ></Image>
+                        )}
+                        {n.text}
+                      </View>
                     </View>
                   ))}
                 </FormItem>

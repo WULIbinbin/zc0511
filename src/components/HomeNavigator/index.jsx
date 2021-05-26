@@ -29,7 +29,7 @@ function HomeNavigator() {
     {
       icon:Tubiao4,
       text:'分数线查询',
-      url:'/pages/score/index'
+      url:'/pages/college/score/index'
     },
   ]
   const handleTo = (url)=>{

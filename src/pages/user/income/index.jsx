@@ -10,7 +10,11 @@ const tabs = ["推广明细", "分成明细"];
 @inject("store")
 @observer
 class Index extends Component {
-  componentWillMount() {}
+  componentWillMount() {
+    Taro.setNavigationBarTitle({
+      title:'2333'
+    })
+  }
 
   componentDidMount() {}
 
