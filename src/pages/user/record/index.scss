@@ -42,7 +42,7 @@
         @include flex-column();
         padding: 50px 0 50px 50px;
         .step-select {
-          &-city{
+          &-city {
             @include flex-row-center();
           }
           &-item {
@@ -55,13 +55,13 @@
             &:nth-of-type(even) {
               margin-right: 0;
             }
-            &:nth-of-type(n+3) {
+            &:nth-of-type(n + 3) {
               margin-top: 30px;
             }
-            &-sex{
+            &-sex {
               height: 20px;
               width: 20px;
-              margin-right:10px;
+              margin-right: 10px;
             }
             &-text {
               @include flex-row-center-center();
@@ -72,7 +72,9 @@
             }
             &.checked {
               background-color: rgba(234, 68, 56, 0.2);
-              color: $primary-color;
+              .step-select-item-text {
+                color: $primary-color;
+              }
             }
           }
         }

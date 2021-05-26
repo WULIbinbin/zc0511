@@ -1,13 +1,14 @@
 import { Component } from "react";
 import { View, Image, Picker, Input } from "@tarojs/components";
 import { observer, inject } from "mobx-react";
+import Taro from "@tarojs/taro";
 import { SelectLabel, FormItem } from "../../../components/index";
 import "./index.scss";
 
 import MaleNor from "../../../static/image/male-nor.png";
 import MaleSel from "../../../static/image/male.png";
 import FemaleNor from "../../../static/image/female-nor.png";
-import femaleSel from "../../../static/image/female.png";
+import FemaleSel from "../../../static/image/female.png";
 
 @inject("store")
 @observer
@@ -16,6 +17,8 @@ class Index extends Component {
     checked: "个人信息",
     formData: {
       province: "",
+      city: "",
+      district: "",
       name: "",
       sex: "",
       score: "",
@@ -34,19 +37,43 @@ class Index extends Component {
   componentDidHide() {}
 
   handleStepChange(checked) {
+    if (checked === "成绩信息" && !this.isCanNext()) {
+      Taro.showToast({
+        title: "请完善个人信息",
+        icon: "none",
+      });
+      return;
+    }
     this.setState({
       checked,
     });
   }
 
+  getSubjectData() {
+    const { Subject } = this.props.store;
+    const {
+      formData: { province },
+    } = this.state;
+    Subject.setCurProv(province);
+  }
+
   handleChangeProv(e) {
-    console.log(e);
-    const { Common } = this.props.store;
     const { formData } = this.state;
-    formData.province = e.detail.value.join("-"); //Common.province[e.detail.value];
-    this.setState({
-      formData,
-    });
+    const [province, city, district] = e.detail.value;
+    Object.assign(formData, { province, city, district });
+    this.setState(
+      {
+        formData,
+      },
+      () => {
+        this.getSubjectData();
+      }
+    );
+  }
+
+  handleSelectSubject(e) {
+    const { Subject } = this.props.store;
+    Subject.selectSubject(e);
   }
 
   handleInputName(e) {
@@ -54,37 +81,61 @@ class Index extends Component {
     formData.name = e.detail.value;
     this.setState({ formData });
   }
-
+  stepItem(subName, cur) {
+    const {
+      Subject: { subjectFilter, curSubjectList },
+    } = this.props.store;
+    return (
+      <View
+        className={`step-select-item ${
+          curSubjectList.includes(subName) && "checked"
+        }`}
+        onClick={this.handleSelectSubject.bind(this, {
+          type: subjectFilter.type,
+          cur,
+          subName,
+        })}
+      >
+        <View className="step-select-item-text">{subName}</View>
+      </View>
+    );
+  }
+  handleSelectSex(item) {
+    const { formData } = this.state;
+    formData.sex = item.text;
+    this.setState({ formData });
+  }
+  isCanNext() {
+    const {
+      formData: { province, city, district, name, sex },
+    } = this.state;
+    const {
+      Subject: { curSubjectList, subjectFilter },
+    } = this.props.store;
+    if (
+      [province, city, district, name, sex].findIndex((f) => f === "") === -1 &&
+      curSubjectList.length === subjectFilter.mustSelect
+    ) {
+      return true;
+    }
+    return false;
+  }
+  handleNext() {
+    this.handleStepChange("成绩信息");
+    console.log(2333);
+  }
   render() {
     const step = ["个人信息", "成绩信息"];
-    const sex = [
+    const sexArr = [
       {
         text: "男",
+        sel: MaleSel,
+        nor: MaleNor,
       },
       {
         text: "女",
-      },
-    ];
-    const first = [
-      {
-        text: "物理",
-      },
-      {
-        text: "历史",
-      },
-    ];
-    const second = [
-      {
-        text: "化学",
-      },
-      {
-        text: "生物",
-      },
-      {
-        text: "地理",
-      },
-      {
-        text: "政治",
+        sel: FemaleSel,
+        nor: FemaleNor,
       },
     ];
     const scoreItem = [
@@ -113,8 +164,15 @@ class Index extends Component {
         name: "生物",
       },
     ];
-    const { Common } = this.props.store;
-    const { checked, formData } = this.state;
+    const {
+      Subject: { subjectFilter },
+    } = this.props.store;
+    const {
+      checked,
+      formData,
+      formData: { province, city, district, sex },
+    } = this.state;
+    const region = (province && [province, city, district].join("-")) || "";
     return (
       <View className="b-user-record">
         <View className="step-view">
@@ -135,15 +193,14 @@ class Index extends Component {
                 <FormItem contentWidth={400} label="地区：">
                   <Picker
                     mode="region"
-                    //range={Common.province}
-                    value={formData.province}
+                    value={region}
                     onChange={this.handleChangeProv.bind(this)}
                   >
                     <View className="step-select-city">
                       <SelectLabel
                         placeHolder="请选择地区"
                         width={400}
-                        value={formData.province}
+                        value={region}
                       />
                     </View>
                   </Picker>
@@ -157,40 +214,55 @@ class Index extends Component {
                   ></Input>
                 </FormItem>
                 <FormItem label="性别：">
-                  {sex.map((n) => (
-                    <View className="step-select-item">
-                      <View className="step-select-item-text">
-                        {n.text === "男" && (
-                          <Image
-                            className="step-select-item-sex"
-                            src={MaleNor}
-                          ></Image>
-                        )}
-                        {n.text === "女" && (
-                          <Image
-                            className="step-select-item-sex"
-                            src={FemaleNor}
-                          ></Image>
-                        )}
+                  {sexArr.map((n, i) => (
+                    <View
+                      className={`step-select-item ${
+                        sex === n.text && "checked"
+                      }`}
+                      onClick={this.handleSelectSex.bind(this, n)}
+                    >
+                      <View className={`step-select-item-text`}>
+                        <Image
+                          className="step-select-item-sex"
+                          src={sex === n.text ? n.sel : n.nor}
+                        ></Image>
                         {n.text}
                       </View>
                     </View>
                   ))}
                 </FormItem>
-                <FormItem label="首选科目：">
-                  {first.map((n) => (
-                    <View className="step-select-item">
-                      <View className="step-select-item-text">{n.text}</View>
-                    </View>
-                  ))}
-                </FormItem>
-                <FormItem label="次选科目：">
-                  {second.map((n) => (
-                    <View className="step-select-item">
-                      <View className="step-select-item-text">{n.text}</View>
-                    </View>
-                  ))}
-                </FormItem>
+                {subjectFilter.type === "TYPE_ALL_IN_3" && (
+                  <View>
+                    <FormItem label="组合选科：">
+                      {subjectFilter.sub1.map((subName) =>
+                        this.stepItem(subName, "sub1")
+                      )}
+                    </FormItem>
+                  </View>
+                )}
+                {subjectFilter.type === "TYPE_2_AND_4" && (
+                  <View>
+                    <FormItem label="首选科目：">
+                      {subjectFilter.sub1.map((subName) =>
+                        this.stepItem(subName, "sub1")
+                      )}
+                    </FormItem>
+                    <FormItem label="次选科目：">
+                      {subjectFilter.sub2.map((subName) =>
+                        this.stepItem(subName, "sub2")
+                      )}
+                    </FormItem>
+                  </View>
+                )}
+                {subjectFilter.type === "ZH_2_IN_1" && (
+                  <View>
+                    <FormItem label="高考选科：">
+                      {subjectFilter.sub1.map((subName) =>
+                        this.stepItem(subName, "sub1")
+                      )}
+                    </FormItem>
+                  </View>
+                )}
               </View>
             )}
             {checked === "成绩信息" && (
@@ -205,8 +277,19 @@ class Index extends Component {
           </View>
         </View>
         {checked === "个人信息" && (
-          <View className={`btn`}>
-            <View className="text">下一步</View>
+          <View>
+            {!this.isCanNext() ? (
+              <View className={`btn`}>
+                <View className="text">下一步</View>
+              </View>
+            ) : (
+              <View
+                className={`btn can-click`}
+                onClick={this.handleNext.bind(this)}
+              >
+                <View className="text">下一步</View>
+              </View>
+            )}
           </View>
         )}
         {checked === "成绩信息" && (
