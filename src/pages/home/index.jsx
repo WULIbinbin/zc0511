@@ -37,13 +37,13 @@ class Index extends Component {
   testPay() {
     WxPay()
       .then((res) => {
-        const { nonceStr, paySign, timeStamp } = res.data;
+        const { nonceStr, paySign, packageValue,signType,timeStamp } = res.data;
         //String(Math.ceil(new Date().getTime()/1000))
         const payParams = {
           timeStamp,
           nonceStr,
-          package:res.data.package,
-          signType: "",
+          package:packageValue,
+          signType,
           paySign,
         };
         console.log(payParams);
