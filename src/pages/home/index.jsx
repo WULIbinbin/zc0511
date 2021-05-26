@@ -36,14 +36,17 @@ class Index extends Component {
 
   testPay() {
     WxPay().then((res) => {
-      const {} = res.data;
-      return Taro.requestPayment({
-        timeStamp: "",
-        nonceStr: "",
-        package: "",
+      const {nonceStr,sign,prepayId,mchId} = res.data;
+      //String(Math.ceil(new Date().getTime()/1000))
+      const payParams = {
+        timeStamp: mchId,
+        nonceStr,
+        package:`prepay_id=${prepayId}`,
         signType: "MD5",
-        paySign: "",
-      });
+        paySign: sign,
+      }
+      console.log(payParams)
+      return Taro.requestPayment(payParams);
     }).then(res=>{
       console.log(res)
     }).catch(err=>{
