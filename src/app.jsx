@@ -1,12 +1,16 @@
 import { Component } from 'react'
 import { Provider } from 'mobx-react'
-
 import Store from './store/index'
 
 import './app.scss'
 
 class App extends Component {
-  componentDidMount () {}
+  componentDidMount () {
+    const storage = wx.getStorageSync("token");
+    if(storage&&storage.access_token&&storage.phoneNumber){
+      Store.Account.GetUserInfo()
+    }
+  }
 
   componentDidShow () {}
 

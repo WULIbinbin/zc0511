@@ -67,6 +67,11 @@ const common = observable({
     "211",
   ],
   subtype: ["综合", "文科", "理科"],
+  zxCity: ["北京市", "天津市", "上海市", "重庆市"],
+  isZxCity(aa,province = "") {
+    console.log(aa,this)
+    return 1//this.zxCity.includes(province);
+  },
 });
 
 export default common;

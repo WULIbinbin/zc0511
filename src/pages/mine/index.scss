@@ -43,20 +43,19 @@ $icon:37px;
       &:last-of-type{
         margin-bottom: 0;
       }
-      @include flex-row();
+      @include flex-row-center();
       .label{
-        font-size: 31px;
+        font-size: 28px;
         font-weight: bold;
         color: #333333;
       }
       .items{
-        font-size: 31px;
-        height: 38px;
-        line-height: 38px;
-        background: #EEEEEE;
+        font-size: 28px;
+        // height: 38px;
+        // line-height: 38px;
+        //background: #EEEEEE;
         border-radius: 18px;
-        padding:3px 18px;
-        margin:0 10px;
+        margin:0 12px;
         color:#333333;
       }
     }
@@ -71,6 +70,7 @@ $icon:37px;
       box-shadow: 5px 8px 19px 0px rgba(203, 203, 203, 0.3);
       border-radius: 13px;
       flex:1;
+      background-color: #fff;
       @include flex-column-center-center();
       &:last-of-type{
         margin-left:20px;

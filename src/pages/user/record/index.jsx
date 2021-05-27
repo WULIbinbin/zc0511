@@ -179,6 +179,7 @@ class Index extends Component {
     const { scoreInput, formData } = this.state;
     const {
       Subject: { mapSubjectList, spProv },
+      Account: { GetUserInfo },
     } = this.props.store;
     const keysScoreInput = Object.keys(scoreInput);
     if (keysScoreInput.length === mapSubjectList.length) {
@@ -189,14 +190,26 @@ class Index extends Component {
         score += arrItem["score"];
         return arrItem;
       });
-      formData.province = spProv(formData.province);
+      //formData.province = spProv(formData.province);
       formData.sex = formData.sex === "男" ? 1 : 0;
       formData.score = score;
       formData.nickname = nickName;
       formData.headImgUrl = avatarUrl;
       formData.openid = Taro.getStorageSync("token").openId;
       console.log(formData);
-      SaveInfo(formData).then((res) => {});
+      SaveInfo({
+        ...formData,
+      }).then((res) => {
+        if (res.status === 0) {
+          Taro.showToast({ title: "提交成功", icon: "success" });
+          GetUserInfo();
+          setTimeout(() => {
+            Taro.navigateBack();
+          }, 1200);
+        } else {
+          Taro.showToast({ title: res.data + ",请重试", icon: "none" });
+        }
+      });
     }
   }
 
@@ -362,18 +375,19 @@ class Index extends Component {
               <Button
                 className={`btn can-click`}
                 openType="getUserInfo"
-                onClick={this.handleSubmit.bind(this)}
+                onGetUserInfo={this.handleSubmit.bind(this)}
               >
                 <View className="text">确定</View>
               </Button>
             )}
+            {/* <button open-type="getUserInfo">222</button>
             <Button
               className={`btn can-click`}
               openType="getUserInfo"
               onGetUserInfo={this.handleSubmit.bind(this)}
             >
               <View className="text">确定</View>
-            </Button>
+            </Button> */}
           </View>
         )}
       </View>

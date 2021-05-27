@@ -7,3 +7,10 @@ export function SaveInfo(data = {}) {
     data,
   });
 }
+
+export function GetStuInfo() {
+  return Request({
+    url: `/student/info`,
+    method: "GET",
+  });
+}

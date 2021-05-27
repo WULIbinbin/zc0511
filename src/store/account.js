@@ -1,11 +1,19 @@
 import { observable } from "mobx";
 import Taro from "@tarojs/taro";
 import { GetSid, PhoneRegister, GetToken } from "../request/apis/account";
+import { GetStuInfo } from "../request/apis/inform";
 
 const account = observable({
   userInfo: {},
   loginInfo: { phoneNumber: "", openId: "", access_token: "", token_type: "" },
+  get studentInfo() {
+    return (this.userInfo && this.userInfo.student) || {};
+  },
+  get subjectInfo() {
+    return (this.userInfo && this.userInfo.subList) || [];
+  },
   WxLogin({ encryptedData, iv, errMsg }) {
+    const that = this
     return new Promise((resolve, reject) => {
       this.CheckCode()
         .then((code) => {
@@ -32,8 +40,9 @@ const account = observable({
                       openId,
                       phoneNumber,
                     };
-                    this.loginInfo = loginInfo;
+                    that.loginInfo = loginInfo;
                     wx.setStorageSync("token", loginInfo);
+                    that.GetUserInfo();
                     Taro.showToast({
                       title: "登录成功",
                       icon: "success",
@@ -93,6 +102,12 @@ const account = observable({
       //     getCode(resolve);
       //   },
       // });
+    });
+  },
+  GetUserInfo() {
+    GetStuInfo().then((res) => {
+      wx.setStorageSync("userInfo", res.data);
+      this.userInfo = res.data;
     });
   },
 });
