@@ -13,11 +13,10 @@ const subject = observable({
   curProv: "",
   noSuport: false,
   subListInneed: [
-    { cur: "0", subject: "语文" },
-    { cur: "0", subject: "数学" },
-    { cur: "0", subject: "英语" },
+    { cur: 0, subject: "语文" },
+    { cur: 0, subject: "数学" },
+    { cur: 0, subject: "英语" },
   ],
-  //subListFromReq: {},
   subject: [
     {
       type: "TYPE_ALL_IN_3",
@@ -100,7 +99,7 @@ const subject = observable({
       return obj;
     });
   },
-  
+
   setFormData(data) {
     this.formData = {
       ...this.formData,
@@ -208,9 +207,9 @@ const subject = observable({
   },
   // 修改分数
   setSubjectScore({ index = 0, score = "" }) {
-    const newlist = [...this.curSubList]
+    const newlist = [...this.curSubList];
     newlist[index].score = score;
-    this.curSubList = newlist
+    this.curSubList = newlist;
   },
 });
 

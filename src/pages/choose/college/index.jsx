@@ -2,6 +2,7 @@ import { Component } from "react";
 import { View, ScrollView } from "@tarojs/components";
 import { observer, inject } from "mobx-react";
 import { PickerLabel, Table } from "../../../components/index";
+import { SearchSubject } from "../../../request/apis/college";
 import "./index.scss";
 
 @inject("store")
@@ -9,7 +10,14 @@ import "./index.scss";
 class Index extends Component {
   componentWillMount() {}
 
-  componentDidMount() {}
+  componentDidMount() {
+    const {
+      options: { subStr },
+    } = getCurrentPages()[getCurrentPages().length - 1];
+    SearchSubject({subStr}).then(res=>{
+
+    })
+  }
 
   componentWillUnmount() {}
 

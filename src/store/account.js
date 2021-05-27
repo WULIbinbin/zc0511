@@ -110,20 +110,9 @@ const account = observable({
     console.log(that, Subject);
     GetStuInfo().then((res) => {
       wx.setStorageSync("userInfo", res.data);
-      const { student,subList } = res.data;
+      //const { student,subList } = res.data;
       that.userInfo = res.data;
-      if (student && student.province) {
-        const { province, city, district, name, sex } = student;
-        Subject.setFormData({
-          province,
-          city,
-          district,
-          name,
-          sex: sex ? "男" : "女",
-        });
-        Subject.setCurProv(province);
-        Subject.setCurSubList(subList)
-      }
+      
     });
   },
 });

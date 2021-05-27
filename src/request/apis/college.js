@@ -47,3 +47,11 @@ export function SearchScoreLine(data={}) {
     data
   });
 }
+
+export function SearchSubject(data={}) {
+  return Request({
+    url: `/choose/subject/search`,
+    method:'GET',
+    data
+  });
+}

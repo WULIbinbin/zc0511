@@ -20,7 +20,28 @@ class Index extends Component {
 
   componentWillMount() {}
 
-  componentDidMount() {}
+  componentDidMount() {
+    Taro.showLoading();
+    setTimeout(() => {
+      Taro.hideLoading();
+      const {
+        Subject,
+        Account: { studentInfo, subjectInfo },
+      } = this.props.store;
+      if (studentInfo && studentInfo.province) {
+        const { province, city, district, name, sex } = studentInfo;
+        Subject.setFormData({
+          province,
+          city,
+          district,
+          name,
+          sex: sex ? "男" : "女",
+        });
+        Subject.setCurProv(province);
+        Subject.setCurSubList(subjectInfo);
+      }
+    }, 800);
+  }
 
   componentWillUnmount() {}
 
@@ -102,7 +123,6 @@ class Index extends Component {
       Subject: { formData },
       Account: { studentInfo },
     } = this.props.store;
-    console.log(studentInfo.sex)
     if (studentInfo.sex === undefined) {
       return;
     }
@@ -119,7 +139,6 @@ class Index extends Component {
         formData: { province, city, district, name, sex },
       },
     } = this.props.store;
-    console.log("curSubjectList", curSubjectList);
     if (
       !noSuport &&
       [province, city, district, name, sex].findIndex((f) => f === "") === -1 &&
@@ -148,7 +167,6 @@ class Index extends Component {
     const {
       Subject: { showSubList },
     } = this.props.store;
-    console.log(showSubList);
     if (
       showSubList.findIndex((f) => f.score == undefined || f.score == "") === -1
     ) {
@@ -158,7 +176,6 @@ class Index extends Component {
   }
 
   handleSubmit(e) {
-    console.log(e);
     const {
       userInfo: { avatarUrl, nickName },
     } = e.detail;
@@ -166,7 +183,6 @@ class Index extends Component {
       Subject: { spProv, formData, showSubList },
       Account,
     } = this.props.store;
-    console.log(showSubList.slice());
     if (
       showSubList.findIndex((f) => f.score === undefined || f.score === "") ===
       -1

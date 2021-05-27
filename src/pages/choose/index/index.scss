@@ -71,6 +71,7 @@
           width: 218px;
           height: 90px;
           margin-right: 20px;
+          margin-bottom: 20px;
           line-height: 90px;
           text-align: center;
           font-size: 28px;
@@ -80,6 +81,28 @@
             color: #ea4438;
             background: rgba(234, 68, 56, 0.2);
           }
+        }
+      }
+      .btn-view {
+        position: fixed;
+        bottom: 60px;
+        left: 0;
+        right: 0;
+      }
+      .btn {
+        @include flex-row-center-center();
+        margin: 0 25px 60px;
+        height: 100px;
+        background: rgba(234, 68, 56, 1);
+        border-radius: 20px;
+        opacity: 0.5;
+        &.can-click {
+          opacity: 1;
+        }
+        .text {
+          font-size: 32px;
+          font-weight: bold;
+          color: #ffffff;
         }
       }
     }
