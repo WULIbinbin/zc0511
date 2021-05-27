@@ -1,10 +1,15 @@
 import { observable } from "mobx";
 import Taro from "@tarojs/taro";
-const Prov3word = ["黑龙江", "内蒙古"];
 
 const subject = observable({
   curSubList: [],
-  curProv: "",
+  curProv: "北京",
+  noSuport: false,
+  subList: [
+    { type: 0, subject: "语文" },
+    { type: 0, subject: "数学" },
+    { type: 0, subject: "英语" },
+  ],
   subject: [
     {
       type: "TYPE_ALL_IN_3",
@@ -64,26 +69,62 @@ const subject = observable({
     prov: [],
     sub1: [],
     sub2: [],
-    mustSelect:1
+    mustSelect: 1,
   },
+  //当前选中地区的科目
   get subjectFilter() {
     if (!this.curProv) {
       return this.defaultSubject;
     }
     return this.subject.find((item) => item.prov.includes(this.curProv));
   },
+  //当前已选的科目
   get curSubjectList() {
     return this.curSubList.map((item) => item.subName);
   },
-  setCurProv(curProv = "") {
+  //当前已选的科目转接口格式
+  //type:0为语数英，1为首选，2为次选，3为不限
+  get mapSubjectList() {
+    const { curSubList, subList } = this;
+    return [
+      ...subList,
+      ...curSubList.map((item) => {
+        if (item.type === "TYPE_ALL_IN_3" || item.type === "ZH_2_IN_1") {
+          return {
+            type: 3,
+            subject: item.subName,
+          };
+        } else if (item.type === "TYPE_2_AND_4") {
+          const obj = item.cur === "sub1" ? { type: 1 } : { type: 2 };
+          obj.subject = item.subName;
+          return obj;
+        }
+      }),
+    ];
+  },
+  spProv(curProv = "") {
     let provSp = "";
+    const Prov3word = ["黑龙江", "内蒙古"];
     if (Prov3word.includes(curProv.substring(0, 3))) {
       provSp = curProv.substring(0, 3);
     } else {
       provSp = curProv.substring(0, 2);
     }
+    return provSp;
+  },
+  setCurProv(curProv = "") {
+    const blacklist = ["台湾省", "香港特别行政区", "澳门特别行政区"];
+    if (blacklist.includes(curProv)) {
+      Taro.showToast({ title: "暂不支持港澳台地区", icon: "none" });
+      this.curSubList = [];
+      this.curProv = "";
+      this.noSuport = true;
+      return;
+    }
+    let provSp = this.spProv(curProv);
     this.curSubList = [];
     this.curProv = provSp;
+    this.noSuport = false;
   },
   allInThree(findIndex, params) {
     if (findIndex > -1) {

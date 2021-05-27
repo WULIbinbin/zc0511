@@ -1,8 +1,9 @@
 import { Component } from "react";
-import { View, Image, Picker, Input } from "@tarojs/components";
+import { View, Image, Picker, Input, Button } from "@tarojs/components";
 import { observer, inject } from "mobx-react";
 import Taro from "@tarojs/taro";
 import { SelectLabel, FormItem } from "../../../components/index";
+import { SaveInfo } from "../../../request/apis/inform";
 import "./index.scss";
 
 import MaleNor from "../../../static/image/male-nor.png";
@@ -21,9 +22,10 @@ class Index extends Component {
       district: "",
       name: "",
       sex: "",
-      score: "",
-      subList: [],
+      // score: "",
+      // subList: [],
     },
+    scoreInput: {},
   };
 
   componentWillMount() {}
@@ -37,6 +39,16 @@ class Index extends Component {
   componentDidHide() {}
 
   handleStepChange(checked) {
+    const {
+      Subject: { noSuport },
+    } = this.props.store;
+    if (checked === "成绩信息" && noSuport) {
+      Taro.showToast({
+        title: "暂不支持港澳台地区",
+        icon: "none",
+      });
+      return;
+    }
     if (checked === "成绩信息" && !this.isCanNext()) {
       Taro.showToast({
         title: "请完善个人信息",
@@ -81,6 +93,7 @@ class Index extends Component {
     formData.name = e.detail.value;
     this.setState({ formData });
   }
+
   stepItem(subName, cur) {
     const {
       Subject: { subjectFilter, curSubjectList },
@@ -100,19 +113,22 @@ class Index extends Component {
       </View>
     );
   }
+
   handleSelectSex(item) {
     const { formData } = this.state;
     formData.sex = item.text;
     this.setState({ formData });
   }
+
   isCanNext() {
     const {
       formData: { province, city, district, name, sex },
     } = this.state;
     const {
-      Subject: { curSubjectList, subjectFilter },
+      Subject: { curSubjectList, subjectFilter, noSuport },
     } = this.props.store;
     if (
+      !noSuport &&
       [province, city, district, name, sex].findIndex((f) => f === "") === -1 &&
       curSubjectList.length === subjectFilter.mustSelect
     ) {
@@ -120,10 +136,70 @@ class Index extends Component {
     }
     return false;
   }
+
+  handleScoreInput(item, e) {
+    console.log(item, e);
+    const { scoreInput } = this.state;
+    const { value } = e.detail;
+    if (isNaN(Number(value))) {
+      this.setState({ scoreInput });
+      return;
+    }
+    scoreInput[item.subject] = {
+      ...item,
+      score: Number(value),
+    };
+    this.setState({ scoreInput });
+  }
+
   handleNext() {
     this.handleStepChange("成绩信息");
-    console.log(2333);
   }
+
+  isCanSubmit() {
+    const { scoreInput } = this.state;
+    const {
+      Subject: { mapSubjectList },
+    } = this.props.store;
+    const keysScoreInput = Object.keys(scoreInput);
+    if (
+      keysScoreInput.length === mapSubjectList.length &&
+      keysScoreInput.findIndex((f) => scoreInput[f].score == undefined) === -1
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  handleSubmit(e) {
+    console.log(e);
+    const {
+      userInfo: { avatarUrl, nickName },
+    } = e.detail;
+    const { scoreInput, formData } = this.state;
+    const {
+      Subject: { mapSubjectList, spProv },
+    } = this.props.store;
+    const keysScoreInput = Object.keys(scoreInput);
+    if (keysScoreInput.length === mapSubjectList.length) {
+      let score = 0;
+      formData.subList = mapSubjectList.map((item) => {
+        const arrItem = { ...item };
+        arrItem["score"] = scoreInput[item.subject].score;
+        score += arrItem["score"];
+        return arrItem;
+      });
+      formData.province = spProv(formData.province);
+      formData.sex = formData.sex === "男" ? 1 : 0;
+      formData.score = score;
+      formData.nickname = nickName;
+      formData.headImgUrl = avatarUrl;
+      formData.openid = Taro.getStorageSync("token").openId;
+      console.log(formData);
+      SaveInfo(formData).then((res) => {});
+    }
+  }
+
   render() {
     const step = ["个人信息", "成绩信息"];
     const sexArr = [
@@ -138,41 +214,16 @@ class Index extends Component {
         nor: FemaleNor,
       },
     ];
-    const scoreItem = [
-      {
-        label: "语文：",
-        name: "语文",
-      },
-      {
-        label: "数学：",
-        name: "数学",
-      },
-      {
-        label: "英语：",
-        name: "英语",
-      },
-      {
-        label: "物理：",
-        name: "物理",
-      },
-      {
-        label: "政治：",
-        name: "政治",
-      },
-      {
-        label: "生物：",
-        name: "生物",
-      },
-    ];
     const {
-      Subject: { subjectFilter },
+      Subject: { subjectFilter, mapSubjectList },
     } = this.props.store;
     const {
       checked,
       formData,
       formData: { province, city, district, sex },
+      scoreInput,
     } = this.state;
-    const region = (province && [province, city, district].join("-")) || "";
+    const region = (province && [province, city, district]) || [];
     return (
       <View className="b-user-record">
         <View className="step-view">
@@ -200,7 +251,7 @@ class Index extends Component {
                       <SelectLabel
                         placeHolder="请选择地区"
                         width={400}
-                        value={region}
+                        value={region.join("-")}
                       />
                     </View>
                   </Picker>
@@ -267,9 +318,18 @@ class Index extends Component {
             )}
             {checked === "成绩信息" && (
               <View className="main">
-                {scoreItem.map((n) => (
-                  <FormItem label={n.label}>
-                    <Input className="b-form-input" value=""></Input>
+                {mapSubjectList.map((n) => (
+                  <FormItem label={`${n.subject}：`}>
+                    <Input
+                      className="b-form-input"
+                      value={
+                        (scoreInput[n.subject] &&
+                          scoreInput[n.subject].score) ||
+                        ""
+                      }
+                      type="number"
+                      onInput={this.handleScoreInput.bind(this, n)}
+                    ></Input>
                   </FormItem>
                 ))}
               </View>
@@ -293,8 +353,27 @@ class Index extends Component {
           </View>
         )}
         {checked === "成绩信息" && (
-          <View className={`btn`}>
-            <View className="text">确认</View>
+          <View>
+            {!this.isCanSubmit() ? (
+              <View className={`btn`}>
+                <View className="text">确定</View>
+              </View>
+            ) : (
+              <Button
+                className={`btn can-click`}
+                openType="getUserInfo"
+                onClick={this.handleSubmit.bind(this)}
+              >
+                <View className="text">确定</View>
+              </Button>
+            )}
+            <Button
+              className={`btn can-click`}
+              openType="getUserInfo"
+              onGetUserInfo={this.handleSubmit.bind(this)}
+            >
+              <View className="text">确定</View>
+            </Button>
           </View>
         )}
       </View>
