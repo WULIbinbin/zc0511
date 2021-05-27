@@ -2,6 +2,7 @@ import { observable } from "mobx";
 import Taro from "@tarojs/taro";
 import { GetSid, PhoneRegister, GetToken } from "../request/apis/account";
 import { GetStuInfo } from "../request/apis/inform";
+import Subject from "./subject";
 
 const account = observable({
   userInfo: {},
@@ -13,7 +14,7 @@ const account = observable({
     return (this.userInfo && this.userInfo.subList) || [];
   },
   WxLogin({ encryptedData, iv, errMsg }) {
-    const that = this
+    const that = this;
     return new Promise((resolve, reject) => {
       this.CheckCode()
         .then((code) => {
@@ -105,10 +106,24 @@ const account = observable({
     });
   },
   GetUserInfo() {
-    const that = this
+    const that = this;
+    console.log(that, Subject);
     GetStuInfo().then((res) => {
       wx.setStorageSync("userInfo", res.data);
       that.userInfo = res.data;
+      const { student,subList } = res.data;
+      if (student && student.province) {
+        const { province, city, district, name, sex } = student;
+        Subject.setFormData({
+          province,
+          city,
+          district,
+          name,
+          sex: sex ? "男" : "女",
+        });
+        Subject.setCurProv(province);
+        Subject.setCurSubList(subList)
+      }
     });
   },
 });

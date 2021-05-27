@@ -75,8 +75,7 @@ class Index extends Component {
     return (
       <PageView bgColor="#f7f7f7">
         <View className="b-mine">
-          <UserProfile />
-
+          <UserProfile phone={studentInfo.tel}/>
           <View className="b-mine-numbers">
             {numbers.map((n, i) => (
               <View className={["items", i === 0 && "b-right-line"]}>

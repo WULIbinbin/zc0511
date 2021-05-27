@@ -16,16 +16,6 @@ import FemaleSel from "../../../static/image/female.png";
 class Index extends Component {
   state = {
     checked: "个人信息",
-    formData: {
-      province: "",
-      city: "",
-      district: "",
-      name: "",
-      sex: "",
-      // score: "",
-      // subList: [],
-    },
-    scoreInput: {},
   };
 
   componentWillMount() {}
@@ -61,26 +51,15 @@ class Index extends Component {
     });
   }
 
-  getSubjectData() {
-    const { Subject } = this.props.store;
-    const {
-      formData: { province },
-    } = this.state;
-    Subject.setCurProv(province);
-  }
-
   handleChangeProv(e) {
-    const { formData } = this.state;
+    const {
+      Subject,
+      Subject: { formData },
+    } = this.props.store;
     const [province, city, district] = e.detail.value;
     Object.assign(formData, { province, city, district });
-    this.setState(
-      {
-        formData,
-      },
-      () => {
-        this.getSubjectData();
-      }
-    );
+    Subject.setFormData(formData);
+    Subject.setCurProv(formData.province);
   }
 
   handleSelectSubject(e) {
@@ -89,44 +68,53 @@ class Index extends Component {
   }
 
   handleInputName(e) {
-    const { formData } = this.state;
+    const {
+      Subject,
+      Subject: { formData },
+    } = this.props.store;
     formData.name = e.detail.value;
-    this.setState({ formData });
+    Subject.setFormData(formData);
   }
 
-  stepItem(subName, cur) {
+  stepItem(subject, cur) {
     const {
       Subject: { subjectFilter, curSubjectList },
     } = this.props.store;
     return (
       <View
         className={`step-select-item ${
-          curSubjectList.includes(subName) && "checked"
+          curSubjectList.includes(subject) && "checked"
         }`}
         onClick={this.handleSelectSubject.bind(this, {
           type: subjectFilter.type,
           cur,
-          subName,
+          subject,
         })}
       >
-        <View className="step-select-item-text">{subName}</View>
+        <View className="step-select-item-text">{subject}</View>
       </View>
     );
   }
 
   handleSelectSex(item) {
-    const { formData } = this.state;
+    const {
+      Subject,
+      Subject: { formData },
+    } = this.props.store;
     formData.sex = item.text;
-    this.setState({ formData });
+    Subject.setFormData(formData);
   }
 
   isCanNext() {
     const {
-      formData: { province, city, district, name, sex },
-    } = this.state;
-    const {
-      Subject: { curSubjectList, subjectFilter, noSuport },
+      Subject: {
+        curSubjectList,
+        subjectFilter,
+        noSuport,
+        formData: { province, city, district, name, sex },
+      },
     } = this.props.store;
+    console.log("curSubjectList", curSubjectList);
     if (
       !noSuport &&
       [province, city, district, name, sex].findIndex((f) => f === "") === -1 &&
@@ -137,19 +125,14 @@ class Index extends Component {
     return false;
   }
 
-  handleScoreInput(item, e) {
-    console.log(item, e);
-    const { scoreInput } = this.state;
+  handleScoreInput({ index }, e) {
+    //console.log(e);
+    const { Subject } = this.props.store;
     const { value } = e.detail;
     if (isNaN(Number(value))) {
-      this.setState({ scoreInput });
       return;
     }
-    scoreInput[item.subject] = {
-      ...item,
-      score: Number(value),
-    };
-    this.setState({ scoreInput });
+    Subject.setSubjectScore({ index, score: Number(value) });
   }
 
   handleNext() {
@@ -157,14 +140,12 @@ class Index extends Component {
   }
 
   isCanSubmit() {
-    const { scoreInput } = this.state;
     const {
-      Subject: { mapSubjectList },
+      Subject: { showSubList },
     } = this.props.store;
-    const keysScoreInput = Object.keys(scoreInput);
+    console.log(showSubList);
     if (
-      keysScoreInput.length === mapSubjectList.length &&
-      keysScoreInput.findIndex((f) => scoreInput[f].score == undefined) === -1
+      showSubList.findIndex((f) => f.score == undefined || f.score == "") === -1
     ) {
       return true;
     }
@@ -176,18 +157,19 @@ class Index extends Component {
     const {
       userInfo: { avatarUrl, nickName },
     } = e.detail;
-    const { scoreInput, formData } = this.state;
     const {
-      Subject: { mapSubjectList, spProv },
+      Subject: { spProv, formData, showSubList },
       Account,
     } = this.props.store;
-    const keysScoreInput = Object.keys(scoreInput);
-    if (keysScoreInput.length === mapSubjectList.length) {
+    console.log(showSubList.slice());
+    if (
+      showSubList.findIndex((f) => f.score === undefined || f.score === "") ===
+      -1
+    ) {
       let score = 0;
-      formData.subList = mapSubjectList.map((item) => {
+      formData.subList = showSubList.map((item) => {
         const arrItem = { ...item };
-        arrItem["score"] = scoreInput[item.subject].score;
-        score += arrItem["score"];
+        score += Number(item.score);
         return arrItem;
       });
       //formData.province = spProv(formData.province);
@@ -228,15 +210,17 @@ class Index extends Component {
       },
     ];
     const {
-      Subject: { subjectFilter, mapSubjectList },
+      Subject: { subjectFilter, showSubList, formData },
     } = this.props.store;
-    const {
-      checked,
-      formData,
-      formData: { province, city, district, sex },
-      scoreInput,
-    } = this.state;
-    const region = (province && [province, city, district]) || [];
+    const { checked } = this.state;
+    const region =
+      (formData.province && [
+        formData.province,
+        formData.city,
+        formData.district,
+      ]) ||
+      [];
+    //const sex = studentInfo.sex ? "男" : "女";
     return (
       <View className="b-user-record">
         <View className="step-view">
@@ -281,14 +265,14 @@ class Index extends Component {
                   {sexArr.map((n, i) => (
                     <View
                       className={`step-select-item ${
-                        sex === n.text && "checked"
+                        formData.sex === n.text && "checked"
                       }`}
                       onClick={this.handleSelectSex.bind(this, n)}
                     >
                       <View className={`step-select-item-text`}>
                         <Image
                           className="step-select-item-sex"
-                          src={sex === n.text ? n.sel : n.nor}
+                          src={formData.sex === n.text ? n.sel : n.nor}
                         ></Image>
                         {n.text}
                       </View>
@@ -298,8 +282,8 @@ class Index extends Component {
                 {subjectFilter.type === "TYPE_ALL_IN_3" && (
                   <View>
                     <FormItem label="组合选科：">
-                      {subjectFilter.sub1.map((subName) =>
-                        this.stepItem(subName, "sub1")
+                      {subjectFilter.sub3.map((subject) =>
+                        this.stepItem(subject, 3)
                       )}
                     </FormItem>
                   </View>
@@ -307,13 +291,13 @@ class Index extends Component {
                 {subjectFilter.type === "TYPE_2_AND_4" && (
                   <View>
                     <FormItem label="首选科目：">
-                      {subjectFilter.sub1.map((subName) =>
-                        this.stepItem(subName, "sub1")
+                      {subjectFilter.sub1.map((subject) =>
+                        this.stepItem(subject, 1)
                       )}
                     </FormItem>
                     <FormItem label="次选科目：">
-                      {subjectFilter.sub2.map((subName) =>
-                        this.stepItem(subName, "sub2")
+                      {subjectFilter.sub2.map((subject) =>
+                        this.stepItem(subject, 2)
                       )}
                     </FormItem>
                   </View>
@@ -321,8 +305,8 @@ class Index extends Component {
                 {subjectFilter.type === "ZH_2_IN_1" && (
                   <View>
                     <FormItem label="高考选科：">
-                      {subjectFilter.sub1.map((subName) =>
-                        this.stepItem(subName, "sub1")
+                      {subjectFilter.sub3.map((subject) =>
+                        this.stepItem(subject, 3)
                       )}
                     </FormItem>
                   </View>
@@ -331,17 +315,15 @@ class Index extends Component {
             )}
             {checked === "成绩信息" && (
               <View className="main">
-                {mapSubjectList.map((n) => (
+                {showSubList.map((n, index) => (
                   <FormItem label={`${n.subject}：`}>
                     <Input
                       className="b-form-input"
-                      value={
-                        (scoreInput[n.subject] &&
-                          scoreInput[n.subject].score) ||
-                        ""
-                      }
+                      value={n.score || ""}
                       type="number"
-                      onInput={this.handleScoreInput.bind(this, n)}
+                      onInput={this.handleScoreInput.bind(this, {
+                        index,
+                      })}
                     ></Input>
                   </FormItem>
                 ))}
