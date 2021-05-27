@@ -91,6 +91,7 @@ const subject = observable({
     return this.curSubList.map((item) => item.subject);
   },
   //当前已选的科目转接口格式
+  //type:0为语数英，1为首选，2为次选，3为不限,整理最终数据
   get showSubList() {
     return this.curSubList.map((item) => {
       const obj = { ...item };
@@ -99,28 +100,7 @@ const subject = observable({
       return obj;
     });
   },
-  //type:0为语数英，1为首选，2为次选，3为不限,整理最终数据
-  // get mapSubjectList() {
-  //   const { showSubList } = this;
-  //   return showSubList.map((item) => {
-  //     const obj = {
-  //       score: item.score,
-  //       subject: item.subject,
-  //     };
-  //     if (item.type === "TYPE_ALL_IN_3" || item.type === "ZH_2_IN_1") {
-  //       return obj;
-  //     } else if (item.type === "TYPE_2_AND_4") {
-  //       // const obj = item.cur === "sub1" ? { type: 1 } : { type: 2 };
-  //       // obj.subject = item.subject;
-  //       // return obj;
-  //     } else {
-  //       return {
-  //         type: 3,
-  //         subject: item.subject,
-  //       };
-  //     }
-  //   });
-  // },
+  
   setFormData(data) {
     this.formData = {
       ...this.formData,
@@ -162,7 +142,6 @@ const subject = observable({
       this.curSubList.splice(findIndex, 1);
     } else {
       if (this.curSubList.length < 6) {
-        params.type = 3;
         this.curSubList.push(params);
       } else {
         //只能选3科
@@ -190,8 +169,7 @@ const subject = observable({
     }
   },
   twoInOne(findIndex, params) {
-    this.curSubList = this.subListInneed;
-    params.type = 3;
+    this.curSubList.splice(findIndex, 1);
     this.curSubList.push(params);
   },
   selectSubject({ type = "", cur = "", subject = "" }) {

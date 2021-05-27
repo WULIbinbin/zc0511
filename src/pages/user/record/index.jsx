@@ -100,7 +100,12 @@ class Index extends Component {
     const {
       Subject,
       Subject: { formData },
+      Account: { studentInfo },
     } = this.props.store;
+    console.log(studentInfo.sex)
+    if (studentInfo.sex === undefined) {
+      return;
+    }
     formData.sex = item.text;
     Subject.setFormData(formData);
   }
@@ -211,6 +216,7 @@ class Index extends Component {
     ];
     const {
       Subject: { subjectFilter, showSubList, formData },
+      Account: { studentInfo },
     } = this.props.store;
     const { checked } = this.state;
     const region =
@@ -240,6 +246,7 @@ class Index extends Component {
               <View className="main">
                 <FormItem contentWidth={400} label="地区：">
                   <Picker
+                    disabled={!!studentInfo.province}
                     mode="region"
                     value={region}
                     onChange={this.handleChangeProv.bind(this)}
@@ -255,6 +262,7 @@ class Index extends Component {
                 </FormItem>
                 <FormItem label="姓名：">
                   <Input
+                    disabled={!!studentInfo.name}
                     className="b-form-input"
                     placeholder="输入您的姓名"
                     value={formData.name}
@@ -362,14 +370,6 @@ class Index extends Component {
                 <View className="text">确定</View>
               </Button>
             )}
-            {/* <button open-type="getUserInfo">222</button>
-            <Button
-              className={`btn can-click`}
-              openType="getUserInfo"
-              onGetUserInfo={this.handleSubmit.bind(this)}
-            >
-              <View className="text">确定</View>
-            </Button> */}
           </View>
         )}
       </View>
