@@ -3,11 +3,10 @@
 .b-card{
   &-main{
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 5px 8px 19px 0px rgba(203, 203, 203, 0.3);
-    border-radius: 13px;
+    @include flex-column();
+    @include shadow-radius();
     background-color: $white-color;
+    margin-bottom:20px;
   }
   &-options{
     width: 100%;

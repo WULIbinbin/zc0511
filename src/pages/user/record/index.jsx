@@ -179,7 +179,7 @@ class Index extends Component {
     const { scoreInput, formData } = this.state;
     const {
       Subject: { mapSubjectList, spProv },
-      Account: { GetUserInfo },
+      Account,
     } = this.props.store;
     const keysScoreInput = Object.keys(scoreInput);
     if (keysScoreInput.length === mapSubjectList.length) {
@@ -202,7 +202,7 @@ class Index extends Component {
       }).then((res) => {
         if (res.status === 0) {
           Taro.showToast({ title: "提交成功", icon: "success" });
-          GetUserInfo();
+          Account.GetUserInfo();
           setTimeout(() => {
             Taro.navigateBack();
           }, 1200);

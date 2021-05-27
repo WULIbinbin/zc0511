@@ -8,6 +8,7 @@ import VipBanner from "../../static/image/vip-banner.png";
 import IconSave from "../../static/image/save.png";
 import IconUniversity from "../../static/image/university.png";
 import IconReport from "../../static/image/report.png";
+import IconVip from "../../static/image/vip-icon.png";
 
 @inject("store")
 @observer
@@ -49,7 +50,7 @@ class Index extends Component {
     };
     const {
       Account: { studentInfo, subjectInfo },
-      Common: { isZxCity },
+      Common: { zxCity },
     } = this.props.store;
     const infos = [
       {
@@ -62,8 +63,8 @@ class Index extends Component {
       },
       {
         label: "学籍:",
-        info: (function(){
-          if (isZxCity(studentInfo.province)) {
+        info: (function () {
+          if (zxCity.includes(studentInfo.province)) {
             return [studentInfo.province];
           } else {
             return [studentInfo.province + studentInfo.city];
@@ -92,23 +93,29 @@ class Index extends Component {
               mode="widthFix"
             ></Image>
           </View>
-
+          <Card
+            label="会员卡绑定"
+            icon={IconVip}
+            accessTo={this.handleTo.bind(this, "/pages/user/record/index")}
+          />
           <Card
             label="录入信息"
             icon={IconSave}
             accessTo={this.handleTo.bind(this, "/pages/user/record/index")}
           >
-            <View className="b-mine-information">
-              {infos.map((la) => (
-                <View className="info-item">
-                  <View className="label">{la.label}</View>
-                  {la.info.length &&
-                    la.info.map((items) => (
-                      <View className="items">{items}</View>
-                    ))}
-                </View>
-              ))}
-            </View>
+            {studentInfo.province && (
+              <View className="b-mine-information">
+                {infos.map((la) => (
+                  <View className="info-item">
+                    <View className="label">{la.label}</View>
+                    {la.info.length &&
+                      la.info.map((items) => (
+                        <View className="items">{items}</View>
+                      ))}
+                  </View>
+                ))}
+              </View>
+            )}
           </Card>
 
           <View className="b-mine-twice-enter">

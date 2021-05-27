@@ -3,7 +3,7 @@ import Taro from "@tarojs/taro";
 
 const subject = observable({
   curSubList: [],
-  curProv: "北京",
+  curProv: "",
   noSuport: false,
   subList: [
     { type: 0, subject: "语文" },
@@ -101,6 +101,11 @@ const subject = observable({
         }
       }),
     ];
+  },
+  resetData(){
+    this.curSubList = []
+    this.curProv = '';
+    this.noSuport = false;
   },
   spProv(curProv = "") {
     let provSp = "";

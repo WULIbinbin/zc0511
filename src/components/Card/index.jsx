@@ -10,7 +10,7 @@ function Card({
 }) {
   return (
     <View className="b-card-main">
-      <View className="b-card-options b-bottom-line" onClick={accessTo}>
+      <View className="b-card-options" onClick={accessTo}>
         <View className="left">
           {icon && <Image className="icon" src={icon}></Image>}
           {label && <View className="label">{label}</View>}
@@ -19,7 +19,9 @@ function Card({
           {access && <View className="b-arrow-right"></View>}
         </View>
       </View>
-      <View className="b-card-content">{children}</View>
+      {children && (
+        <View className="b-card-content b-top-line">{children}</View>
+      )}
     </View>
   );
 }

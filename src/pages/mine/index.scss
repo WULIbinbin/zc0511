@@ -28,10 +28,11 @@ $icon:37px;
 
   &-vip-banner{
     width: 100%;
+    @include flex-column();
     .vip-banner{
       width: 100%;
     }
-    margin-bottom: 52px;
+    margin-bottom: 20px;
   }
 
   &-information{
@@ -62,7 +63,7 @@ $icon:37px;
   }
 
   &-twice-enter{
-    margin-top:32px;
+    //margin-top:32px;
     width: 100%;
     @include flex-row-center-between();
     .enter-item{

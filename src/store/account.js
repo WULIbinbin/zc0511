@@ -105,9 +105,10 @@ const account = observable({
     });
   },
   GetUserInfo() {
+    const that = this
     GetStuInfo().then((res) => {
       wx.setStorageSync("userInfo", res.data);
-      this.userInfo = res.data;
+      that.userInfo = res.data;
     });
   },
 });
