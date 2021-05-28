@@ -16,7 +16,7 @@ import RemoveIcon from "../../../static/image/remove.png";
 class Index extends Component {
   state = {
     activeTab: "按选科查专业",
-    position: "北京",
+    curProv: "北京",
     isGetList: "",
     currentData: [],
     currentPage: 0,
@@ -55,7 +55,7 @@ class Index extends Component {
     const prov = province[e.detail.value];
     this.setState(
       {
-        position: prov,
+        curProv: prov,
         params: {
           ...this.state.params,
           province: prov,
@@ -148,8 +148,9 @@ class Index extends Component {
   }
 
   goDetail(name) {
+    const { curProv } = this.state;
     Taro.navigateTo({
-      url: `/pages/choose/college/index?schoolName=${name}`,
+      url: `/pages/choose/college/index?schoolName=${name}&fromProvince=${curProv}`,
     });
   }
 
@@ -193,8 +194,9 @@ class Index extends Component {
   }
 
   goMajor(majorName) {
+    const { curProv } = this.state;
     Taro.navigateTo({
-      url: `/pages/choose/college/index?majorName=${majorName}`,
+      url: `/pages/choose/college/index?majorName=${majorName}&fromProvince=${curProv}`,
     });
   }
 
@@ -202,7 +204,7 @@ class Index extends Component {
     const tabs = ["按选科查专业", "按学校查选科", "按专业查选科"];
     const {
       activeTab,
-      position,
+      curProv,
       currentData,
       isGetList,
       majorHistory,
@@ -217,13 +219,13 @@ class Index extends Component {
         <View className="top-bar">
           <Picker
             range={Common.province}
-            value={position}
+            value={curProv}
             onChange={this.handlePosition.bind(this)}
           >
             <View className="position">
               <Image className="icon" src={PositionIcon}></Image>
               <View className="label">省份</View>
-              <View className="province">{position}</View>
+              <View className="province">{curProv}</View>
             </View>
           </Picker>
           <Tabbar
@@ -245,7 +247,9 @@ class Index extends Component {
                       this.stepItem(subject, 3)
                     )}
                   </View>
-                  <View className='sub-desc'>此种选科组合可覆盖85.5%的专业</View>
+                  <View className="sub-desc">
+                    此种选科组合可覆盖85.5%的专业
+                  </View>
                 </View>
               )}
               {subjectFilter.type === "TYPE_2_AND_4" && (

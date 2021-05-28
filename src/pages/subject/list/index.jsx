@@ -58,7 +58,7 @@ class Index extends Component {
   render() {
     const { topic, list } = this.state;
     return (
-      <ScrollView className="b-subject-list">
+      <ScrollView scrollY className="b-subject-list">
         <View className="main">
           <View className="topic">
             <View className="title">{topic.categoryName}</View>

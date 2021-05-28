@@ -35,7 +35,7 @@ class Index extends Component {
   render() {
     const { detail } = this.state;
     return (
-      <ScrollView className="b-subject-detail">
+      <ScrollView scrollY className="b-subject-detail">
         <View className="main">
           <View className="topic">
             <View className="title">{detail.majorName}</View>

@@ -4,6 +4,10 @@
   @include flex-column();
   height: 100vh;
   background-color: #ffffff;
+  .tab-bar {
+    background-color: $white-color;
+    padding: 0 160px;
+  }
   .main {
     @include flex-row();
     border-top: 20px solid #f7f7f7;

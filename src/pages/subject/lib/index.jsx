@@ -125,13 +125,15 @@ class Index extends Component {
           placeholder="搜索专业"
           onConfirm={this.handleConfirm.bind(this)}
         />
-        <Tabbar
-          tabs={tabs}
-          activeTab={activeTab}
-          onChange={({ target }) => {
-            this.handleTabChange(target);
-          }}
-        />
+        <View className="tab-bar">
+          <Tabbar
+            tabs={tabs}
+            activeTab={activeTab}
+            onChange={({ target }) => {
+              this.handleTabChange(target);
+            }}
+          />
+        </View>
         <View className="main">
           <ScrollView
             scrollY={true}

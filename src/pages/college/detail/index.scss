@@ -8,6 +8,8 @@ page{
       margin: 20px 25px;
       overflow: hidden;
       @include shadow-radius();
+      background-color: $white-color;
+      padding:0 130px;
     }
     .tab-pane{
       @include flex-column();
