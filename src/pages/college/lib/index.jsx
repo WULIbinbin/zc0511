@@ -4,6 +4,7 @@ import { View, Input, Image, ScrollView } from "@tarojs/components";
 import { observer, inject } from "mobx-react";
 import { PickerSelect, Search, CollegeItem } from "../../../components/index";
 import { GetCollegeList } from "../../../request/apis/college";
+import { getScrollViewHeight } from "../../../utils/tool";
 import "./index.scss";
 
 @inject("store")
@@ -121,22 +122,38 @@ class Index extends Component {
     const {
       Common: { province, category, level },
     } = this.props.store;
+    const pickers = [
+      {
+        label: "地区",
+        range: province,
+      },
+      {
+        label: "层次",
+        range: level,
+      },
+      {
+        label: "类型",
+        range: category,
+      },
+    ];
+    const scrollViewHeight = getScrollViewHeight(90 + 97);
     return (
       <View className="b-lib-search">
         <View className="options">
           <Search name="schoolName" onConfirm={this.handlePicker.bind(this)} />
           <View className="pickers">
             <PickerSelect
-              province={province}
-              category={category}
-              level={level}
+              style={{ padding: "0 25rpx" }}
+              range={pickers}
               onChange={this.handlePicker.bind(this)}
             />
           </View>
         </View>
         <ScrollView
-          scrollY
           className="result"
+          style={{ height: scrollViewHeight }}
+          scrollY={true}
+          scrollWithAnimation
           onScrollToLower={this.addListData.bind(this)}
           lowerThreshold={100}
         >

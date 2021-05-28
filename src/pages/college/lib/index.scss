@@ -4,14 +4,15 @@
   background-color: #f7f7f7;
   width: 100%;
   height: 100vh;
+  overflow: hidden;
   @include flex-column();
   .options {
     width: 100%;
     background-color: #fff;
     @include flex-column();
     .pickers {
-      @include flex-row-center-between();
-      padding: 0 25px;
+      // @include flex-row-center-between();
+      
     }
   }
   .result {

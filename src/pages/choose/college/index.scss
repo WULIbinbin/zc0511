@@ -3,8 +3,8 @@
 .b-choose-college {
   @include flex-column();
   .top-bar {
-    @include flex-row-center-between();
-    padding: 0 200px;
+    // @include flex-row-center-between();
+    // padding: 0 140px;
     background-color: $white-color;
     position: relative;
     &::after {

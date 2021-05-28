@@ -1,25 +1,36 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { View, Image, ScrollView } from "@tarojs/components";
 import PickerLabel from "../PickerLabel/index";
 import "./index.scss";
 
+import SelectIcon from "../../static/image/select.png";
+
 function PickerSelect({
   placeHolder = "请选择",
-  style = {},
-  range = [],
+  province,
+  level,
+  category,
   onChange = null,
 }) {
-  const pickers = [...range];
-  //设置默认选中
-  const defaultSelected = (() => {
-    const dataSet = {};
-    if (pickers.length === 0) return dataSet;
-    pickers.forEach((n) => {
-      dataSet[n.label] = new Set();
-    });
-    return dataSet;
-  })();
-  const refs = useRef(null);
+  const pickers = [
+    {
+      label: "地区",
+      range: province,
+    },
+    {
+      label: "层次",
+      range: level,
+    },
+    {
+      label: "类型",
+      range: category,
+    },
+  ];
+  const defaultSelected = {
+    地区: new Set(),
+    层次: new Set(),
+    类型: new Set(),
+  };
   const [selected, setSelect] = useState(defaultSelected);
   const [currentShow, setPicker] = useState(-1);
   //刷新picker数组
@@ -52,9 +63,11 @@ function PickerSelect({
     const newMaps = [...maps];
     setSelect(defaultSelected);
     setMaps(newMaps);
+    //setPicker(-1);
   });
 
   const handleSubmit = useCallback(() => {
+    console.log(selected);
     const mapSelected = () => {
       const result = {};
       Object.keys(selected).forEach((item) => {
@@ -72,28 +85,14 @@ function PickerSelect({
     onChange && onChange(selectedResult);
   });
 
-  useEffect(() => {
-    const pickerDom = wx.createSelectorQuery();
-    pickerDom.select("#b-picker-item-xjgatr").boundingClientRect();
-    //pickerDom.selectViewport().scrollOffset()
-    pickerDom.exec(function (res) {
-      console.log(res);
-    });
-  });
-
   const { screenWidth } = wx.getSystemInfoSync();
   const selectViewStyle = { width: screenWidth + "PX" };
   return (
-    <View
-      className="b-picker-item"
-      style={{ ...style, ...selectViewStyle }}
-      id="b-picker-item-xjgatr"
-    >
+    <View className="b-picker-item">
       <View className="picker-group">
         {pickers.map((p, pdx) => (
           <PickerLabel
             value={p.label}
-            onShow={currentShow === pdx}
             onChange={() => {
               showPicker(pdx);
             }}

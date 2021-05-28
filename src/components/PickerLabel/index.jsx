@@ -2,7 +2,8 @@ import { useCallback, useState } from "react";
 import { View, Image } from "@tarojs/components";
 import "./index.scss";
 
-import SelectIcon from "../../static/image/select.png";
+import SelectNorIcon from "../../static/image/select.png";
+import SelectSelIcon from "../../static/image/select-sel.png";
 
 function PickerLabel({
   placeHolder = "请选择",
@@ -18,7 +19,10 @@ function PickerLabel({
       <View className={`label ${onShow && "on-show"}`}>
         {value || placeHolder}
       </View>
-      <Image className={`icon ${onShow && "up"}`} src={SelectIcon}></Image>
+      <Image
+        className={`icon`}
+        src={onShow ? SelectSelIcon : SelectNorIcon}
+      ></Image>
     </View>
   );
 }

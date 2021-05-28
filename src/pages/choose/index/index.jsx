@@ -1,11 +1,10 @@
 import { Component } from "react";
-import { View, Image, ScrollView, Picker,Button } from "@tarojs/components";
+import { View, Image, ScrollView, Picker, Button } from "@tarojs/components";
 import { observer, inject } from "mobx-react";
 import {
   Tabbar,
   Search,
   CollegeItem,
-  FormItem,
 } from "../../../components/index";
 import Taro from "@tarojs/taro";
 import "./index.scss";
@@ -81,11 +80,9 @@ class Index extends Component {
 
   isCanSubmit() {
     const {
-      Subject: { showSubList,subjectFilter },
+      Subject: { showSubList, subjectFilter },
     } = this.props.store;
-    if (
-      showSubList.length===subjectFilter.mustSelect
-    ) {
+    if (showSubList.length === subjectFilter.mustSelect) {
       return true;
     }
     return false;
@@ -93,11 +90,13 @@ class Index extends Component {
 
   handleSubmit() {
     const {
-      Subject: { showSubList },
+      Subject: { showSubList, curProv },
     } = this.props.store;
     Taro.navigateTo({
-      url:`/pages/choose/college/index?subStr=${showSubList.map(n=>n.subject).join('')}`
-    })
+      url: `/pages/choose/college/index?subStr=${showSubList
+        .map((n) => n.subject)
+        .join("")}&fromProvince=${curProv}`,
+    });
   }
 
   render() {
