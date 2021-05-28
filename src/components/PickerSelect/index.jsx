@@ -19,7 +19,6 @@ function PickerSelect({
     });
     return dataSet;
   })();
-  const refs = useRef(null);
   const [selected, setSelect] = useState(defaultSelected);
   const [currentShow, setPicker] = useState(-1);
   //刷新picker数组
@@ -73,12 +72,12 @@ function PickerSelect({
   });
 
   useEffect(() => {
-    const pickerDom = wx.createSelectorQuery();
-    pickerDom.select("#b-picker-item-xjgatr").boundingClientRect();
-    //pickerDom.selectViewport().scrollOffset()
-    pickerDom.exec(function (res) {
-      console.log(res);
-    });
+    // const pickerDom = wx.createSelectorQuery();
+    // pickerDom.select("#b-picker-item-xjgatr").boundingClientRect();
+    // //pickerDom.selectViewport().scrollOffset()
+    // pickerDom.exec(function (res) {
+    //   console.log(res);
+    // });
   });
 
   const { screenWidth } = wx.getSystemInfoSync();

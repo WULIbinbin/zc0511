@@ -16,6 +16,8 @@
     .position {
       @include flex-row-center();
       padding: 38px 25px;
+      height: 100px;
+      box-sizing: border-box;
       .icon {
         height: 38px;
         width: 38px;

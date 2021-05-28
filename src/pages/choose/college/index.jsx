@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { View, ScrollView } from "@tarojs/components";
 import { observer, inject } from "mobx-react";
-import Taro from '@tarojs/taro'
+import Taro from "@tarojs/taro";
 import { PickerSelect, Table } from "../../../components/index";
 import { SearchSubject } from "../../../request/apis/college";
 import { getScrollViewHeight } from "../../../utils/tool";
@@ -24,15 +24,16 @@ class Index extends Component {
     const {
       options: { subStr, fromProvince },
     } = getCurrentPages()[getCurrentPages().length - 1];
-    Taro.showLoading()
+    Taro.showLoading();
+    const params = {
+      pageNum: 1,
+      pageSize: 20,
+    };
+    subStr && (params.subStr = subStr);
+    fromProvince && (params.fromProvince = fromProvince);
     this.setState(
       {
-        params: {
-          subStr,
-          fromProvince,
-          pageNum: 1,
-          pageSize: 20,
-        },
+        params,
       },
       () => {
         this.getList();
@@ -44,18 +45,66 @@ class Index extends Component {
 
   handleChange(data) {
     console.log(data);
+    if (!data) return;
+    const params = {};
+    const prov = data["院校地区"];
+    const level = data["院校层次"];
+    if (prov && prov.length > 0) {
+      params.province = prov.join(",");
+    }
+    if (level && level.length > 0) {
+      if (level.includes("双一流")) {
+        params.tag1 = 1;
+      } else {
+        params.tag1 = 0;
+      }
+      if (level.includes("985")) {
+        params.tag2 = 1;
+      } else {
+        params.tag2 = 0;
+      }
+      if (level.includes("211")) {
+        params.tag3 = 1;
+      } else {
+        params.tag3 = 0;
+      }
+      if (level.includes("本科") && !level.includes("专科")) {
+        params.schoolType = "本科";
+      } else if (!level.includes("本科") && level.includes("专科")) {
+        params.schoolType = "专科";
+      } else {
+        params.schoolType = "";
+      }
+    }
+    const { subStr, fromProvince, pageNum, pageSize } = this.state.params;
+    this.setState(
+      {
+        params: {
+          subStr,
+          fromProvince,
+          pageNum,
+          pageSize,
+          ...params,
+        },
+        tbody: [],
+      },
+      () => {
+        this.getList();
+      }
+    );
   }
 
   getList() {
     let { params, tbody } = this.state;
+    Taro.showLoading();
     SearchSubject(params).then((res) => {
-      Taro.hideLoading()
+      Taro.hideLoading();
       const { list, pages } = res.data;
       const newlist = list.map((n) => {
         return {
           ...n,
           includes: "-",
-          sub: n.sub == 0 ? "不限" : "-",
+          sub: ["不限", "物理", "历史"][n.sub] || "不限",
         };
       });
       tbody = tbody.concat(newlist);

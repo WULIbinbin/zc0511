@@ -35,7 +35,7 @@ class Index extends Component {
   componentDidHide() {}
 
   testPay() {
-    WxPay()
+    WxPay(1)
       .then((res) => {
         const { nonceStr, paySign, packageValue,signType,timeStamp } = res.data;
         //String(Math.ceil(new Date().getTime()/1000))

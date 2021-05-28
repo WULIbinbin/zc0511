@@ -1,12 +1,11 @@
 import { Component } from "react";
 import { View, Image, ScrollView, Picker, Button } from "@tarojs/components";
 import { observer, inject } from "mobx-react";
-import {
-  Tabbar,
-  Search,
-  CollegeItem,
-} from "../../../components/index";
+import { Tabbar, Search, CollegeItem } from "../../../components/index";
 import Taro from "@tarojs/taro";
+import { GetCollegeList } from "../../../request/apis/college";
+import { getScrollViewHeight } from "../../../utils/tool";
+
 import "./index.scss";
 
 import PositionIcon from "../../../static/image/position.png";
@@ -16,13 +15,19 @@ import RemoveIcon from "../../../static/image/remove.png";
 @observer
 class Index extends Component {
   state = {
-    activeTab: "按选科查专业",
+    activeTab: "按学校查选科",
     position: "北京",
+    isGetList: "",
+    currentData: [],
+    currentPage: 0,
+    params: {},
   };
-
+  allData = [];
+  pageSize = 50;
   componentWillMount() {
     const { Subject } = this.props.store;
     Subject.setCurProv("北京");
+    this.getList();
   }
 
   componentDidMount() {}
@@ -99,9 +104,58 @@ class Index extends Component {
     });
   }
 
+  getList() {
+    Taro.showLoading();
+    this.setState({
+      isGetList: false,
+    });
+    const { params } = this.state;
+    GetCollegeList(params).then((res) => {
+      Taro.hideLoading();
+      const { list } = res.data;
+      let currentData = [];
+      if (list.length > 0) {
+        this.allData = list;
+        currentData = list.slice(0, this.pageSize);
+      }
+      this.setState({
+        currentData,
+        isGetList: true,
+      });
+    });
+  }
+
+  addListData() {
+    let { currentData, currentPage } = this.state;
+    const len = currentData.length;
+    const newData = currentData.concat(
+      this.allData.slice(len, len + this.pageSize)
+    );
+    this.setState({
+      currentData: newData,
+      currentPage: currentPage + 1,
+    });
+  }
+
+  goDetail(name) {
+    Taro.navigateTo({
+      url: `/pages/choose/college/index?schoolName=${name}`,
+    });
+  }
+
+  handleSearch(e){
+    this.setState({
+      params:{
+        schoolName:e.value
+      }
+    },()=>{
+      this.getList()
+    })
+  }
+
   render() {
     const tabs = ["按选科查专业", "按学校查选科", "按专业查选科"];
-    const { activeTab, position } = this.state;
+    const { activeTab, position,currentData,isGetList } = this.state;
     const subItems = ["物理", "历史"];
     const college = new Array(20).fill({});
     const historyItem = ["物理", "历史", "23333"];
@@ -109,6 +163,7 @@ class Index extends Component {
       Common,
       Subject: { subjectFilter },
     } = this.props.store;
+    const scrollViewHeight = getScrollViewHeight(117+86+100)
     return (
       <View className="b-choose">
         <View className="top-bar">
@@ -190,16 +245,45 @@ class Index extends Component {
         {activeTab === "按学校查选科" && (
           <View className="main">
             <View className="search-bar">
-              <Search />
+              <Search onConfirm={this.handleSearch.bind(this)}/>
             </View>
-            <ScrollView scrollY className="search-list">
-              {college.map((n) => (
-                <CollegeItem
-                  name="北京大学"
-                  labels={["综合类", "985/211", "双一流", "公办"]}
-                  local="北京"
-                />
-              ))}
+            <ScrollView
+              className="search-list"
+              style={{ height: scrollViewHeight }}
+              scrollY={true}
+              scrollWithAnimation
+              onScrollToLower={this.addListData.bind(this)}
+              lowerThreshold={100}
+            >
+              <View>
+                {currentData.map((n) => {
+                  const labels =
+                    (n.college_category && [n.college_category]) || [];
+                  !!n.tag1 && labels.push("双一流");
+                  !!n.tag2 && labels.push("985");
+                  !!n.tag3 && labels.push("211");
+                  return (
+                    <CollegeItem
+                      icon={n.cover_image}
+                      name={n.college_name}
+                      labels={labels}
+                      local={n.province}
+                      goto={this.goDetail.bind(this, n.college_name)}
+                    />
+                  );
+                })}
+                {currentData.length > this.pageSize && (
+                  <View
+                    className="loadmore"
+                    onClick={this.addListData.bind(this)}
+                  >
+                    点击加载更多
+                  </View>
+                )}
+                {isGetList && currentData.length === 0 && (
+                  <View className="nomore">没有查询到相关院校</View>
+                )}
+              </View>
             </ScrollView>
           </View>
         )}
