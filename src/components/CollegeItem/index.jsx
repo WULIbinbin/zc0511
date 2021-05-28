@@ -17,11 +17,17 @@ function CollegeItem({
       <Image className="logo" src={icon}></Image>
       <View className="info">
         <View className="name">{name}</View>
-        <View className="labels">
-          {labels.map((label) => (
-            <View className="label">{label}</View>
-          ))}
-        </View>
+        {labels.length > 0 && (
+          <View className="labels">
+            {labels.map((label) =>{
+              if(!!label){
+                return <View className="label">{label}</View>
+              }else{
+                return null
+              }
+            })}
+          </View>
+        )}
       </View>
       <View className="local">{local}</View>
     </View>

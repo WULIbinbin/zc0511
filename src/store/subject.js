@@ -12,11 +12,6 @@ const subject = observable({
   curSubList: [],
   curProv: "",
   noSuport: false,
-  subListInneed: [
-    { cur: 0, subject: "语文" },
-    { cur: 0, subject: "数学" },
-    { cur: 0, subject: "英语" },
-  ],
   subject: [
     {
       type: "TYPE_ALL_IN_3",
@@ -78,6 +73,13 @@ const subject = observable({
     sub2: [],
     mustSelect: 1,
   },
+  get subListInneed() {
+    return [
+      { cur: 0, subject: "语文" },
+      { cur: 0, subject: "数学" },
+      { cur: 0, subject: "英语" },
+    ];
+  },
   //当前选中地区的科目
   get subjectFilter() {
     if (!this.curProv) {
@@ -131,8 +133,8 @@ const subject = observable({
       return;
     }
     let provSp = this.spProv(curProv);
-    console.log(provSp);
     this.curSubList = this.subListInneed;
+    console.log(provSp, this.curSubList.slice());
     this.curProv = provSp;
     this.noSuport = false;
   },
@@ -168,7 +170,7 @@ const subject = observable({
     }
   },
   twoInOne(findIndex, params) {
-    this.curSubList.splice(findIndex, 1);
+    this.curSubList = this.curSubList.slice(0, 3);
     this.curSubList.push(params);
   },
   selectSubject({ type = "", cur = "", subject = "" }) {

@@ -15,12 +15,15 @@ import RemoveIcon from "../../../static/image/remove.png";
 @observer
 class Index extends Component {
   state = {
-    activeTab: "按学校查选科",
+    activeTab: "按选科查专业",
     position: "北京",
     isGetList: "",
     currentData: [],
     currentPage: 0,
-    params: {},
+    majorHistory: [],
+    params: {
+      province: "北京",
+    },
   };
   allData = [];
   pageSize = 50;
@@ -45,17 +48,22 @@ class Index extends Component {
   }
 
   handlePosition(e) {
-    console.log(e);
     const {
       Common: { province },
       Subject,
     } = this.props.store;
+    const prov = province[e.detail.value];
     this.setState(
       {
-        position: province[e.detail.value],
+        position: prov,
+        params: {
+          ...this.state.params,
+          province: prov,
+        },
       },
       () => {
-        Subject.setCurProv(province[e.detail.value]);
+        Subject.setCurProv(prov);
+        this.getList();
       }
     );
   }
@@ -106,8 +114,10 @@ class Index extends Component {
 
   getList() {
     Taro.showLoading();
+    let majorHistory = Taro.getStorageSync("majorHistory") || [];
     this.setState({
       isGetList: false,
+      majorHistory,
     });
     const { params } = this.state;
     GetCollegeList(params).then((res) => {
@@ -143,27 +153,65 @@ class Index extends Component {
     });
   }
 
-  handleSearch(e){
-    this.setState({
-      params:{
-        schoolName:e.value
+  handleSearchCollege(e) {
+    this.setState(
+      {
+        params: {
+          schoolName: e.value,
+        },
+      },
+      () => {
+        this.getList();
       }
-    },()=>{
-      this.getList()
-    })
+    );
+  }
+
+  handleSearchMajor(e) {
+    const { value } = e;
+    let majorHistory = Taro.getStorageSync("majorHistory");
+    if (majorHistory.constructor === Array) {
+      const findIdx = majorHistory.findIndex((f) => f == value);
+      if (findIdx > -1) {
+        majorHistory.splice(findIdx, 0);
+      }
+      majorHistory.push(value);
+    } else {
+      majorHistory = [value];
+    }
+    Taro.setStorageSync("majorHistory", majorHistory);
+    this.setState({
+      majorHistory,
+    });
+    this.goMajor(value);
+  }
+
+  handleRmHistory() {
+    Taro.setStorageSync("majorHistory", []);
+    this.setState({
+      majorHistory: [],
+    });
+  }
+
+  goMajor(majorName) {
+    Taro.navigateTo({
+      url: `/pages/choose/college/index?majorName=${majorName}`,
+    });
   }
 
   render() {
     const tabs = ["按选科查专业", "按学校查选科", "按专业查选科"];
-    const { activeTab, position,currentData,isGetList } = this.state;
-    const subItems = ["物理", "历史"];
-    const college = new Array(20).fill({});
-    const historyItem = ["物理", "历史", "23333"];
+    const {
+      activeTab,
+      position,
+      currentData,
+      isGetList,
+      majorHistory,
+    } = this.state;
     const {
       Common,
       Subject: { subjectFilter },
     } = this.props.store;
-    const scrollViewHeight = getScrollViewHeight(117+86+100)
+    const scrollViewHeight = getScrollViewHeight(117 + 86 + 100);
     return (
       <View className="b-choose">
         <View className="top-bar">
@@ -191,16 +239,17 @@ class Index extends Component {
             <View className="choose-subject">
               {subjectFilter.type === "TYPE_ALL_IN_3" && (
                 <View className="sub-select">
-                  <View className="sub-title">组合选科</View>
+                  <View className="sub-title">按组合选科</View>
                   <View className="sub-list">
                     {subjectFilter.sub3.map((subject) =>
                       this.stepItem(subject, 3)
                     )}
                   </View>
+                  <View className='sub-desc'>此种选科组合可覆盖85.5%的专业</View>
                 </View>
               )}
               {subjectFilter.type === "TYPE_2_AND_4" && (
-                <View className="sub-select">
+                <View className="sub-select b-bottom-line">
                   <View className="sub-title">首选科目</View>
                   <View className="sub-list">
                     {subjectFilter.sub1.map((subject) =>
@@ -245,7 +294,7 @@ class Index extends Component {
         {activeTab === "按学校查选科" && (
           <View className="main">
             <View className="search-bar">
-              <Search onConfirm={this.handleSearch.bind(this)}/>
+              <Search onConfirm={this.handleSearchCollege.bind(this)} />
             </View>
             <ScrollView
               className="search-list"
@@ -290,15 +339,24 @@ class Index extends Component {
         {activeTab === "按专业查选科" && (
           <View className="main">
             <View className="search-bar2">
-              <Search placeholder="搜索专业" />
+              <Search
+                placeholder="搜索专业"
+                onConfirm={this.handleSearchMajor.bind(this)}
+              />
             </View>
             <View className="history-option">
               <View className="title">历史搜索</View>
-              <Image className="remove" src={RemoveIcon}></Image>
+              <Image
+                className="remove"
+                src={RemoveIcon}
+                onClick={this.handleRmHistory.bind(this)}
+              ></Image>
             </View>
             <View className="history-list">
-              {historyItem.map((n) => (
-                <View className="item">{n}</View>
+              {majorHistory.map((n) => (
+                <View className="item" onClick={this.goMajor.bind(this, n)}>
+                  {n}
+                </View>
               ))}
             </View>
           </View>

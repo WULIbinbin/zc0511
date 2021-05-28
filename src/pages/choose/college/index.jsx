@@ -2,8 +2,8 @@ import { Component } from "react";
 import { View, ScrollView } from "@tarojs/components";
 import { observer, inject } from "mobx-react";
 import Taro from "@tarojs/taro";
-import { PickerSelect, Table } from "../../../components/index";
-import { SearchSubject } from "../../../request/apis/college";
+import { PickerSelect, Table, CollegeItem } from "../../../components/index";
+import { SearchSubject, GetCollegeDetail } from "../../../request/apis/college";
 import { getScrollViewHeight } from "../../../utils/tool";
 import "./index.scss";
 
@@ -13,6 +13,7 @@ class Index extends Component {
   state = {
     params: {},
     tbody: [],
+    collegeDetail: {},
   };
   componentWillMount() {}
 
@@ -22,23 +23,40 @@ class Index extends Component {
 
   componentDidShow() {
     const {
-      options: { subStr, fromProvince },
+      options: { subStr, fromProvince, schoolName, majorName },
     } = getCurrentPages()[getCurrentPages().length - 1];
     Taro.showLoading();
+    const obj = {};
     const params = {
       pageNum: 1,
       pageSize: 20,
     };
     subStr && (params.subStr = subStr);
     fromProvince && (params.fromProvince = fromProvince);
-    this.setState(
-      {
-        params,
-      },
-      () => {
-        this.getList();
+    schoolName && (params.schoolName = schoolName);
+    majorName && (params.majorName = majorName);
+    obj.params = params;
+    this.setState(obj, () => {
+      this.getList();
+      if (!!params.schoolName) {
+        GetCollegeDetail(params.schoolName).then((res) => {
+          const collegeDetail = res.data;
+          if (!!collegeDetail.CollegeTags) {
+            collegeDetail.CollegeTags = collegeDetail.CollegeTags.substring(
+              1,
+              collegeDetail.CollegeTags.length - 1
+            )
+              .split(",")
+              .map((n) => {
+                return n.replace(" ", "");
+              });
+          }
+          this.setState({
+            collegeDetail: { ...collegeDetail },
+          });
+        });
       }
-    );
+    });
   }
 
   componentDidHide() {}
@@ -76,15 +94,12 @@ class Index extends Component {
         params.schoolType = "";
       }
     }
-    const { subStr, fromProvince, pageNum, pageSize } = this.state.params;
     this.setState(
       {
         params: {
-          subStr,
-          fromProvince,
-          pageNum,
-          pageSize,
+          ...this.state.params,
           ...params,
+          pageNum:1
         },
         tbody: [],
       },
@@ -97,24 +112,35 @@ class Index extends Component {
   getList() {
     let { params, tbody } = this.state;
     Taro.showLoading();
-    SearchSubject(params).then((res) => {
-      Taro.hideLoading();
-      const { list, pages } = res.data;
-      const newlist = list.map((n) => {
-        return {
-          ...n,
-          includes: "-",
-          sub: ["不限", "物理", "历史"][n.sub] || "不限",
-        };
+    SearchSubject(params)
+      .then((res) => {
+        Taro.hideLoading();
+        const { list, pages } = res.data;
+        const newlist = list.map((n) => {
+          return {
+            ...n,
+            includes: "-",
+            sub: ["不限", "物理", "历史"][n.sub] || "不限",
+          };
+        });
+        tbody = tbody.concat(newlist);
+        if (params.pageNum < pages) {
+          params.pageNum += 1;
+        }
+        this.setState({
+          tbody,
+          params,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        Taro.showToast({ title: "服务器繁忙，稍后重试", icon: "none" });
       });
-      tbody = tbody.concat(newlist);
-      if (params.pageNum < pages) {
-        params.pageNum += 1;
-      }
-      this.setState({
-        tbody,
-        params,
-      });
+  }
+
+  goDetail(name) {
+    Taro.navigateTo({
+      url: `/pages/college/detail/index?name=${name}`,
     });
   }
 
@@ -140,6 +166,11 @@ class Index extends Component {
     const {
       Common: { province, level },
     } = this.props.store;
+    const {
+      tbody,
+      collegeDetail,
+      params: { subStr, majorName },
+    } = this.state;
     const pickers = [
       {
         label: "院校地区",
@@ -150,17 +181,22 @@ class Index extends Component {
         range: level,
       },
     ];
-    const scrollViewHeight = getScrollViewHeight(90);
-    const { tbody } = this.state;
+    let curTopVisiteHeight = 0;
+    if (!!subStr || !!majorName) {
+      curTopVisiteHeight = 90;
+    }
+    const scrollViewHeight = getScrollViewHeight(curTopVisiteHeight);
     return (
       <View className="b-choose-college">
-        <View className="top-bar">
-          <PickerSelect
-            style={{ padding: "0 140rpx" }}
-            range={pickers}
-            onChange={this.handleChange.bind(this)}
-          />
-        </View>
+        {curTopVisiteHeight > 0 && (
+          <View className="top-bar">
+            <PickerSelect
+              style={{ padding: "0 140rpx" }}
+              range={pickers}
+              onChange={this.handleChange.bind(this)}
+            />
+          </View>
+        )}
         <ScrollView
           style={{ height: scrollViewHeight }}
           scrollY
@@ -169,6 +205,15 @@ class Index extends Component {
           onScrollToLower={this.getList.bind(this)}
           lowerThreshold={200}
         >
+          {collegeDetail.CollegeName && (
+            <CollegeItem
+              icon={collegeDetail.CoverImage}
+              name={collegeDetail.CollegeName}
+              labels={collegeDetail.CollegeTags}
+              local={collegeDetail.Province}
+              goto={this.goDetail.bind(this, collegeDetail.CollegeName)}
+            />
+          )}
           <View className="list">
             <Table thead={thead} tbody={tbody} />
           </View>
