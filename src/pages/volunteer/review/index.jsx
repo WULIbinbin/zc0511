@@ -26,7 +26,7 @@ class Index extends Component {
       <View className="b-vol-page">
         <VolTitle title="志愿审核报告" desc="报告单号：CYZY-0000001"></VolTitle>
         <VolTestInfo />
-        <VolTable />
+        <VolTable showData={false} todo='/pages/volunteer/batch/index'/>
         <VolPayment />
         <VolReport />
       </View>
