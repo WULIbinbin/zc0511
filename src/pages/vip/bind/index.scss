@@ -1,0 +1,40 @@
+@import "../../../styles/mixin.scss";
+
+.b-vip-bind {
+  &-page {
+    @include flex-column();
+    background-color: $bg-color;
+    padding: 0 25px;
+  }
+  &-desc {
+    font-size: 26px;
+    color: #666666;
+    margin: 30px 0;
+  }
+  &-content {
+    @include shadow-radius();
+    @include flex-column();
+    width: 100%;
+    box-sizing: border-box;
+    padding: 50px 36px;
+    background-color: $white-color;
+  }
+  &-input {
+    width: 100%;
+    box-sizing: border-box;
+    height: 90px;
+    &:first-of-type {
+      margin-bottom: 30px;
+    }
+  }
+  &-btn {
+    @include flex-row-center-center();
+    height: 100px;
+    background: #ea4438;
+    border-radius: 20px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-top:100px;
+  }
+}

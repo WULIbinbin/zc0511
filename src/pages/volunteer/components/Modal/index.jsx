@@ -1,6 +1,7 @@
 import { View, Image } from "@tarojs/components";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { EChart } from "echarts-taro3-react";
+import MidTitle from "../MidTitle";
 
 import "./index.scss";
 
@@ -80,10 +81,7 @@ export default function ({ echart = null }) {
   }, [gaugeChart.current]);
   return (
     <View className="b-vol-modal">
-      <View className="b-vol-modal-options b-bottom-line">
-        <View className="b-underline-title">霍兰德职业模型</View>
-        <Image className="b-vol-modal-edit"></Image>
-      </View>
+      <MidTitle title="霍兰德职业模型" showIcon={false} />
       <View className="b-vol-modal-content">
         <View className="b-vol-modal-chart-title">
           职业兴趣测试结果显示您的类型属于

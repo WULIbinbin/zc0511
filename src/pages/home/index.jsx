@@ -13,6 +13,8 @@ import { GetBanner } from "../../request/apis/home";
 import { WxPay } from "../../request/apis/account";
 import "./index.scss";
 
+import HomeBanner2Png from '../../static/image/home-banner2.png'
+
 @inject("store")
 @observer
 class Index extends Component {
@@ -33,6 +35,12 @@ class Index extends Component {
   componentDidShow() {}
 
   componentDidHide() {}
+
+  gotoGuide(){
+    Taro.navigateTo({
+      url:'/pages/vip/guide/index'
+    })
+  }
 
   testPay() {
     WxPay(1)
@@ -72,7 +80,7 @@ class Index extends Component {
           <HomeBanner banner={banner} />
           <HomeNavigator items={items} />
           <HomeTitle title="人工智能指导" />
-          <Image className="b-home-poster"></Image>
+          <Image className="b-home-poster" src={HomeBanner2Png} onClick={this.gotoGuide}></Image>
           <HomeTitle title="志愿填报服务" />
           <HomeServer />
         </View>

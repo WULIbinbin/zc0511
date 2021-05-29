@@ -3,7 +3,14 @@
 $icon:37px;
        
 .b-mine{
-  padding:30px 26px 80px;
+  padding-bottom:80px;
+  &-top{
+    background-color: $white-color;
+    padding:30px 25px 0;
+  }
+  &-bottom{
+    padding:0 25px;
+  }
   &-numbers{
     width: 100%;
     @include flex-row();

@@ -5,7 +5,7 @@ import "./index.scss";
 import StarSel from "../../image/star-sel.png";
 import StarNor from "../../image/star-nor.png";
 
-export default function ({ icon = "", name = "" }) {
+export default function ({ icon = "", name = "", onChange = null }) {
   const [num, setNum] = useState(0);
   const stars = new Array(5).fill(false);
   const [mapStar, setStar] = useState(stars);
@@ -16,6 +16,7 @@ export default function ({ icon = "", name = "" }) {
       });
       setStar(newStars);
       setNum(n + 1);
+      onChange && onChange(num);
     },
     [mapStar]
   );
@@ -26,7 +27,7 @@ export default function ({ icon = "", name = "" }) {
         <View className="b-vol-star-name">{name}：</View>
       </View>
       <View className="b-vol-star-content">
-        {mapStar.map((n,idx) => (
+        {mapStar.map((n, idx) => (
           <Image
             className="b-vol-star-img"
             src={n ? StarSel : StarNor}

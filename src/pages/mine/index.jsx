@@ -75,64 +75,69 @@ class Index extends Component {
     return (
       <PageView bgColor="#f7f7f7">
         <View className="b-mine">
-          <UserProfile phone={studentInfo.tel}/>
-          <View className="b-mine-numbers">
-            {numbers.map((n, i) => (
-              <View className={["items", i === 0 && "b-right-line"]}>
-                <View className="num">{n.num}</View>
-                <View className="label">{n.label}</View>
-              </View>
-            ))}
-          </View>
-
-          <View className="b-mine-vip-banner">
-            <Image
-              className="vip-banner"
-              src={VipBanner}
-              mode="widthFix"
-            ></Image>
-          </View>
-          <Card
-            label="会员卡绑定"
-            icon={IconVip}
-            accessTo={this.handleTo.bind(this, "/pages/user/record/index")}
-          />
-          <Card
-            label="录入信息"
-            icon={IconSave}
-            accessTo={this.handleTo.bind(this, "/pages/user/record/index")}
-          >
-            {studentInfo.province && (
-              <View className="b-mine-information">
-                {infos.map((la) => (
-                  <View className="info-item">
-                    <View className="label">{la.label}</View>
-                    {la.info.length &&
-                      la.info.map((items) => (
-                        <View className="items">{items}</View>
-                      ))}
-                  </View>
-                ))}
-              </View>
-            )}
-          </Card>
-
-          <View className="b-mine-twice-enter">
-            <View className="enter-item">
-              <View className="num">
-                {enter1.num}
-                <View className="plus">+</View>
-              </View>
-              <View className="label">
-                <Image className="icon" src={enter1.icon}></Image>
-                <View className="text">{enter1.text}</View>
-              </View>
+          <View className="b-mine-top">
+            <UserProfile phone={studentInfo.tel} />
+            <View className="b-mine-numbers">
+              {numbers.map((n, i) => (
+                <View className={["items", i === 0 && "b-right-line"]}>
+                  <View className="num">{n.num}</View>
+                  <View className="label">{n.label}</View>
+                </View>
+              ))}
             </View>
-            <View className="enter-item">
-              <View className="num">{enter2.num}</View>
-              <View className="label">
-                <Image className="icon" src={enter2.icon}></Image>
-                <View className="text">{enter2.text}</View>
+
+            <View className="b-mine-vip-banner">
+              <Image
+                onClick={this.handleTo.bind(this, "/pages/vip/guide/index")}
+                className="vip-banner"
+                src={VipBanner}
+                mode="widthFix"
+              ></Image>
+            </View>
+          </View>
+          <View className="b-mine-bottom">
+            <Card
+              label="会员卡绑定"
+              icon={IconVip}
+              accessTo={this.handleTo.bind(this, "/pages/vip/bind/index")}
+            />
+            <Card
+              label="录入信息"
+              icon={IconSave}
+              accessTo={this.handleTo.bind(this, "/pages/user/record/index")}
+            >
+              {studentInfo.province && (
+                <View className="b-mine-information">
+                  {infos.map((la) => (
+                    <View className="info-item">
+                      <View className="label">{la.label}</View>
+                      {la.info.length &&
+                        la.info.map((items) => (
+                          <View className="items">{items}</View>
+                        ))}
+                    </View>
+                  ))}
+                </View>
+              )}
+            </Card>
+
+            <View className="b-mine-twice-enter">
+              <View className="enter-item">
+                <View className="num">
+                  {enter1.num}
+                  <View className="plus">+</View>
+                </View>
+                <View className="label">
+                  <Image className="icon" src={enter1.icon}></Image>
+                  <View className="text">{enter1.text}</View>
+                </View>
+              </View>
+              <View className="enter-item">
+                <View className="num">{enter2.num}</View>
+                <View className="label">
+                  <Image className="icon" src={enter2.icon}></Image>
+                  <View className="text">{enter2.text}</View>
+                </View>
               </View>
             </View>
           </View>

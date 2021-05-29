@@ -173,3 +173,18 @@ page {
   color: #666666;
   background: #f9f9f9;
 }
+
+.b-vol-pages {
+  &-options {
+    @include flex-row-center-center();
+    position: relative;
+    padding: 30px 0;
+    width: 100%;
+    &-edit {
+      height: 38px;
+      width: 38px;
+      position: absolute;
+      right: 10px;
+    }
+  }
+}

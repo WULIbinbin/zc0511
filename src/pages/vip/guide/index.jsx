@@ -1,14 +1,14 @@
 import { Component } from "react";
-import { View,Image } from "@tarojs/components";
+import { View, Image } from "@tarojs/components";
 import { observer, inject } from "mobx-react";
 
 import "./index.scss";
 
-import Lock from "../../static/image/lock.png";
+import Lock from "../../../static/image/lock.png";
 
-import Tuxing1 from "../../static/image/tuxing1-2.png";
-import Tuxing2 from "../../static/image/tuxing2-2.png";
-import Tuxing3 from "../../static/image/tuxing3-2.png";
+import Tuxing1 from "../../../static/image/tuxing1-2.png";
+import Tuxing2 from "../../../static/image/tuxing2-2.png";
+import Tuxing3 from "../../../static/image/tuxing3-2.png";
 
 @inject("store")
 @observer
@@ -35,11 +35,11 @@ class Index extends Component {
         desc: "分析所填的志愿方案",
         bg: Tuxing2,
       },
-      {
-        title: "志愿填报综合报告",
-        desc: "形成全面分析报告",
-        bg: Tuxing3,
-      },
+      // {
+      //   title: "志愿填报综合报告",
+      //   desc: "形成全面分析报告",
+      //   bg: Tuxing3,
+      // },
     ];
     return (
       <View className="b-guide-page">
@@ -57,10 +57,15 @@ class Index extends Component {
             </View>
           ))}
         </View>
-        <View className='vip-btn'>
-          <View className='text'>开通VIP 全面解锁</View>
+        <View className="b-vol-page-button-group">
+          <View className="b-vol-page-button b-vol-page-button-left">
+            <View className="b-vol-page-button-money">￥</View>299.00
+          </View>
+          <View className="b-vol-page-button b-vol-page-button-right">
+            立即解锁
+          </View>
         </View>
-        <View className='example'>看看 示例报告</View>
+        <View className="example">看看 示例报告</View>
       </View>
     );
   }

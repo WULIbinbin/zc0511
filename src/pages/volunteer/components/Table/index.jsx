@@ -1,11 +1,17 @@
 import { View, Image } from "@tarojs/components";
 import { Table } from "../../../../components/index";
+import MidTitle from "../MidTitle";
 import "./index.scss";
 
-export default function ({}) {
+export default function ({
+  showIcon = true,
+  showMidTitle = true,
+  batch = "本科批",
+  data = [],
+}) {
   const thead = [
     {
-      key: "willing",
+      key: "sort",
       name: "志愿",
     },
     {
@@ -13,71 +19,26 @@ export default function ({}) {
       name: "院校代码",
     },
     {
-      key: "name",
+      key: "schoolName",
       name: "院校名称",
     },
     {
-      key: "order",
+      key: "adjust",
       name: "是否服从调剂",
     },
   ];
-  const tbody = [
-    {
-      willing: "",
-      code: "4757",
-      name: "湘潭大学",
-      order: "否",
-    },
-    {
-      willing: "",
-      code: "4757",
-      name: "湘潭大学",
-      order: "否",
-    },
-    {
-      willing: "",
-      code: "4757",
-      name: "湘潭大学",
-      order: "否",
-    },
-    {
-      willing: "",
-      code: "4757",
-      name: "湘潭大学",
-      order: "否",
-    },
-    {
-      willing: "",
-      code: "4757",
-      name: "湘潭大学",
-      order: "否",
-    },
-    {
-      willing: "",
-      code: "4757",
-      name: "湘潭大学",
-      order: "否",
-    },
-  ].map((n, i) => {
-    return {
-      ...n,
-      willing: i + 1,
-    };
-  });
+
   return (
     <View className="b-vol-table">
       <View className="b-vol-table-main">
-        <View className="b-vol-table-options b-bottom-line">
-          <View className="b-underline-title">志愿填报信息</View>
-          <Image className="b-vol-table-edit"></Image>
-        </View>
+        {showMidTitle && <MidTitle title="志愿填报信息" showIcon={showIcon} />}
         <View className="b-vol-table-content">
-          <View className="b-vol-table-title">本科批</View>
-          <Table thead={thead} tbody={tbody}></Table>
+          <View className="b-vol-table-title">{batch}</View>
+          <Table thead={thead} tbody={data}></Table>
         </View>
       </View>
-      <View className="b-vol-table-chance">还有2次智能审核机会</View>
-      <View className="b-vol-table-btn">提交审核</View>
+      {/* <View className="b-vol-table-chance">还有2次智能审核机会</View>
+      <View className="b-vol-table-btn">提交审核</View> */}
     </View>
   );
 }

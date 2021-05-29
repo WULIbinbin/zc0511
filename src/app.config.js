@@ -11,7 +11,8 @@ export default {
     "pages/subject/detail/index",
     "pages/choose/index/index",
     "pages/choose/college/index",
-    "pages/guide/index",
+    "pages/vip/guide/index",
+    "pages/vip/bind/index",
   ],
   subpackages: [
     {
