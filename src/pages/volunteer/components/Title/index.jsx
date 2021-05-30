@@ -1,11 +1,13 @@
 import { View, Image } from "@tarojs/components";
-import './index.scss'
+import "./index.scss";
 
-import Recommend from '../../../../static/image/recommend.png'
+import Recommend from "../../../../static/image/tianbao.png";
+import Review from "../../../../static/image/review.png";
 
 export default function ({ type = "recommend", title = "", desc = "" }) {
   const icons = {
-    recommend:Recommend
+    recommend: Recommend,
+    review: Review,
   };
   return (
     <View className="b-vol-title">

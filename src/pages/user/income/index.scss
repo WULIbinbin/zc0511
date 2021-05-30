@@ -20,9 +20,19 @@
       z-index: 1;
       &-title {
         @include flex-row-center-center();
+        width: 100%;
         font-size: 30px;
         font-weight: bold;
         color: #f9f9f9;
+        position: relative;
+        .b-navigate-back {
+          position: absolute;
+          left: 25px;
+          top: 50%;
+          transform: translateY(-50%);
+          height: 36px;
+          width: 36px;
+        }
       }
       &-desc {
         font-size: 20px;

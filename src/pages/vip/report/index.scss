@@ -1,0 +1,38 @@
+@import "../../../styles/mixin.scss";
+
+.b-vip-report {
+  &-page {
+    @include flex-column();
+    background-color: $bg-color;
+  }
+  &-item {
+    @include flex-row-center-between();
+    @include shadow-radius();
+    margin: 20px 25px 0;
+    background-color: $white-color;
+    padding:50px 10px 50px 36px;
+    &-icon {
+      height: 48px;
+      width: 48px;
+      margin:0 9px 36px 0;
+    }
+    &-info {
+      @include flex-column();
+      flex: 1;
+    }
+    &-title {
+      font-size: 28px;
+      font-weight: bold;
+      color: #333333;
+      margin-bottom: 8px;
+    }
+    &-order {
+      font-size: 24px;
+      color: #666666;
+    }
+    &-access{
+      height: 38px;
+      width: 38px;
+    }
+  }
+}

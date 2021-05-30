@@ -75,8 +75,7 @@ $icon:37px;
     @include flex-row-center-between();
     .enter-item{
       height: 170px;
-      box-shadow: 5px 8px 19px 0px rgba(203, 203, 203, 0.3);
-      border-radius: 13px;
+      @include shadow-radius();
       flex:1;
       background-color: #fff;
       @include flex-column-center-center();

@@ -4,17 +4,13 @@ import { View, Image } from "@tarojs/components";
 import { observer, inject } from "mobx-react";
 import { Tabbar } from "../../../components/index";
 import "./index.scss";
-
+import ArrowLeft from "../../../static/image/arrow-left.png";
 const tabs = ["推广明细", "分成明细"];
 
 @inject("store")
 @observer
 class Index extends Component {
-  componentWillMount() {
-    Taro.setNavigationBarTitle({
-      title:'2333'
-    })
-  }
+  componentWillMount() {}
 
   componentDidMount() {}
 
@@ -36,6 +32,13 @@ class Index extends Component {
         <View className="b-income-bg"></View>
         <View className="b-income-topic">
           <View className="b-income-topic-title" style={statusBarStyle}>
+            <Image
+              className="b-navigate-back"
+              src={ArrowLeft}
+              onClick={() => {
+                Taro.navigateBack();
+              }}
+            ></Image>
             我的收益
           </View>
           <View className="b-income-topic-desc">累计收益（元）</View>

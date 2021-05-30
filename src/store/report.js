@@ -6,19 +6,10 @@ const report = observable({
     college: [],
   },
   get schoolBatch() {
-    return this.setKeyEmpty(this.batch.school);
+    return this.batch.school;
   },
   get collegeBatch() {
-    return this.setKeyEmpty(this.batch.college);
-  },
-  setKeyEmpty(data = [], keyname = "-") {
-    return [...data].map(item=>{
-      return {
-        ...item,
-        schoolName:item.schoolName||keyname,
-        code:item.code||keyname
-      }
-    })
+    return this.batch.college;
   },
   setBatch(batch) {
     this.batch = batch;

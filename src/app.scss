@@ -127,7 +127,7 @@ page {
     font-size: 24px;
     color: #999999;
     line-height: 36px;
-    margin: 20px 25px 50px;
+    margin: 20px 25px;
   }
   &-button-group {
     @include flex-row-center();

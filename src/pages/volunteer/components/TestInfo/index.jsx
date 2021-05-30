@@ -1,38 +1,20 @@
 import { View, Image } from "@tarojs/components";
 import { Table } from "../../../../components/index";
+import MidTitle from "../MidTitle";
+import Store from "../../../../store/index";
 import "./index.scss";
 
-//import Recommend from "../../../../static/image/recommend.png";
-
-export default function ({}) {
-  const subject = ["物理", "生物", "化学"];
-  const score = [
-    {
-      sub: "语文",
-      score: 100,
-    },
-    {
-      sub: "数学",
-      score: 100,
-    },
-    {
-      sub: "英语",
-      score: 100,
-    },
-    {
-      sub: "物理",
-      score: 100,
-    },
-
-    {
-      sub: "生物",
-      score: 100,
-    },
-    {
-      sub: "化学",
-      score: 100,
-    },
-  ];
+export default function ({
+  showMidTitle = true,
+  midTitle = "center",
+  tableData = [],
+}) {
+  const {
+    Account: { studentInfo, subjectInfo },
+  } = Store;
+  const mainSubject = ["语文", "数学", "英语"];
+  const mapSubject = [...subjectInfo]
+  const otherSubject = mapSubject.filter(f=>!mainSubject.includes(f.subject)).map(n=>n.subject)
   const thead = [
     {
       key: "year",
@@ -53,51 +35,57 @@ export default function ({}) {
   ];
   const tbody = [
     {
-      year:'2020',
-      subject:'物/化/生',
-      score:'520',
-      queue:'37565'
+      year: "2020",
+      subject: "物/化/生",
+      score: "520",
+      queue: "37565",
     },
     {
-      year:'2020',
-      subject:'物/化/生',
-      score:'520',
-      queue:'37565'
+      year: "2020",
+      subject: "物/化/生",
+      score: "520",
+      queue: "37565",
     },
     {
-      year:'2020',
-      subject:'物/化/生',
-      score:'520',
-      queue:'37565'
+      year: "2020",
+      subject: "物/化/生",
+      score: "520",
+      queue: "37565",
     },
-  ]
+  ];
   return (
     <View className="b-vol-test">
-      <View className="b-vol-test-options b-bottom-line">
-        <View className="b-underline-title">我的考试信息</View>
-        <Image className="b-vol-test-edit"></Image>
-      </View>
+      {showMidTitle &&
+        (midTitle === "center" ? (
+          <MidTitle title="我的考试信息" showIcon={false} />
+        ) : (
+          midTitle
+        ))}
       <View className="b-vol-test-content">
         <View className="b-vol-test-local">
-          性别:男&nbsp;&nbsp;&nbsp;地区：北京丰台区
+          性别:{studentInfo.sex}&nbsp;&nbsp;&nbsp;&nbsp;地区:{studentInfo.area}
         </View>
         <View className="b-vol-test-score">
           <View className="b-vol-test-score-text">总分:</View>
-          <View className="b-vol-test-score-num">520</View>
-          {subject.map((n) => (
+          <View className="b-vol-test-score-num">{studentInfo.score}</View>
+          {otherSubject.map((n) => (
             <View className="b-vol-test-subject">{n}</View>
           ))}
         </View>
         <View className="b-vol-test-all-score">
-          {score.map((n) => (
+          {mapSubject.map((n) => (
             <View className="b-vol-test-all-score-item">
-              <View>{n.sub}</View>
+              <View>{n.subject}</View>
               <View>{n.score}</View>
             </View>
           ))}
         </View>
-        <View className="b-vol-test-traslate">转化为近两年成绩</View>
-        <Table thead={thead} tbody={tbody} theadType='default'/>
+        {tableData.length > 0 && (
+          <>
+            <View className="b-vol-test-traslate">转化为近两年成绩</View>
+            <Table thead={thead} tbody={tbody} theadType="default" />
+          </>
+        )}
       </View>
     </View>
   );

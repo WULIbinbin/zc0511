@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { View, Image, ScrollView } from "@tarojs/components";
 import PickerLabel from "../PickerLabel/index";
+import { getScrollViewHeight } from "../../utils/tool";
 import "./index.scss";
 
 function PickerSelect({
@@ -21,6 +22,7 @@ function PickerSelect({
   })();
   const [selected, setSelect] = useState(defaultSelected);
   const [currentShow, setPicker] = useState(-1);
+  const [compTop, setCompTop] = useState({});
   //刷新picker数组
   const [maps, setMaps] = useState([]);
   //当前选中的picker数据
@@ -71,21 +73,33 @@ function PickerSelect({
     onChange && onChange(selectedResult);
   });
 
-  useEffect(() => {
-    // const pickerDom = wx.createSelectorQuery();
-    // pickerDom.select("#b-picker-item-xjgatr").boundingClientRect();
-    // //pickerDom.selectViewport().scrollOffset()
-    // pickerDom.exec(function (res) {
-    //   console.log(res);
-    // });
+  useLayoutEffect(() => {
+    const pickerDom = wx.createSelectorQuery();
+    pickerDom
+      .select("#b-picker-item-xjgatr")
+      .fields(
+        {
+          size:true,
+          rect: true,
+          scrollOffset: true,
+        },
+        (res) => {
+          if (res) {
+            console.log(res)
+            setCompTop(Math.floor(res.top+res.height));
+          }
+        }
+      )
+      .exec();
   });
 
   const { screenWidth } = wx.getSystemInfoSync();
   const selectViewStyle = { width: screenWidth + "PX" };
+  const selectViewTop = compTop;
   return (
     <View
       className="b-picker-item"
-      style={{ ...style, ...selectViewStyle }}
+      style={{ ...style }}
       id="b-picker-item-xjgatr"
     >
       <View className="picker-group">
@@ -100,7 +114,10 @@ function PickerSelect({
         ))}
       </View>
       {currentShow >= 0 && (
-        <View className="select-view" style={selectViewStyle}>
+        <View
+          className="select-view"
+          style={{ ...selectViewStyle, top: selectViewTop }}
+        >
           <View className="select-content">
             <ScrollView scrollY className="select-wrap">
               <View className="select-items">

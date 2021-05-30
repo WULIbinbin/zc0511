@@ -1,31 +1,28 @@
-import { Component } from 'react'
-import { Provider } from 'mobx-react'
-import Store from './store/index'
+import { Component } from "react";
+import { Provider } from "mobx-react";
+import Store from "./store/index";
 
-import './app.scss'
+import "./app.scss";
 
 class App extends Component {
-  componentDidMount () {
+  componentDidMount() {
     const storage = wx.getStorageSync("token");
-    if(storage&&storage.access_token&&storage.phoneNumber){
-      Store.Account.GetUserInfo()
+    if (storage && storage.access_token && storage.phoneNumber) {
+      Store.Account.GetUserInfo();
+      Store.Account.CheckCode();
     }
   }
 
-  componentDidShow () {}
+  componentDidShow() {}
 
-  componentDidHide () {}
+  componentDidHide() {}
 
-  componentDidCatchError () {}
+  componentDidCatchError() {}
 
   // this.props.children 就是要渲染的页面
-  render () {
-    return (
-      <Provider store={Store}>
-        {this.props.children}
-      </Provider>
-    )
+  render() {
+    return <Provider store={Store}>{this.props.children}</Provider>;
   }
 }
 
-export default App
+export default App;

@@ -1,0 +1,120 @@
+@import "../../../styles/mixin.scss";
+
+.b-befit-list {
+  &-page {
+    @include flex-column();
+    background-color: $bg-color;
+  }
+  &-topbar {
+    height: 90px;
+    padding: 0 60px;
+    background-color: $white-color;
+  }
+  &-options {
+    height: 90px;
+    box-sizing: border-box;
+    padding: 0 25px;
+    background-color: $white-color;
+  }
+  &-selector {
+    @include flex-row-center-between();
+    padding: 0 35px;
+  }
+  &-length {
+    flex: 3;
+    font-size: 28px;
+    color: #ea4438;
+  }
+  &-content {
+    flex: 1;
+  }
+  &-item {
+    @include flex-row-center-between();
+    @include shadow-radius();
+    margin: 20px 25px 0;
+    position: relative;
+    background-color: $white-color;
+    padding: 50px 30px;
+    &-left {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background-color: $bg-color;
+    }
+    &-mid {
+      @include flex-column();
+      flex: 1;
+      padding: 0 30px;
+    }
+    &-name {
+      font-size: 32px;
+      color: #333333;
+    }
+    &-desc {
+      font-size: 26px;
+      color: #666666;
+      margin: 12px 0;
+    }
+    &-labels {
+      @include flex-row();
+    }
+    &-label {
+      height: 40px;
+      background: #f5f5f5;
+      line-height: 40px;
+      font-size: 24px;
+      color: #666666;
+      padding: 0 8px;
+      margin-right: 10px;
+    }
+    &-right {
+      @include flex-column();
+      align-items: flex-end;
+    }
+    &-precent {
+      font-size: 32px;
+      color: #333333;
+      margin-bottom: 12px;
+    }
+    &-risk {
+      font-size: 26px;
+      color: #ea4438;
+      &.bao {
+        color: #60ce7c;
+      }
+      &.wen {
+        color: #ef9034;
+      }
+    }
+    &-top-label {
+      position: absolute;
+      top: 0;
+      right: 80px;
+      width: 42px;
+      height: 54px;
+      background-color: #ea4438;
+      color: #fff;
+      line-height: 48px;
+      text-align: center;
+      font-size: 28px;
+      &::after {
+        position: absolute;
+        content: "";
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 0;
+        height: 0;
+        border-left: 21px solid transparent;
+        border-right: 21px solid transparent;
+        border-bottom: 9px solid #fff;
+      }
+      &.bao {
+        background-color: #60ce7c;
+      }
+      &.wen {
+        background-color: #ef9034;
+      }
+    }
+  }
+}

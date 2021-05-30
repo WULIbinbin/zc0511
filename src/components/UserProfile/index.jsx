@@ -2,7 +2,7 @@ import { View, OpenData } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import "./index.scss";
 
-function UserProfile({ phone = "" }) {
+function UserProfile({ phone = "", isVip = false }) {
   const gotoVip = () => {
     Taro.navigateTo({
       url: "/pages/vip/guide/index",
@@ -13,7 +13,7 @@ function UserProfile({ phone = "" }) {
       <OpenData type="userAvatarUrl" className="left"></OpenData>
       <View className="right" onClick={gotoVip}>
         {phone && <View className="phone">{phone}</View>}
-        <View className="vip">开通会员</View>
+        {!isVip && <View className="vip">开通会员</View>}
       </View>
     </View>
   );

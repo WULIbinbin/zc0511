@@ -32,21 +32,25 @@ class Index extends Component {
       {
         num: 0,
         label: "我的推荐",
+        link: "",
       },
       {
         num: 0,
         label: "我的收益",
+        link: "/pages/user/income/index",
       },
     ];
     const enter1 = {
-      text: "适合我的大学",
+      text: "适合大学",
       num: 99,
       icon: IconUniversity,
+      link: "/pages/befit/index/index",
     };
     const enter2 = {
-      text: "我的综合报告",
+      text: "我的报告",
       num: 0,
       icon: IconReport,
+      link: "/pages/vip/report/index",
     };
     const {
       Account: { studentInfo, subjectInfo },
@@ -76,24 +80,29 @@ class Index extends Component {
       <PageView bgColor="#f7f7f7">
         <View className="b-mine">
           <View className="b-mine-top">
-            <UserProfile phone={studentInfo.tel} />
+            <UserProfile phone={studentInfo.tel} isVip={!!studentInfo.vip} />
             <View className="b-mine-numbers">
               {numbers.map((n, i) => (
-                <View className={["items", i === 0 && "b-right-line"]}>
+                <View
+                  onClick={this.handleTo.bind(this, n.link)}
+                  className={["items", i === 0 && "b-right-line"]}
+                >
                   <View className="num">{n.num}</View>
                   <View className="label">{n.label}</View>
                 </View>
               ))}
             </View>
 
-            <View className="b-mine-vip-banner">
-              <Image
-                onClick={this.handleTo.bind(this, "/pages/vip/guide/index")}
-                className="vip-banner"
-                src={VipBanner}
-                mode="widthFix"
-              ></Image>
-            </View>
+            {!studentInfo.vip && (
+              <View className="b-mine-vip-banner">
+                <Image
+                  onClick={this.handleTo.bind(this, "/pages/vip/guide/index")}
+                  className="vip-banner"
+                  src={VipBanner}
+                  mode="widthFix"
+                ></Image>
+              </View>
+            )}
           </View>
           <View className="b-mine-bottom">
             <Card
@@ -122,7 +131,10 @@ class Index extends Component {
             </Card>
 
             <View className="b-mine-twice-enter">
-              <View className="enter-item">
+              <View
+                className="enter-item"
+                onClick={this.handleTo.bind(this, enter1.link)}
+              >
                 <View className="num">
                   {enter1.num}
                   <View className="plus">+</View>
@@ -132,7 +144,10 @@ class Index extends Component {
                   <View className="text">{enter1.text}</View>
                 </View>
               </View>
-              <View className="enter-item">
+              <View
+                className="enter-item"
+                onClick={this.handleTo.bind(this, enter2.link)}
+              >
                 <View className="num">{enter2.num}</View>
                 <View className="label">
                   <Image className="icon" src={enter2.icon}></Image>

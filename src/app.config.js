@@ -11,8 +11,6 @@ export default {
     "pages/subject/detail/index",
     "pages/choose/index/index",
     "pages/choose/college/index",
-    "pages/vip/guide/index",
-    "pages/vip/bind/index",
   ],
   subpackages: [
     {
@@ -33,6 +31,14 @@ export default {
     {
       root: "pages/user/",
       pages: ["income/index", "record/index"],
+    },
+    {
+      root: "pages/befit/",
+      pages: ["index/index", "list/index"],
+    },
+    {
+      root: "pages/vip/",
+      pages: ["guide/index", "bind/index", "report/index"],
     },
   ],
   tabBar: {

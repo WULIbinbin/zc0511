@@ -3,10 +3,17 @@ import Taro from "@tarojs/taro";
 import { GetSid, PhoneRegister, GetToken } from "../request/apis/account";
 import { GetStuInfo } from "../request/apis/inform";
 import Subject from "./subject";
+import Common from "./common";
 
 const account = observable({
   userInfo: {},
-  loginInfo: { phoneNumber: "", openId: "", access_token: "", token_type: "" },
+  loginInfo: {
+    code: "",
+    phoneNumber: "",
+    openId: "",
+    access_token: "",
+    token_type: "",
+  },
   get studentInfo() {
     return (this.userInfo && this.userInfo.student) || {};
   },
@@ -19,9 +26,9 @@ const account = observable({
       this.CheckCode()
         .then((code) => {
           return GetSid({
-            code,
+            code: that.loginInfo.code,
           }).then((res) => {
-            console.log("wxlogin成功====》", res);
+            console.log("==========================>wxlogin成功", res);
             const { sessionKey, openid } = res.data;
             const openId = openid;
             PhoneRegister({
@@ -31,7 +38,7 @@ const account = observable({
               openId,
             })
               .then((res) => {
-                console.log("获取手机号成功====》", res);
+                console.log("============================>获取手机号成功", res);
                 const { phoneNumber } = res.data;
                 GetToken(phoneNumber)
                   .then((res) => {
@@ -78,9 +85,12 @@ const account = observable({
     });
   },
   CheckCode() {
+    const that = this;
     const getCode = (resolve) => {
       wx.login({
         success(res) {
+          console.log("======================>重新获取code", res.code);
+          that.loginInfo.code = res.code;
           resolve(res.code);
         },
         fail(err) {
@@ -89,20 +99,20 @@ const account = observable({
       });
     };
     return new Promise((resolve, reject) => {
-      getCode(resolve);
-      // wx.checkSession({
-      //   success() {
-      //     const code = wx.getStorageSync("code");
-      //     if (!!code) {
-      //       resolve(code);
-      //     } else {
-      //       getCode(resolve);
-      //     }
-      //   },
-      //   fail() {
-      //     getCode(resolve);
-      //   },
-      // });
+      wx.checkSession({
+        success() {
+          const { code } = that.loginInfo;
+          if (!!code) {
+            resolve(code);
+          } else {
+            getCode(resolve);
+          }
+        },
+        fail() {
+          console.log("======================>code已过期");
+          getCode(resolve);
+        },
+      });
     });
   },
   GetUserInfo() {
@@ -110,9 +120,15 @@ const account = observable({
     console.log(that, Subject);
     GetStuInfo().then((res) => {
       wx.setStorageSync("userInfo", res.data);
-      //const { student,subList } = res.data;
-      that.userInfo = res.data;
-      
+      const { student, subList } = res.data;
+      student.sex = student.sex ? "男" : "女";
+      student.area = Common.zxCity.includes(student.province)
+        ? student.city + student.district
+        : student.province + student.city;
+      that.userInfo = {
+        subList,
+        student,
+      };
     });
   },
 });

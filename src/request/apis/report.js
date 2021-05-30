@@ -37,6 +37,14 @@ export function PreferenceSave(data = {}) {
   });
 }
 
+export function PreferenceSaveInfo(data = {}) {
+  return Request({
+    url: `/preference/saveInfo`,
+    method: "POST",
+    data,
+  });
+}
+
 export function SaveStar(data = {}) {
   return Request({
     url: `/student/saveStar`,

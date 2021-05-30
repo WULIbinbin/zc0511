@@ -19,15 +19,13 @@ class Index extends Component {
     const {
       Report: { collegeBatch, schoolBatch },
     } = this.props.store;
+    console.log(schoolBatch)
     return (
       <View className="b-vol-page">
         {schoolBatch.length > 0 && (
-          <VolTable data={schoolBatch} showMidTitle={false} showIcon={false} />
-        )}
-        {collegeBatch.length > 0 && (
           <VolTable
-            batch="高职专科批"
-            data={collegeBatch}
+            school={schoolBatch}
+            college={collegeBatch}
             showMidTitle={false}
             showIcon={false}
           />

@@ -10,7 +10,11 @@ import {
 import { observer, inject } from "mobx-react";
 import Taro from "@tarojs/taro";
 import { FormItem, SelectLabel } from "../../../components/index";
-import { PreferenceSearch, PreferenceSave } from "../../../request/apis/report";
+import {
+  PreferenceSearch,
+  PreferenceSave,
+  PreferenceList,
+} from "../../../request/apis/report";
 import "./index.scss";
 
 import PlusPng from "../image/plus.png";
@@ -19,12 +23,15 @@ const collegeItem = {
   sort: 1,
   code: "",
   schoolName: "",
-  adjust: "否",
+  adjust: false,
   type: 1,
 };
 
 const batchs = ["本科批", "高职专科批"];
-const adjust = ["否", "是"];
+const adjust = [
+  { name: "否", value: false },
+  { name: "是", value: true },
+];
 
 @inject("store")
 @observer
@@ -35,7 +42,17 @@ class Index extends Component {
     college: [],
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    PreferenceList().then((res) => {
+      if (res.status === 0) {
+        const { school, college } = res.data;
+        this.setState({
+          school,
+          college,
+        });
+      }
+    });
+  }
 
   componentWillUnmount() {}
 
@@ -82,6 +99,7 @@ class Index extends Component {
       .then((res) => {
         if (res.status === 0) {
           Taro.showToast({ title: "保存成功", icon: "success" });
+          Taro.navigateBack();
         } else {
           Taro.showToast({ title: "保存失败，请重试", icon: "none" });
         }
@@ -139,8 +157,7 @@ class Index extends Component {
         }
       }
     } else if (key === "adjust") {
-      value = adjust[value];
-      this.setItemData({ index, data: { [key]: value } });
+      this.setItemData({ index, data: { [key]: value == 1 } });
     }
   }
 
@@ -240,16 +257,20 @@ class Index extends Component {
                   ></Input>
                 </FormItem>
                 <FormItem labelWidth={200} label="是否服从调解：">
+                  {/* === 1 ? "是" : "否" */}
                   <Picker
                     className="b-vol-batch-item-picker"
-                    value={item.adjust === "是" ? 1 : 0}
+                    value={item.adjust}
                     range={adjust}
+                    rangeKey="name"
                     onChange={this.handleChange.bind(this, {
                       key: "adjust",
                       index,
                     })}
                   >
-                    <SelectLabel value={item.adjust}></SelectLabel>
+                    <SelectLabel
+                      value={item.adjust ? "是" : "否"}
+                    ></SelectLabel>
                   </Picker>
                 </FormItem>
               </View>

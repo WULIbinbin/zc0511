@@ -1,8 +1,10 @@
-import { View, Text,Input } from "@tarojs/components";
-import {FormItem} from '../../../../components/index'
+import { View, Text, Input } from "@tarojs/components";
+import { useCallback, useState } from "react";
+import { FormItem } from "../../../../components/index";
 import "./index.scss";
 
 export default function ({}) {
+  const [formData, setFormData] = useState({ wx: "", tel: "" });
   const price = [
     {
       name: "专家审核",
@@ -17,6 +19,16 @@ export default function ({}) {
       exact: "3次提交机会",
     },
   ];
+  const handleChange = useCallback((key, e) => {
+    const { value } = e.detail;
+    if (key === "tel" && value.length > 11) {
+      return;
+    }
+    setFormData({
+      ...formData,
+      [key]: e.detail.value,
+    });
+  });
   return (
     <View className="b-vol-payment-view">
       <View className="b-vol-payment">
@@ -38,15 +50,32 @@ export default function ({}) {
           <View className="b-vol-contact-desc">专家审核需留下联系方式</View>
         </View>
         <View className="b-vol-contact-content">
-          <FormItem label='微信：'>
-            <Input className='b-form-input' placeholder='输入微信账号'></Input>
+          <FormItem label="微信：">
+            <Input
+              className="b-form-input"
+              value={formData.wx}
+              onInput={(e) => {
+                handleChange("wx", e);
+              }}
+              placeholder="输入微信账号"
+            ></Input>
           </FormItem>
-          <FormItem label='手机：'>
-            <Input className='b-form-input' placeholder='请输入11位手机号码'></Input>
+          <FormItem label="手机：">
+            <Input
+              className="b-form-input"
+              type="number"
+              value={formData.tel}
+              maxlength={11}
+              onInput={(e) => {
+                handleChange("tel", e);
+              }}
+              placeholder="请输入11位手机号码"
+            ></Input>
           </FormItem>
         </View>
       </View>
-      <View className='b-vol-payment-btn'>立即支付</View>
+      <View className="b-vol-payment-chance">您有一次人工审核机会</View>
+      <View className="b-vol-payment-btn">立即提交</View>
     </View>
   );
 }
