@@ -5,21 +5,11 @@
   @include shadow-radius();
   margin: 20px 25px 0;
   background-color: $white-color;
-  &-options {
-    @include flex-row-center-center();
-    position: relative;
-    padding: 30px 0;
-    width: 100%;
-  }
-  &-edit {
-    height: 38px;
-    width: 38px;
-  }
   &-content {
     @include flex-column();
     box-sizing: border-box;
     width: 100%;
-    padding: 30px;
+    padding: 30px 0;
     .b-bottom-line {
       &::after {
         background-color: #cccccc;
@@ -78,7 +68,7 @@
       font-size: 28px;
       color: #666666;
       line-height: 40px;
-      margin: 30px 0 0;
+      margin: 30px 30px 0;
     }
   }
   &-unlock {
@@ -104,6 +94,8 @@
     &-tab {
       @include flex-row-center();
       flex-wrap: wrap;
+      padding:0 30px;
+      box-sizing: border-box;
       &-item {
         flex: 1;
         padding: 18px 0;
@@ -126,6 +118,8 @@
     }
     &-content {
       @include flex-column();
+      padding:0 30px;
+      box-sizing: border-box;
     }
     &-title {
       margin: 40px 0 16px 0;
