@@ -38,21 +38,11 @@ const adjust = [
 class Index extends Component {
   state = {
     actived: "本科批",
-    school: [collegeItem],
-    college: [],
+    // school: [collegeItem],
+    // college: [],
   };
 
-  componentDidMount() {
-    PreferenceList().then((res) => {
-      if (res.status === 0) {
-        const { school, college } = res.data;
-        this.setState({
-          school,
-          college,
-        });
-      }
-    });
-  }
+  componentDidMount() {}
 
   componentWillUnmount() {}
 
@@ -67,16 +57,19 @@ class Index extends Component {
   }
 
   gotoPreview() {
-    const { school, college } = this.state;
-    const { Report } = this.props.store;
-    Report.setBatch({ school, college });
     Taro.navigateTo({
       url: "/pages/volunteer/batchInfo/index",
     });
   }
 
   handlePlus() {
-    const { school, college, actived } = this.state;
+    const { actived } = this.state;
+    const {
+      Review,
+      Review: {
+        batch: { school, college },
+      },
+    } = this.props.store;
     const newItem = { ...collegeItem };
     if (actived === "高职专科批") {
       newItem.type = 0;
@@ -87,14 +80,15 @@ class Index extends Component {
       newItem.sort = school.length + 1;
       school.push(newItem);
     }
-    this.setState({
-      school,
-      college,
-    });
+    Review.setBatch({ school, college });
   }
 
   toSave() {
-    const { school, college } = this.state;
+    const {
+      Review: {
+        batch: { school, college },
+      },
+    } = this.props.store;
     PreferenceSave(JSON.stringify([...school, ...college]))
       .then((res) => {
         if (res.status === 0) {
@@ -110,7 +104,11 @@ class Index extends Component {
   }
 
   handleSubmit() {
-    const { school, college } = this.state;
+    const {
+      Review: {
+        batch: { school, college },
+      },
+    } = this.props.store;
     if (school.findIndex((f) => !f.code || !f.schoolName) > -1) {
       Taro.showModal({
         title: "提示",
@@ -183,7 +181,13 @@ class Index extends Component {
   }
 
   setItemData({ index, data }) {
-    const { school, college, actived } = this.state;
+    const { actived } = this.state;
+    const {
+      Review,
+      Review: {
+        batch: { school, college },
+      },
+    } = this.props.store;
     if (actived === "高职专科批") {
       college.splice(index, 1, {
         ...college[index],
@@ -195,14 +199,16 @@ class Index extends Component {
         ...data,
       });
     }
-    this.setState({
-      school,
-      college,
-    });
+    Review.setBatch({ school, college });
   }
 
   render() {
-    const { school, college, actived } = this.state;
+    const { actived } = this.state;
+    const {
+      Review: {
+        batch: { school, college },
+      },
+    } = this.props.store;
     let items = school;
     if (actived === "高职专科批") {
       items = college;

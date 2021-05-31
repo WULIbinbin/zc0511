@@ -5,12 +5,17 @@ import Store from "./store/index";
 import "./app.scss";
 
 class App extends Component {
-  componentDidMount() {
+  onLaunch(){
     const storage = wx.getStorageSync("token");
-    if (storage && storage.access_token && storage.phoneNumber) {
-      Store.Account.GetUserInfo();
-      Store.Account.CheckCode();
-    }
+    Store.Account.CheckCode().then(()=>{
+      if (storage && storage.access_token && storage.phoneNumber) {
+        Store.Account.GetUserInfo();
+        Store.Review.getReviewOrder();
+      }
+    })
+  }
+  componentDidMount() {
+    
   }
 
   componentDidShow() {}

@@ -15,9 +15,9 @@ import "./index.scss";
 @observer
 class Index extends Component {
   state = {
-    ai: 3,
+    isPay: 1,
+    ai: 1,
     college: [],
-    professor: 3,
     school: [],
   };
 
@@ -26,26 +26,28 @@ class Index extends Component {
   componentWillUnmount() {}
 
   componentDidShow() {
-    PreferenceList().then((res) => {
-      if (res.status === 0) {
-        this.setState({
-          ...res.data,
-        });
-      }
-    });
+    this.getOrderStatus();
   }
 
   componentDidHide() {}
 
+  getOrderStatus() {
+    const { Review } = this.props.store;
+    Review.getReviewOrder();
+  }
+
   render() {
-    const { school, college } = this.state;
     return (
       <View className="b-vol-page">
-        <VolTitle title="志愿审核报告" desc="报告单号：CYZY-0000001"></VolTitle>
+        <VolTitle
+          title="志愿审核报告"
+          type="review"
+          desc="报告单号：CYZY-0000001"
+        ></VolTitle>
         <VolTestInfo />
-        <VolTable showData={false} school={school} college={college} todo="/pages/volunteer/batch/index" />
+        <VolTable />
         <VolPayment />
-        <VolReport />
+        <VolReport/>
       </View>
     );
   }

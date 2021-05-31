@@ -1,0 +1,12 @@
+@import '../../../styles/mixin.scss';
+
+
+.b-shili{
+  &-page{
+    @include flex-column();
+    width: 100%;
+  }
+  &-img{
+    width: 100%;
+  }
+}

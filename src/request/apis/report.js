@@ -52,3 +52,10 @@ export function SaveStar(data = {}) {
     data,
   });
 }
+
+export function GetOrderById(id = "") {
+  return Request({
+    url: `/wx/miniprogram/user/queryOrder/${id}`,
+    method: "GET",
+  });
+}

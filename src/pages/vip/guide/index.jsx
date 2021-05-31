@@ -1,14 +1,14 @@
 import { Component } from "react";
 import { View, Image } from "@tarojs/components";
 import { observer, inject } from "mobx-react";
-
+import Taro from "@tarojs/taro";
 import "./index.scss";
 
 import Lock from "../../../static/image/lock.png";
 
 import Tuxing1 from "../../../static/image/tuxing1-2.png";
 import Tuxing2 from "../../../static/image/tuxing2-2.png";
-import Tuxing3 from "../../../static/image/tuxing3-2.png";
+// import Tuxing3 from "../../../static/image/tuxing3-2.png";
 
 @inject("store")
 @observer
@@ -22,6 +22,12 @@ class Index extends Component {
   componentDidShow() {}
 
   componentDidHide() {}
+
+  gotoExample() {
+    Taro.navigateTo({
+      url: "/pages/example/index/index",
+    });
+  }
 
   render() {
     const guideItems = [
@@ -65,7 +71,9 @@ class Index extends Component {
             立即解锁
           </View>
         </View>
-        <View className="example">看看 示例报告</View>
+        <View className="example" onClick={this.gotoExample}>
+          看看 示例报告
+        </View>
       </View>
     );
   }

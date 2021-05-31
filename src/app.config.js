@@ -40,6 +40,10 @@ export default {
       root: "pages/vip/",
       pages: ["guide/index", "bind/index", "report/index"],
     },
+    {
+      root: "pages/example/",
+      pages: ["index/index"],
+    },
   ],
   tabBar: {
     color: "#333333",

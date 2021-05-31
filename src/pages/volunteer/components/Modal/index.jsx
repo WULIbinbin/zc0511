@@ -2,6 +2,7 @@ import { View, Image } from "@tarojs/components";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { EChart } from "echarts-taro3-react";
 import MidTitle from "../MidTitle";
+import Taro from '@tarojs/taro'
 import VolSubject from "../Subject";
 import "./index.scss";
 

@@ -45,20 +45,8 @@ class Index extends Component {
   testPay() {
     WxPay(1)
       .then((res) => {
-        const { nonceStr, paySign, packageValue,signType,timeStamp } = res.data;
-        //String(Math.ceil(new Date().getTime()/1000))
-        const payParams = {
-          timeStamp,
-          nonceStr,
-          package:packageValue,
-          signType,
-          paySign,
-        };
-        console.log(payParams);
-        return Taro.requestPayment(payParams);
-      })
-      .then((res) => {
-        console.log(res);
+        
+        console.log(res)
       })
       .catch((err) => {
         console.log(err);
@@ -71,12 +59,12 @@ class Index extends Component {
     return (
       <PageView bgColor="#f7f7f7">
         <View className="b-home">
-          <Button onClick={this.testPay.bind(this)}>测试支付</Button>
+          {/* <Button onClick={this.testPay.bind(this)}>测试支付</Button>
           <Button onClick={()=>{
             Taro.navigateTo({
               url:'/pages/login/index'
             })
-          }}>重新登录</Button>
+          }}>重新登录</Button> */}
           <HomeBanner banner={banner} />
           <HomeNavigator items={items} />
           <HomeTitle title="人工智能指导" />

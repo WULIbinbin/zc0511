@@ -3,19 +3,21 @@ import { Table } from "../../../../components/index";
 import Taro from "@tarojs/taro";
 import MidTitle from "../MidTitle";
 import { setEmptyKey } from "../../../../utils/tool";
+import { inject, observer } from "mobx-react";
 
 import "./index.scss";
 
-export default function ({
+function Comp({
   showIcon = true,
   showMidTitle = true,
-  batch = "本科批",
-  data = [],
-  showData = true,
-  todo = "",
-  school = [],
-  college = [],
+  store,
 }) {
+  const todo = "/pages/volunteer/batch/index"
+  const {
+    Review: {
+      orderData: { school, college },
+    },
+  } = store;
   const thead = [
     {
       key: "sort",
@@ -93,3 +95,6 @@ export default function ({
     </View>
   );
 }
+
+export default inject("store")(observer(Comp));
+

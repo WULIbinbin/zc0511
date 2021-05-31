@@ -16,20 +16,12 @@ class Index extends Component {
   componentDidHide() {}
 
   render() {
-    const {
-      Report: { collegeBatch, schoolBatch },
-    } = this.props.store;
-    console.log(schoolBatch)
     return (
       <View className="b-vol-page">
-        {schoolBatch.length > 0 && (
-          <VolTable
-            school={schoolBatch}
-            college={collegeBatch}
-            showMidTitle={false}
-            showIcon={false}
-          />
-        )}
+        <VolTable
+          showMidTitle={false}
+          showIcon={false}
+        />
       </View>
     );
   }
