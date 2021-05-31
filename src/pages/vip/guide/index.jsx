@@ -2,6 +2,7 @@ import { Component } from "react";
 import { View, Image } from "@tarojs/components";
 import { observer, inject } from "mobx-react";
 import Taro from "@tarojs/taro";
+import { WxPay } from "../../../request/apis/account";
 import "./index.scss";
 
 import Lock from "../../../static/image/lock.png";
@@ -22,6 +23,12 @@ class Index extends Component {
   componentDidShow() {}
 
   componentDidHide() {}
+
+  handlePay() {
+    WxPay(1).then((res) => {
+      console.log(res);
+    });
+  }
 
   gotoExample() {
     Taro.navigateTo({
@@ -63,7 +70,10 @@ class Index extends Component {
             </View>
           ))}
         </View>
-        <View className="b-vol-page-button-group">
+        <View
+          className="b-vol-page-button-group"
+          onClick={this.handlePay.bind(this)}
+        >
           <View className="b-vol-page-button b-vol-page-button-left">
             <View className="b-vol-page-button-money">￥</View>299.00
           </View>

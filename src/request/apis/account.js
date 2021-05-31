@@ -15,6 +15,20 @@ export function PhoneRegister(data = {}) {
   });
 }
 
+export function SendCode(data = {}) {
+  return Request({
+    url: `/student/sendSms`,
+    data,
+  });
+}
+
+export function VerifyCode(data = {}) {
+  return Request({
+    url: `/student/checkSmsCode`,
+    data,
+  });
+}
+
 export function GetToken(phoneNum) {
   return Request({
     url: `/oauth/token`,
@@ -59,6 +73,7 @@ export function WxPay(type) {
           });
       })
       .catch((err) => {
+        Taro.showToast({ title: "支付失败，请重试", icon: "none" });
         reject(err);
       });
   });
