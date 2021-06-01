@@ -15,7 +15,7 @@ function Comp({
   const todo = "/pages/volunteer/batch/index"
   const {
     Review: {
-      orderData: { school, college },
+      batch: { school, college },
     },
   } = store;
   const thead = [

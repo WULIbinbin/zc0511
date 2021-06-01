@@ -27,6 +27,7 @@ const Stars = {
   生物: Shengwu,
   化学: Huaxue,
   政治: Zhengzhi,
+  思想政治: Zhengzhi,
   地理: Dili,
   历史: Lishi,
   文综: Zhengzhi,
@@ -52,7 +53,7 @@ class Index extends Component {
       if (userInfo.subList) {
         const selected = [];
         const starList = userInfo.subList.map((n) => {
-          selected.push({ id: n.id, star: 0 });
+          selected.push({ ...n });
           return {
             id: n.id,
             name: n.subject,
@@ -78,10 +79,15 @@ class Index extends Component {
   handleSubmit() {
     const params = JSON.stringify(this.selected);
     SaveStar(params).then((res) => {
-      if(res.status===0){
-        Taro.showToast({title:'保存成功',icon:'success'})
-      }else{
-        Taro.showToast({title:'保存失败，请重试',icon:'none'})
+      if (res.status === 0) {
+        Taro.showToast({ title: "保存成功", icon: "success" });
+        const {
+          Account
+        } = this.props.store;
+        Account.GetUserInfo()
+        Taro.navigateBack()
+      } else {
+        Taro.showToast({ title: "保存失败，请重试", icon: "none" });
       }
     });
   }
@@ -95,7 +101,12 @@ class Index extends Component {
             <VolStar {...n} onChange={this.handleStar.bind(this, i)} />
           ))}
         </View>
-        <View className="b-vol-star-sure" onClick={this.handleSubmit.bind(this)}>确定</View>
+        <View
+          className="b-vol-star-sure"
+          onClick={this.handleSubmit.bind(this)}
+        >
+          确定
+        </View>
         {/* <Image
           className="b-vol-star-bottom"
           mode="widthFix"

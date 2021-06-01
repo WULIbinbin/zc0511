@@ -20,6 +20,11 @@ const account = observable({
     access_token: "",
     token_type: "",
   },
+  get isVip() {
+    return (
+      this.userInfo && this.userInfo.student && !!this.userInfo.student.vip
+    );
+  },
   get studentInfo() {
     return (this.userInfo && this.userInfo.student) || {};
   },

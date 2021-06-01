@@ -7,9 +7,9 @@ export function GetBanner(data = {}) {
   });
 }
 
-export function GetMySchoolList(type) {
+export function GetMySchoolList(type='',params={}) {
   return Request({
     url: `/student/schoolList/${type}`,
-    data:{},
+    data:params,
   });
 }

@@ -81,3 +81,11 @@ export function GetOrderByType(type) {
     method: "GET",
   });
 }
+
+//智能审核立即提交（免费一次版）
+export function PayAudit() {
+  return Request({
+    url: `/preference/payAudit`,
+    method: "POST",
+  });
+}

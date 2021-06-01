@@ -194,3 +194,88 @@ page {
     text-align: center;
   }
 }
+
+.b-payment {
+  &-dialog {
+    @include flex-column-center-center();
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    &-icon {
+      width: 13px;
+      height: 19px;
+      &:last-of-type {
+        transform: rotateY(180deg);
+      }
+    }
+    &-body {
+      display: inline-block;
+      background: #fefefe;
+      border-radius: 20px;
+      margin: 0 90px 20px;
+      //height: 590px;
+      padding: 27px;
+    }
+    &-main {
+      padding: 27px;
+      position: relative;
+    }
+    &-top {
+      @include flex-row-center-center();
+      margin: 20px 0 47px;
+    }
+    &-top-title {
+      font-size: 32px;
+      font-weight: bold;
+      color: #333333;
+      margin: 0 20px;
+    }
+    &-content {
+      @include flex-column();
+      font-size: 28px;
+      color: #333333;
+      line-height: 40px;
+      text-align: center;
+      & > text {
+        margin-bottom: 20px;
+      }
+    }
+    &-money {
+      font-size: 28px;
+      font-weight: 500;
+      color: #333333;
+    }
+    &-moneynum {
+      font-size: 48px;
+      font-weight: 500;
+      color: #333333;
+    }
+    &-desc {
+      font-size: 28px;
+      font-family: PingFang SC;
+      color: #333333;
+    }
+    &-btn {
+      width: 350px;
+      height: 80px;
+      background: #d0ac58;
+      box-shadow: 5px 9px 20px 0px rgba(208, 172, 88, 0.2);
+      border-radius: 40px;
+      line-height: 80px;
+      text-align: center;
+      color: $white-color;
+      margin: 27px auto;
+    }
+    &-close-icon {
+      position: absolute;
+      height: 28px;
+      width: 28px;
+      right: 20px;
+      top: 20px;
+    }
+  }
+}

@@ -6,16 +6,19 @@ import { WxPay } from "../../../../request/apis/account";
 import {
   GetOrderById,
   PreferenceSaveInfo,
+  PayAudit,
 } from "../../../../request/apis/report";
 import VolContact from "../Contact";
 import "./index.scss";
 
+//微信支付：isNeedPay==true||report.payStatus==false
+//免费一次支付：isNeedPay==false||report.payStatus==false
 function Comp({ store }) {
   const {
     Review,
     Review: {
-      isPay,
       orderData: { school, college, info },
+      orderStatus: { isNeedPay, report },
     },
     Common,
   } = store;
@@ -47,7 +50,7 @@ function Comp({ store }) {
         Taro.showToast({ title: "请先完成霍兰德职业模型", icon: "none" });
         return;
       }
-      if (payType == 3 && info == null) {
+      if (payType == 3 && (formData.wx == "" || formData.tel == "")) {
         Taro.showToast({ title: "请先填写微信号码", icon: "none" });
         return;
       }
@@ -66,10 +69,18 @@ function Comp({ store }) {
   const handleContact = (data) => {
     setFormData(data);
   };
+  const handlePayFree = () => {
+    PayAudit().then((res) => {
+      if (res.status == 0) {
+        Taro.showToast({ title: "提交成功", icon: "none" });
+      } else {
+        Taro.showToast({ title: "提交成功", icon: "none" });
+      }
+    });
+  };
   return (
     <View className="b-vol-payment-view">
-      {(!isPay || info == null) && <VolContact onChange={handleContact} />}
-      {!isPay && (
+      {isNeedPay == true && report.payStatus == false && (
         <>
           <View className="b-vol-payment">
             {price.map((n, i) => (
@@ -91,16 +102,24 @@ function Comp({ store }) {
               </View>
             ))}
           </View>
+          {payType == 3 && info == null && (
+            <VolContact onChange={handleContact} />
+          )}
           <View className="b-vol-payment-btn" onClick={handlePay}>
             立即支付
           </View>
         </>
       )}
-      {isPay && (
+
+      {isNeedPay == false && report.payStatus == false && (
         <>
-          <View className="b-vol-payment-chance">您有一次人工审核机会</View>
+          <View className="b-vol-payment-chance">您有一次智能审核机会</View>
+          <View className="b-vol-payment-btn" onClick={handlePayFree}>
+            立即提交
+          </View>
         </>
       )}
+      
     </View>
   );
 }

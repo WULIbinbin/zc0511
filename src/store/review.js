@@ -15,11 +15,11 @@ const review = observable({
     },
   },
   orderData: {
-    sortList:[],
-    sortScore:0,
+    sortList: [],
+    sortScore: 0,
     school: [],
     college: [],
-    info:null,
+    info: null,
   },
   batch: {
     school: [],
@@ -31,6 +31,8 @@ const review = observable({
       this.orderStatus.report.payStatus == true
     );
   },
+  //微信支付：isNeedPay==true||report.payStatus==false
+  //免费一次支付：isNeedPay==false||report.payStatus==false
   get isPay() {
     return this.orderStatus.report.payStatus === true;
   },
@@ -64,6 +66,26 @@ const review = observable({
     GetOrderByType(2).then((res) => {
       this.orderStatus = res.data;
     });
+  },
+  resetOrderData() {
+    this.orderData = {
+      sortList: [],
+      sortScore: 0,
+      school: [],
+      college: [],
+      info: null,
+    };
+    this.batch = {
+      school: [],
+      college: [],
+    };
+    this.orderStatus= {
+      isNeedPay: true,
+      report: {
+        payStatus: false,
+        num: "",
+      },
+    }
   },
 });
 

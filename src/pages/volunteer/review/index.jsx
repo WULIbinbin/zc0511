@@ -7,7 +7,6 @@ import {
   VolPayment,
   VolTable,
   VolReport,
-  VolModal,
 } from "../components/index";
 import "./index.scss";
 
@@ -21,24 +20,29 @@ class Index extends Component {
     school: [],
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.getOrderStatus();
+  }
 
   componentWillUnmount() {}
 
-  componentDidShow() {
-    this.getOrderStatus();
-  }
+  componentDidShow() {}
 
   componentDidHide() {}
 
   getOrderStatus() {
     const { Review } = this.props.store;
     Review.getReviewOrder();
-    Review.getOrderStatus()
+    Review.getOrderStatus();
   }
 
   render() {
-    const { Review } = this.props.store;
+    const {
+      Review,
+      Review: {
+        orderStatus: { isNeedPay, report },
+      },
+    } = this.props.store;
     return (
       <View className="b-vol-page">
         <VolTitle
@@ -48,9 +52,20 @@ class Index extends Component {
         ></VolTitle>
         <VolTestInfo />
         <VolTable />
-        <VolModal showData={false} todo="/pages/evaluation/readme/index" />
         <VolPayment />
         <VolReport />
+        {isNeedPay == false && report.payStatus == true && (
+          <View className="b-vol-reset">
+            <View
+              className="b-vol-reset-btn"
+              onClick={() => {
+                Review.resetOrderData();
+              }}
+            >
+              增加审核次数
+            </View>
+          </View>
+        )}
       </View>
     );
   }

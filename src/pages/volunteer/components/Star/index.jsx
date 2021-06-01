@@ -14,11 +14,12 @@ export default function ({ icon = "", name = "", onChange = null }) {
       const newStars = mapStar.map((m, i) => {
         return i <= n;
       });
+      const nu = n+1
       setStar(newStars);
-      setNum(n + 1);
-      onChange && onChange(num);
+      setNum(nu);
+      onChange && onChange(nu);
     },
-    [mapStar]
+    [mapStar, num]
   );
   return (
     <View className="b-vol-star">

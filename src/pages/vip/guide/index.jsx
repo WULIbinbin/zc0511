@@ -26,10 +26,11 @@ class Index extends Component {
   componentDidHide() {}
 
   handlePay() {
-    const { Tutor, Review } = this.props.store;
+    const { Tutor, Review,Account } = this.props.store;
     WxPay(1).then((res) => {
       console.log(res);
       GetOrderById(res.data.id).then((res) => {
+        Account.GetUserInfo()
         Tutor.getOrderStatus();
         Review.getOrderStatus();
       });

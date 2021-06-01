@@ -70,6 +70,9 @@ const common = observable({
   subtype: ["综合", "文科", "理科"],
   zxCity: ["北京市", "天津市", "上海市", "重庆市"],
   holland:null,
+  get hollandTypeList(){
+    
+  },
   phoneVerify(phone = "") {
     return /^[1][3,4,5,7,8,9][0-9]{9}$/.test(phone);
   },

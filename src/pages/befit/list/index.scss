@@ -35,6 +35,9 @@
     position: relative;
     background-color: $white-color;
     padding: 50px 30px;
+    &:last-of-type{
+      margin-bottom:80px;
+    }
     &-left {
       width: 90px;
       height: 90px;
