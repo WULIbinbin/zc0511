@@ -1,4 +1,5 @@
 import { observable } from "mobx";
+import {GetHolland} from '../request/apis/report'
 
 const common = observable({
   curProv: "北京",
@@ -68,9 +69,15 @@ const common = observable({
   ],
   subtype: ["综合", "文科", "理科"],
   zxCity: ["北京市", "天津市", "上海市", "重庆市"],
+  holland:null,
   phoneVerify(phone = "") {
     return /^[1][3,4,5,7,8,9][0-9]{9}$/.test(phone);
   },
+  getHolland(){
+    GetHolland().then(res=>{
+      this.holland = res.data
+    })
+  }
 });
 
 export default common;

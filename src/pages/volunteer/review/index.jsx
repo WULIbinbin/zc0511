@@ -7,6 +7,7 @@ import {
   VolPayment,
   VolTable,
   VolReport,
+  VolModal,
 } from "../components/index";
 import "./index.scss";
 
@@ -47,6 +48,7 @@ class Index extends Component {
         ></VolTitle>
         <VolTestInfo />
         <VolTable />
+        <VolModal showData={false} todo="/pages/evaluation/readme/index" />
         <VolPayment />
         <VolReport />
       </View>

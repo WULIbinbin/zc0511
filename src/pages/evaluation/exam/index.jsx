@@ -9,7 +9,6 @@ import "./index.scss";
 @inject("store")
 @observer
 class Index extends Component {
-
   state = {
     no: 1,
     myResults: {},
@@ -69,7 +68,7 @@ class Index extends Component {
           history,
           checked: null,
         });
-      }, 500);
+      }, 0);
     }
   }
 
@@ -99,12 +98,17 @@ class Index extends Component {
     })
       .then((res) => {
         Taro.hideLoading();
-        Taro.reLaunch({
-          url: "/pages/home/index",
-        });
+        this.props.store.Common.getHolland();
+        if (res.status == 0) {
+          Taro.navigateBack();
+        } else {
+          this.setState({ checked: null });
+          Taro.showToast({ title: "提交失败，请重试", icon: "none" });
+        }
       })
       .catch((err) => {
         Taro.hideLoading();
+        this.setState({ checked: null });
         Taro.showToast({ title: "提交失败，请重试", icon: "none" });
       });
   }

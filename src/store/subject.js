@@ -124,6 +124,7 @@ const subject = observable({
     return provSp;
   },
   setCurProv(curProv = "") {
+    console.log(curProv)
     const blacklist = ["台湾省", "香港特别行政区", "澳门特别行政区"];
     if (blacklist.includes(curProv)) {
       Taro.showToast({ title: "暂不支持港澳台地区", icon: "none" });

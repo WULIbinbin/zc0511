@@ -1,20 +1,25 @@
 import { observable } from "mobx";
 import Taro from "@tarojs/taro";
-import { PreferenceList, GetOrderByType,GetOrderById } from "../request/apis/report";
+import {
+  PreferenceList,
+  GetOrderByType,
+  GetOrderById,
+} from "../request/apis/report";
 
 const review = observable({
   orderStatus: {
     isNeedPay: true,
     report: {
       payStatus: false,
-      num:''
+      num: "",
     },
   },
   orderData: {
-    ai: 0,
-    isPay: 0,
+    sortList:[],
+    sortScore:0,
     school: [],
     college: [],
+    info:null,
   },
   batch: {
     school: [],
@@ -26,8 +31,8 @@ const review = observable({
       this.orderStatus.report.payStatus == true
     );
   },
-  get isPay(){
-    return this.orderStatus.report.payStatus === true
+  get isPay() {
+    return this.orderStatus.report.payStatus === true;
   },
   get orderNum() {
     return this.orderStatus.report.num;

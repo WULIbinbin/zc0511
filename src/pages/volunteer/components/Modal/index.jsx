@@ -2,21 +2,25 @@ import { View, Image } from "@tarojs/components";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { EChart } from "echarts-taro3-react";
 import MidTitle from "../MidTitle";
-import Taro from '@tarojs/taro'
+import Taro from "@tarojs/taro";
 import VolSubject from "../Subject";
+import { inject, observer } from "mobx-react";
+
 import "./index.scss";
 
 import SelectNor from "../../../../static/image/select.png";
 import SelectSel from "../../../../static/image/select-sel.png";
 
-export default function ({
+function Comp({
   echart = null,
   showIcon = true,
   showMidTitle = true,
   data = [],
   showData = true,
   todo = "",
+  store,
 }) {
+  const { Common } = store;
   const [folded, setFold] = useState(true);
   const gaugeChart = useRef(null);
   const defautOption = {
@@ -96,8 +100,8 @@ export default function ({
   return (
     <>
       <View className="b-vol-modal">
-        <MidTitle title="霍兰德职业模型" showIcon={false} goEdit={goto} />
-        {!showData && (
+        <MidTitle title="霍兰德职业模型" showIcon={true} goEdit={goto} />
+        {Common.holland == null ? (
           <View className="b-vol-comp-no-data">
             <View className="b-vol-comp-no-data-desc">
               添加后推荐与课程偏好相关专业
@@ -106,8 +110,7 @@ export default function ({
               立即添加
             </View>
           </View>
-        )}
-        {showData && (
+        ) : (
           <View className="b-vol-modal-content">
             <View className="b-vol-modal-chart-title">
               职业兴趣测试结果显示您的类型属于
@@ -181,3 +184,5 @@ export default function ({
     </>
   );
 }
+
+export default inject("store")(observer(Comp));

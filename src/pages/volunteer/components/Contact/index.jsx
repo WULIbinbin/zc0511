@@ -2,9 +2,10 @@ import { View, Input } from "@tarojs/components";
 import { useCallback, useEffect, useState } from "react";
 import { FormItem } from "../../../../components/index";
 import { inject, observer } from "mobx-react";
+
 import "./index.scss";
 
-function Comp({ store, onSubmit = null }) {
+function Comp({ store, onSubmit = null, onChange = null }) {
   const {
     Account: { studentInfo },
   } = store;
@@ -22,6 +23,9 @@ function Comp({ store, onSubmit = null }) {
       ...formData,
       [key]: e.detail.value,
     });
+    setTimeout(() => {
+      onChange && onChange(formData);
+    }, 100);
   });
 
   const handleSubmit = useCallback(() => {
@@ -29,12 +33,12 @@ function Comp({ store, onSubmit = null }) {
     onSubmit && onSubmit(formData);
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     setFormData({
       wx: "",
       tel: studentInfo.tel || "",
-    })
-  },[studentInfo])
+    });
+  }, [studentInfo]);
 
   return (
     <>
@@ -68,9 +72,9 @@ function Comp({ store, onSubmit = null }) {
           </FormItem>
         </View>
       </View>
-      <View className="b-vol-payment-btn" onClick={handleSubmit}>
+      {/* <View className="b-vol-payment-btn" onClick={handleSubmit}>
         立即提交
-      </View>
+      </View> */}
     </>
   );
 }

@@ -14,6 +14,14 @@ export function SubQuestion(data = {}) {
   });
 }
 
+export function GetHolland() {
+  return Request({
+    url: `/student/getHolland`,
+    method: "GET",
+    data: {},
+  });
+}
+
 export function PreferenceSearch(code = "") {
   return Request({
     url: `/school/getSchoolName/${code}`,

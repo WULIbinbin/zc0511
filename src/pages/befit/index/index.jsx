@@ -4,6 +4,7 @@ import { observer, inject } from "mobx-react";
 import VolTestInfo from "../../volunteer/components/TestInfo";
 import "./index.scss";
 import { GetMySchoolList } from "../../../request/apis/home";
+import Taro from '@tarojs/taro'
 import MineIcon from "../image/mine.png";
 import ChongIcon from "../image/chon.png";
 import WenIcon from "../image/wen.png";
@@ -16,9 +17,9 @@ class Index extends Component {
   componentWillMount() {}
 
   componentDidMount() {
-    GetMySchoolList(1)
-    GetMySchoolList(2)
-    GetMySchoolList(3)
+    // GetMySchoolList(1)
+    // GetMySchoolList(2)
+    // GetMySchoolList(3)
   }
 
   componentWillUnmount() {}
@@ -27,28 +28,30 @@ class Index extends Component {
 
   componentDidHide() {}
 
+
+
   render() {
     const accessList = [
       {
         icon: ChongIcon,
         title: "冲刺院校",
         desc: "录取率20%左右",
-        accessText: "20",
-        todo: "",
+        //accessText: "20",
+        todo: "/pages/befit/list/index?type=1",
       },
       {
         icon: WenIcon,
         title: "适中院校",
         desc: "录取率70%左右",
-        accessText: "40",
-        todo: "",
+        //accessText: "40",
+        todo: "/pages/befit/list/index?type=2",
       },
       {
         icon: BaoIcon,
         title: "保底院校",
         desc: "录取率90%左右",
-        accessText: "130",
-        todo: "",
+        //accessText: "130",
+        todo: "/pages/befit/list/index?type=3",
       },
     ];
     return (
@@ -64,7 +67,11 @@ class Index extends Component {
           }
         ></VolTestInfo>
         {accessList.map((item) => (
-          <View className="b-befit-item">
+          <View className="b-befit-item" onClick={()=>{
+            Taro.navigateTo({
+              url:item.todo
+            })
+          }}>
             <Image className="b-befit-item-icon" src={item.icon}></Image>
             <View className="b-befit-item-info">
               <View className="b-befit-item-title">{item.title}</View>

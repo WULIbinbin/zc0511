@@ -1,9 +1,13 @@
 import { View, Text, Input } from "@tarojs/components";
 import { useCallback, useState } from "react";
 import { inject, observer } from "mobx-react";
+import Taro from "@tarojs/taro";
 import { WxPay } from "../../../../request/apis/account";
-import { GetOrderById } from "../../../../request/apis/report";
-import VolContact from '../Contact'
+import {
+  GetOrderById,
+  PreferenceSaveInfo,
+} from "../../../../request/apis/report";
+import VolContact from "../Contact";
 import "./index.scss";
 
 function Comp({ store }) {
@@ -11,10 +15,15 @@ function Comp({ store }) {
     Review,
     Review: {
       isPay,
-      orderData: { ai },
+      orderData: { school, college, info },
     },
+    Common,
   } = store;
   const [payType, setPayType] = useState(3);
+  const [formData, setFormData] = useState({
+    wx: "",
+    tel: "",
+  });
   const price = [
     {
       name: "专家审核",
@@ -33,18 +42,33 @@ function Comp({ store }) {
   ];
 
   const handlePay = () => {
-    WxPay(payType).then((res) => {
-      console.log(res);
-      Review.getReviewOrder();
-      Review.getOrderStatus();
-      GetOrderById(res.data.id).then(res=>{
-        
-      })
-    });
+    if (school.length >= 10 || college.length >= 10) {
+      if (Common.holland == null) {
+        Taro.showToast({ title: "请先完成霍兰德职业模型", icon: "none" });
+        return;
+      }
+      if (payType == 3 && info == null) {
+        Taro.showToast({ title: "请先填写微信号码", icon: "none" });
+        return;
+      }
+      WxPay(payType).then((res) => {
+        console.log(res);
+        PreferenceSaveInfo({ ...formData, id: res.data.id });
+        Review.getReviewOrder();
+        Review.getOrderStatus();
+        GetOrderById(res.data.id).then((res) => {});
+      });
+    } else {
+      Taro.showToast({ title: "请先完善志愿填报", icon: "none" });
+    }
   };
-  //ai结合isPay来做显示，如果次数为0且isPay为0，则需要支付
+
+  const handleContact = (data) => {
+    setFormData(data);
+  };
   return (
     <View className="b-vol-payment-view">
+      {(!isPay || info == null) && <VolContact onChange={handleContact} />}
       {!isPay && (
         <>
           <View className="b-vol-payment">
@@ -74,10 +98,7 @@ function Comp({ store }) {
       )}
       {isPay && (
         <>
-          <VolContact />
-          {ai > 0 && (
-            <View className="b-vol-payment-chance">您有一次人工审核机会</View>
-          )}
+          <View className="b-vol-payment-chance">您有一次人工审核机会</View>
         </>
       )}
     </View>
