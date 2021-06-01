@@ -10,6 +10,9 @@ import {
   VolRecommend,
   VolSubject,
 } from "../components/index";
+import { WxPay } from "../../../request/apis/account";
+import { GetOrderById } from "../../../request/apis/report";
+
 import "./index.scss";
 
 @inject("store")
@@ -19,26 +22,57 @@ class Index extends Component {
 
   componentWillUnmount() {}
 
-  componentDidShow() {}
+  componentDidShow() {
+    this.getOrderStatus();
+  }
 
   componentDidHide() {}
 
+  getOrderStatus() {
+    const { Tutor } = this.props.store;
+    Tutor.getReviewOrder();
+    Tutor.getRemSchool();
+  }
+
+  handlePay() {
+    const { Tutor } = this.props.store;
+    WxPay(2).then((res) => {
+      console.log(res);
+      Tutor.getReviewOrder();
+      Tutor.getOrderStatus();
+      Tutor.getRemSchool();
+      GetOrderById(res.data.id).then((res) => {});
+    });
+  }
+
   render() {
+    const {
+      Tutor,
+      Tutor: { isPay },
+    } = this.props.store;
     return (
       <View className="b-vol-page">
-        <VolTitle title="志愿填报推荐" desc="报告单号：CYZY-0000001"></VolTitle>
+        <VolTitle
+          title="志愿填报推荐"
+          desc={Tutor.orderNum ? `报告单号：${Tutor.orderNum}` : ""}
+        ></VolTitle>
         <VolTestInfo />
-        <VolRecommend />
+        {isPay && <VolRecommend />}
         <VolPreference showData={false} todo="/pages/volunteer/prefer/index" />
-        <VolModal showData={false} todo='/pages/evaluation/readme/index'/>
-        <View className="b-vol-page-button-group">
-          <View className="b-vol-page-button b-vol-page-button-left">
-            <View className="b-vol-page-button-money">￥</View>99.00
+        <VolModal showData={false} todo="/pages/evaluation/readme/index" />
+        {!isPay && (
+          <View
+            className="b-vol-page-button-group"
+            onClick={this.handlePay.bind(this)}
+          >
+            <View className="b-vol-page-button b-vol-page-button-left">
+              <View className="b-vol-page-button-money">￥</View>99.00
+            </View>
+            <View className="b-vol-page-button b-vol-page-button-right">
+              单项解锁
+            </View>
           </View>
-          <View className="b-vol-page-button b-vol-page-button-right">
-            单项解锁
-          </View>
-        </View>
+        )}
         <View className="b-vol-page-bottom-example">看看 示例报告</View>
       </View>
     );

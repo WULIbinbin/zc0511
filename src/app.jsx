@@ -10,7 +10,8 @@ class App extends Component {
     Store.Account.CheckCode().then(()=>{
       if (storage && storage.access_token && storage.phoneNumber) {
         Store.Account.GetUserInfo();
-        Store.Review.getReviewOrder();
+        Store.Review.getOrderStatus();
+        Store.Tutor.getOrderStatus();
       }
     })
   }

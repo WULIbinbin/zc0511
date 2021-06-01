@@ -3,7 +3,7 @@ import { View, Image, Input } from "@tarojs/components";
 import { observer, inject } from "mobx-react";
 import VolTestInfo from "../../volunteer/components/TestInfo";
 import "./index.scss";
-
+import { GetMySchoolList } from "../../../request/apis/home";
 import MineIcon from "../image/mine.png";
 import ChongIcon from "../image/chon.png";
 import WenIcon from "../image/wen.png";
@@ -15,7 +15,11 @@ import ArrowIcon from "../../../static/image/arrow-right.png";
 class Index extends Component {
   componentWillMount() {}
 
-  componentDidMount() {}
+  componentDidMount() {
+    GetMySchoolList(1)
+    GetMySchoolList(2)
+    GetMySchoolList(3)
+  }
 
   componentWillUnmount() {}
 

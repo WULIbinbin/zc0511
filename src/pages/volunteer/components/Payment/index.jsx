@@ -2,6 +2,7 @@ import { View, Text, Input } from "@tarojs/components";
 import { useCallback, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { WxPay } from "../../../../request/apis/account";
+import { GetOrderById } from "../../../../request/apis/report";
 import VolContact from '../Contact'
 import "./index.scss";
 
@@ -9,7 +10,7 @@ function Comp({ store }) {
   const {
     Review,
     Review: {
-      shouldPay,
+      isPay,
       orderData: { ai },
     },
   } = store;
@@ -35,12 +36,16 @@ function Comp({ store }) {
     WxPay(payType).then((res) => {
       console.log(res);
       Review.getReviewOrder();
+      Review.getOrderStatus();
+      GetOrderById(res.data.id).then(res=>{
+        
+      })
     });
   };
   //ai结合isPay来做显示，如果次数为0且isPay为0，则需要支付
   return (
     <View className="b-vol-payment-view">
-      {shouldPay && (
+      {!isPay && (
         <>
           <View className="b-vol-payment">
             {price.map((n, i) => (
@@ -67,7 +72,7 @@ function Comp({ store }) {
           </View>
         </>
       )}
-      {!shouldPay && (
+      {isPay && (
         <>
           <VolContact />
           {ai > 0 && (

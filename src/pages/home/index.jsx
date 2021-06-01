@@ -10,6 +10,7 @@ import {
 } from "../../components/index";
 import Taro from "@tarojs/taro";
 import { GetBanner } from "../../request/apis/home";
+import { GetOrderByType } from "../../request/apis/report";
 import { WxPay } from "../../request/apis/account";
 import "./index.scss";
 

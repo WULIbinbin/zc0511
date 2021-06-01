@@ -8,7 +8,6 @@ import {
   VolTable,
   VolReport,
 } from "../components/index";
-import { PreferenceList } from "../../../request/apis/report";
 import "./index.scss";
 
 @inject("store")
@@ -34,20 +33,22 @@ class Index extends Component {
   getOrderStatus() {
     const { Review } = this.props.store;
     Review.getReviewOrder();
+    Review.getOrderStatus()
   }
 
   render() {
+    const { Review } = this.props.store;
     return (
       <View className="b-vol-page">
         <VolTitle
           title="志愿审核报告"
           type="review"
-          desc="报告单号：CYZY-0000001"
+          desc={Review.orderNum ? `报告单号：${Review.orderNum}` : ""}
         ></VolTitle>
         <VolTestInfo />
         <VolTable />
         <VolPayment />
-        <VolReport/>
+        <VolReport />
       </View>
     );
   }

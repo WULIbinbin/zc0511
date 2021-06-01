@@ -4,6 +4,7 @@ import { observer, inject } from "mobx-react";
 import Taro from "@tarojs/taro";
 import { WxPay } from "../../../request/apis/account";
 import "./index.scss";
+import { GetOrderById } from "../../../request/apis/report";
 
 import Lock from "../../../static/image/lock.png";
 
@@ -25,8 +26,13 @@ class Index extends Component {
   componentDidHide() {}
 
   handlePay() {
+    const { Tutor, Review } = this.props.store;
     WxPay(1).then((res) => {
       console.log(res);
+      GetOrderById(res.data.id).then((res) => {
+        Tutor.getOrderStatus();
+        Review.getOrderStatus();
+      });
     });
   }
 
@@ -37,16 +43,19 @@ class Index extends Component {
   }
 
   render() {
+    const { Tutor, Review } = this.props.store;
     const guideItems = [
       {
         title: "志愿填报辅导",
         desc: "推荐最优院校最适合的专业",
         bg: Tuxing1,
+        isLock: !Tutor.hasPay,
       },
       {
         title: "志愿审核服务",
         desc: "分析所填的志愿方案",
         bg: Tuxing2,
+        isLock: !Review.hasPay,
       },
       // {
       //   title: "志愿填报综合报告",
@@ -60,9 +69,11 @@ class Index extends Component {
           {guideItems.map((n) => (
             <View className="server-item">
               <View className="content">
-                <View className="right-top">
-                  <Image className="lock" src={Lock}></Image>
-                </View>
+                {n.isLock && (
+                  <View className="right-top">
+                    <Image className="lock" src={Lock}></Image>
+                  </View>
+                )}
                 <View className="title">{n.title}</View>
                 <View className="desc">{n.desc}</View>
                 <Image className="b-bg" mode="heightFix" src={n.bg}></Image>

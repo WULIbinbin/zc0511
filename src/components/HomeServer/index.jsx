@@ -12,9 +12,7 @@ import Tuxing2 from "../../static/image/tuxing2.png";
 import Tuxing3 from "../../static/image/tuxing3.png";
 
 function HomeServer({ store }) {
-  const {
-    Review: { shouldPay },
-  } = store;
+  const { Review, Tutor } = store;
   const items = [
     {
       icon: ShenHe,
@@ -24,7 +22,7 @@ function HomeServer({ store }) {
       label: "院校审核",
       bg: Tuxing1,
       bgClass: "linear-bg1",
-      isLock: shouldPay,
+      isLock: !Review.hasPay,
       link: "/pages/volunteer/review/index",
     },
     {
@@ -35,7 +33,7 @@ function HomeServer({ store }) {
       label: "智能推荐",
       bg: Tuxing2,
       bgClass: "linear-bg2",
-      isLock: true,
+      isLock: !Tutor.hasPay,
       link: "/pages/volunteer/tutor/index",
     },
     {

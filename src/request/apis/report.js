@@ -59,3 +59,17 @@ export function GetOrderById(id = "") {
     method: "GET",
   });
 }
+
+export function GetRecommend() {
+  return Request({
+    url: `/student/getRecommend`,
+    method: "GET",
+  });
+}
+
+export function GetOrderByType(type) {
+  return Request({
+    url: `/report/num/${type}`,
+    method: "GET",
+  });
+}

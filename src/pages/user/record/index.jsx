@@ -193,7 +193,7 @@ class Index extends Component {
         score += Number(item.score);
         return arrItem;
       });
-      //formData.province = spProv(formData.province);
+      formData.province = spProv(formData.province);
       formData.sex = formData.sex === "男" ? 1 : 0;
       formData.score = score;
       formData.nickname = nickName;
@@ -243,6 +243,7 @@ class Index extends Component {
       ]) ||
       [];
     //const sex = studentInfo.sex ? "男" : "女";
+    //value={region}
     return (
       <View className="b-user-record">
         <View className="step-view">
@@ -264,7 +265,6 @@ class Index extends Component {
                   <Picker
                     disabled={!!studentInfo.province}
                     mode="region"
-                    value={region}
                     onChange={this.handleChangeProv.bind(this)}
                   >
                     <View className="step-select-city">
