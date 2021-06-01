@@ -89,7 +89,10 @@ class Index extends Component {
         batch: { school, college },
       },
     } = this.props.store;
-    PreferenceSave(JSON.stringify([...school, ...college]))
+    const { actived } = this.state;
+    PreferenceSave(
+      JSON.stringify(actived === "本科批" ? [...school] : [...college])
+    )
       .then((res) => {
         if (res.status === 0) {
           Taro.showToast({ title: "保存成功", icon: "success" });
@@ -103,35 +106,66 @@ class Index extends Component {
       });
   }
 
+  isRepeat(data = []) {
+    const check = {};
+    data.forEach((item) => {
+      if (check[item.schoolName] === undefined) {
+        check[item.schoolName] = 1;
+      } else {
+        check[item.schoolName] += 1;
+      }
+    });
+    return Object.keys(check).findIndex((f) => check[f] > 1) > -1;
+  }
+
   handleSubmit() {
     const {
       Review: {
         batch: { school, college },
       },
     } = this.props.store;
-    if (school.findIndex((f) => !f.code || !f.schoolName) > -1) {
-      Taro.showModal({
-        title: "提示",
-        content: "本科批存在未填写项",
-        confirmText: "继续提交",
-      }).then((res) => {
-        if (res.confirm) {
-          this.toSave();
-        }
-      });
-      return;
-    } else if (college.findIndex((f) => !f.code || !f.schoolName) > -1) {
-      Taro.showModal({
-        title: "提示",
-        content: "高职专科批存在未填写项",
-        confirmText: "继续提交",
-      }).then((res) => {
-        if (res.confirm) {
-          this.toSave();
-        }
-      });
-      return;
+    const { actived } = this.state;
+    if (actived === "本科批") {
+      if (school.findIndex((f) => !f.code || !f.schoolName) > -1) {
+        Taro.showModal({
+          title: "提示",
+          content: "本科批存在未填写项",
+          confirmText: "确认",
+        }).then((res) => {});
+        return;
+      } else if (school.length < 10) {
+        Taro.showModal({
+          title: "提示",
+          content: "至少填写10个志愿",
+          confirmText: "确认",
+        }).then((res) => {});
+        return;
+      }else if(this.isRepeat(school)){
+        Taro.showModal({
+          title: "提示",
+          content: "本科批存在重复的学校",
+          confirmText: "确认",
+        }).then((res) => {});
+        return;
+      }
+    } else {
+      if (college.findIndex((f) => !f.code || !f.schoolName) > -1) {
+        Taro.showModal({
+          title: "提示",
+          content: "高职专科批存在未填写项",
+          confirmText: "确认",
+        }).then((res) => {});
+        return;
+      } else if (college.length < 10) {
+        Taro.showModal({
+          title: "提示",
+          content: "至少填写10个志愿",
+          confirmText: "确认",
+        }).then((res) => {});
+        return;
+      }
     }
+
     this.toSave();
   }
 

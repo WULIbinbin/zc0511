@@ -1,0 +1,73 @@
+@import "../../../styles/mixin.scss";
+
+.b-rem-apply {
+  &-page {
+    @include flex-column();
+    padding: 20px 25px 60px;
+  }
+  &-banner {
+    @include shadow-radius();
+    width: 100%;
+  }
+  &-options {
+    @include flex-row-center-between();
+    @include shadow-radius();
+    padding: 30px 100px;
+    margin-top: 20px;
+    background-color: $white-color;
+  }
+  &-optiem {
+    @include flex-column-center-center();
+    &-icon {
+      height: 100px;
+      width: 100px;
+      margin-bottom: 20px;
+    }
+    &-text {
+      font-size: 26px;
+      color: #333333;
+    }
+  }
+  &-list {
+    @include flex-column();
+    @include shadow-radius();
+    margin-top: 20px;
+    background-color: $white-color;
+    &-title {
+      width: 100%;
+      padding: 30px 0;
+      font-size: 28px;
+      font-family: PingFang SC;
+      font-weight: bold;
+      color: #333333;
+      text-align: center;
+    }
+    &-item {
+      @include flex-row-center-between();
+      padding:30px 26px;
+    }
+    &-icon {
+      width: 72px;
+      height: 72px;
+      background: #f9f9f9;
+      border-radius: 50%;
+    }
+    &-info {
+      margin: 0 10px;
+      flex: 1;
+    }
+    &-name {
+      font-size: 28px;
+      font-weight: bold;
+      color: #333333;
+    }
+    &-date {
+      font-size: 24px;
+      color: #666666;
+    }
+    &-status {
+      font-size: 26px;
+      color: #ea4438;
+    }
+  }
+}

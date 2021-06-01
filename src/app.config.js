@@ -41,6 +41,10 @@ export default {
       pages: ["guide/index", "bind/index", "report/index"],
     },
     {
+      root: "pages/recommend/",
+      pages: ["index/index", "apply/index"],
+    },
+    {
       root: "pages/example/",
       pages: ["index/index"],
     },

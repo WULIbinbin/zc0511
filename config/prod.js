@@ -1,9 +1,19 @@
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+
 module.exports = {
   env: {
-    NODE_ENV: '"production"'
+    NODE_ENV: '"production"',
   },
-  defineConstants: {
+  terser: {
+    enable: true,
+    config: {
+      compress: {
+        drop_debugger: true,
+        pure_funcs: ["console.log"],
+      },
+    }
   },
+  defineConstants: {},
   mini: {},
   h5: {
     /**
@@ -14,5 +24,5 @@ module.exports = {
      *     .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin, [])
      * }
      */
-  }
-}
+  },
+};

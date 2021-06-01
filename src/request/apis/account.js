@@ -78,3 +78,11 @@ export function WxPay(type) {
       });
   });
 }
+
+export function VipCard(data = {}) {
+  return Request({
+    url: `/wx/miniprogram/card`,
+    method: "POST",
+    data,
+  });
+}

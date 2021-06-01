@@ -1,0 +1,73 @@
+@import "../../../styles/mixin.scss";
+
+@mixin point {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.b-recommend {
+  &-page {
+    @include flex-column-center-center();
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-image: url(../image/index-bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  &-content {
+    @include flex-column-center-center();
+    margin: 0 70px 0;
+    .b-form-item {
+      align-items: center;
+    }
+    .b-form-label {
+      margin: 0 10px 0 0;
+    }
+  }
+  &-title {
+    position: relative;
+    width: 338px;
+    height: 60px;
+    background: #ea4438;
+    border: 2px solid #ea4438;
+    border-radius: 30px;
+    font-size: 32px;
+    color: #ffffff;
+    text-align: center;
+    line-height: 60px;
+    margin-bottom: 60px;
+    &::before {
+      @include point();
+      left: 30px;
+    }
+    &::after {
+      @include point();
+      right: 30px;
+    }
+  }
+  &-input {
+    width: 420px;
+    height: 70px;
+    margin-right: 40px;
+    background-color: $white-color;
+  }
+  &-apply {
+    text-align: center;
+    width: 100%;
+    height: 80px;
+    line-height: 80px;
+    background: #ea4438;
+    border-radius: 40px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-top:30px;
+  }
+}
