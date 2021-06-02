@@ -127,13 +127,13 @@
       font-weight: bold;
       color: #333333;
       position: relative;
-      height: 30px;
-      line-height: 30px;
+      line-height: 44px;
       &::before {
         @include column-line();
         position: absolute;
+        height: 30px;
         left: -10px;
-        top: 0;
+        top: 6px;
         bottom: 0;
         width: 6px;
         background: #ea4438;

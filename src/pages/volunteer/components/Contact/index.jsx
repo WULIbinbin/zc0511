@@ -5,28 +5,30 @@ import { inject, observer } from "mobx-react";
 
 import "./index.scss";
 
-function Comp({ store, onSubmit = null, onChange = null }) {
+function Comp({ tel = "", wx = "", store, onSubmit = null, onChange = null }) {
   const {
     Account: { studentInfo },
   } = store;
+
   const [formData, setFormData] = useState({
     wx: "",
-    tel: studentInfo.tel || "",
+    tel: "",
   });
 
-  const handleChange = useCallback((key, e) => {
-    const { value } = e.detail;
-    if (key === "tel" && value.length > 11) {
-      return;
-    }
-    setFormData({
-      ...formData,
-      [key]: e.detail.value,
-    });
-    setTimeout(() => {
+  const handleChange = useCallback(
+    (key, e) => {
+      const { value } = e.detail;
+      if (key === "tel" && value.length > 11) {
+        return;
+      }
+      setFormData({
+        ...formData,
+        [key]: e.detail.value,
+      });
       onChange && onChange(formData);
-    }, 100);
-  });
+    },
+    [formData]
+  );
 
   const handleSubmit = useCallback(() => {
     console.log(formData);
@@ -35,10 +37,10 @@ function Comp({ store, onSubmit = null, onChange = null }) {
 
   useEffect(() => {
     setFormData({
-      wx: "",
-      tel: studentInfo.tel || "",
+      wx: wx || "",
+      tel: tel || studentInfo.tel || "",
     });
-  }, [studentInfo]);
+  }, [studentInfo, wx, tel]);
 
   return (
     <>
@@ -55,6 +57,12 @@ function Comp({ store, onSubmit = null, onChange = null }) {
               onInput={(e) => {
                 handleChange("wx", e);
               }}
+              onConfirm={(e) => {
+                handleChange("wx", e);
+              }}
+              onBlur={(e) => {
+                handleChange("wx", e);
+              }}
               placeholder="输入微信账号"
             ></Input>
           </FormItem>
@@ -65,6 +73,12 @@ function Comp({ store, onSubmit = null, onChange = null }) {
               value={formData.tel}
               maxlength={11}
               onInput={(e) => {
+                handleChange("tel", e);
+              }}
+              onConfirm={(e) => {
+                handleChange("tel", e);
+              }}
+              onBlur={(e) => {
                 handleChange("tel", e);
               }}
               placeholder="请输入11位手机号码"

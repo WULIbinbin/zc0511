@@ -97,8 +97,9 @@ class Index extends Component {
       hollandStr: JSON.stringify(myResults),
     })
       .then((res) => {
+        console.log(res)
         Taro.hideLoading();
-        this.props.store.Common.getHolland();
+        this.props.store.Tutor.getHolland();
         if (res.status == 0) {
           Taro.navigateBack();
         } else {

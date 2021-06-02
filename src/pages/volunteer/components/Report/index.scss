@@ -4,6 +4,7 @@
   @include flex-column();
   @include shadow-radius();
   margin: 20px 25px 0;
+  padding: 0 0 20px;
   background-color: $white-color;
   &-options {
     @include flex-column-center-center();
@@ -79,5 +80,21 @@
       font-size: 26px;
       color: #666666;
     }
+  }
+  &-table {
+    margin: 0 25px 0;
+    &-topdesc {
+      font-size: 28px;
+      color: #d0ac58;
+      margin: 20px 0 10px;
+    }
+    .b-table-thead {
+      background-color: #d0ac58;
+    }
+  }
+  &-bottom-desc {
+    font-size: 28px;
+    color: #d0ac58;
+    margin: 20px 25px;
   }
 }

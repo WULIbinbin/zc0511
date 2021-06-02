@@ -89,3 +89,33 @@ export function PayAudit() {
     method: "POST",
   });
 }
+
+export function GetContact() {
+  return Request({
+    url: `/report/online`,
+    method: "GET",
+  });
+}
+
+export function PostContact(params = {}) {
+  return Request({
+    url: `/report/saveInfo`,
+    method: "POST",
+    data: params,
+  });
+}
+
+export function GetOrderList(type=1) {
+  return Request({
+    url: `/report/list`,
+    method: "GET",
+    data: { type },
+  });
+}
+
+export function GetOrderDetail(id) {
+  return Request({
+    url: `/report/${id}`,
+    method: "GET",
+  });
+}

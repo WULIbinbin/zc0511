@@ -12,6 +12,7 @@ class App extends Component {
         Store.Account.GetUserInfo();
         Store.Review.getOrderStatus();
         Store.Tutor.getOrderStatus();
+        Store.Tutor.getOnline();
       }
     })
   }

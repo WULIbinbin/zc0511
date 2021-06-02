@@ -10,6 +10,8 @@ import ZhiDao from "../../static/image/zhidao.png";
 import Tuxing1 from "../../static/image/tuxing1.png";
 import Tuxing2 from "../../static/image/tuxing2.png";
 import Tuxing3 from "../../static/image/tuxing3.png";
+import {GetContact} from '../../request/apis/report'
+import { useEffect } from "react";
 
 function HomeServer({ store }) {
   const { Review, Tutor } = store;
@@ -44,7 +46,7 @@ function HomeServer({ store }) {
       label: "在线指导",
       bg: Tuxing3,
       bgClass: "linear-bg3",
-      isLock: true,
+      isLock: !Tutor.isPayOnline,
       link: "/pages/volunteer/online/index",
     },
   ];

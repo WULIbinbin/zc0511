@@ -8,6 +8,8 @@ export { default as VolStar } from "./Star/index";
 export { default as VolPayment } from "./Payment/index";
 export { default as VolTable } from "./Table/index";
 export { default as VolReport } from "./Report/index";
+export { default as VolContact } from "./Contact/index";
+
 
 
 

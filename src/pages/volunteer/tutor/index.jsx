@@ -30,18 +30,17 @@ class Index extends Component {
 
   getOrderStatus() {
     const { Tutor } = this.props.store;
-    Tutor.getReviewOrder();
+    Tutor.getOrderStatus();
     Tutor.getRemSchool();
+    Tutor.getHolland()
   }
 
   handlePay() {
-    const { Tutor } = this.props.store;
     WxPay(2).then((res) => {
       console.log(res);
-      Tutor.getReviewOrder();
-      Tutor.getOrderStatus();
-      Tutor.getRemSchool();
-      GetOrderById(res.data.id).then((res) => {});
+      GetOrderById(res.data.id).then((res) => {
+        this.getOrderStatus();
+      });
     });
   }
 

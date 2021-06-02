@@ -7,12 +7,8 @@ import { inject, observer } from "mobx-react";
 
 import "./index.scss";
 
-function Comp({
-  showIcon = true,
-  showMidTitle = true,
-  store,
-}) {
-  const todo = "/pages/volunteer/batch/index"
+function Comp({ showIcon = true, showMidTitle = true, store }) {
+  const todo = "/pages/volunteer/batch/index";
   const {
     Review: {
       batch: { school, college },
@@ -66,13 +62,13 @@ function Comp({
           <MidTitle title="志愿填报信息" showIcon={showIcon} goEdit={goto} />
         )}
         <View className="b-vol-table-content">
-          {school.length > 0 && (
+          {school && school.length > 0 && (
             <>
               <View className="b-vol-table-title">本科批</View>
               <Table thead={thead} tbody={mapSchool}></Table>
             </>
           )}
-          {college.length > 0 && (
+          {college && college.length > 0 && (
             <>
               <View className="b-vol-table-title">高职专科批</View>
               <Table thead={thead} tbody={mapCollege}></Table>
@@ -97,4 +93,3 @@ function Comp({
 }
 
 export default inject("store")(observer(Comp));
-

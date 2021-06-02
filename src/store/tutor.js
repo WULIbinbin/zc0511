@@ -4,6 +4,8 @@ import {
   PreferenceList,
   GetOrderByType,
   GetRecommend,
+  GetHolland,
+  GetContact
 } from "../request/apis/report";
 
 const review = observable({
@@ -14,15 +16,35 @@ const review = observable({
       num: "",
     },
   },
-  orderData: {
-    ai: 0,
-    isPay: 0,
-    school: [],
-    college: [],
+  recommendData:null,
+  holland: null,
+  online:null,
+  get orderNum() {
+    return this.orderStatus.report.num;
   },
-  batch: {
-    school: [],
-    college: [],
+  get recommendProvince() {
+    return this.recommendData && this.recommendData.province||[];
+  },
+  get recommendAll() {
+    return this.recommendData && this.recommendData.all||[];
+  },
+  get hollandTypeList() {
+    return this.holland && this.holland.typeList||[];
+  },
+  get hollandMajorList() {
+    return this.holland && this.holland.majorList||[];
+  },
+  get hollandSubData(){
+    return this.holland&&this.holland.hollandStr&&JSON.parse(this.holland.hollandStr)||{}
+  },
+  get hollandTypeWord(){
+    return {
+      en:this.hollandTypeList.map(n=>n.cate).join(' ')||'',
+      cn:this.hollandTypeList.map(n=>n.memo.substring(0,2)).join('/')||''
+    }
+  },
+  get isPayOnline(){
+    return this.online!=null
   },
   get hasPay() {
     return (
@@ -30,34 +52,8 @@ const review = observable({
       this.orderStatus.report.payStatus == true
     );
   },
-  get isPay(){
-    return this.orderStatus.report.payStatus == true
-  },
-  get orderNum() {
-    return this.orderStatus.report.num;
-  },
-  get schoolBatch() {
-    return this.batch.school;
-  },
-  get collegeBatch() {
-    return this.batch.college;
-  },
-  get getBatch() {
-    return this.batch;
-  },
-  setBatch(batch) {
-    this.batch = batch;
-  },
-  getReviewOrder() {
-    Taro.showLoading();
-    PreferenceList().then((res) => {
-      console.log("==========================>获取审核服务数据", res.data);
-      Taro.hideLoading();
-      if (res.status === 0) {
-        this.orderData = res.data;
-        this.setBatch(this.orderData);
-      }
-    });
+  get isPay() {
+    return this.orderStatus.report.payStatus == true;
   },
   getOrderStatus() {
     GetOrderByType(1).then((res) => {
@@ -65,8 +61,22 @@ const review = observable({
     });
   },
   getRemSchool() {
-    GetRecommend().then((res) => {});
+    GetRecommend().then((res) => {
+      this.recommendData = res.data
+    });
   },
+  getHolland() {
+    GetHolland().then((res) => {
+      this.holland = res.data;
+    });
+  },
+  getOnline(){
+    GetContact().then((res) => {
+      console.log(res);
+      if (res.data == null) return;
+      this.online = res.data
+    });
+  }
 });
 
 export default review;

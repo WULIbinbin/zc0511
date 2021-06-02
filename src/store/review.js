@@ -13,6 +13,15 @@ const review = observable({
       payStatus: false,
       num: "",
     },
+    type: 3,
+  },
+  oldOrderStatus:{
+    isNeedPay: true,
+    report: {
+      payStatus: false,
+      num: "",
+    },
+    type: 3,
   },
   orderData: {
     sortList: [],
@@ -30,6 +39,9 @@ const review = observable({
       this.orderStatus.isNeedPay == false ||
       this.orderStatus.report.payStatus == true
     );
+  },
+  get isZNUse(){
+    return this.oldOrderStatus.report.payStatus===true
   },
   //微信支付：isNeedPay==true||report.payStatus==false
   //免费一次支付：isNeedPay==false||report.payStatus==false
@@ -64,7 +76,9 @@ const review = observable({
   },
   getOrderStatus() {
     GetOrderByType(2).then((res) => {
+      console.log("==========================>获取订单状态", res.data);
       this.orderStatus = res.data;
+      this.oldOrderStatus = res.data
     });
   },
   resetOrderData() {
@@ -79,13 +93,14 @@ const review = observable({
       school: [],
       college: [],
     };
-    this.orderStatus= {
+    this.orderStatus = {
       isNeedPay: true,
       report: {
         payStatus: false,
         num: "",
       },
-    }
+      type: 3,
+    };
   },
 });
 

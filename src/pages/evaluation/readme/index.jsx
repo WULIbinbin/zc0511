@@ -32,7 +32,7 @@ class Index extends Component {
   }
 
   goExam(){
-    Taro.navigateTo({
+    Taro.redirectTo({
       url:'/pages/evaluation/exam/index'
     })
   }

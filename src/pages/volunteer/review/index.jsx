@@ -13,12 +13,7 @@ import "./index.scss";
 @inject("store")
 @observer
 class Index extends Component {
-  state = {
-    isPay: 1,
-    ai: 1,
-    college: [],
-    school: [],
-  };
+  state = {};
 
   componentDidMount() {
     this.getOrderStatus();
@@ -54,7 +49,7 @@ class Index extends Component {
         <VolTable />
         <VolPayment />
         <VolReport />
-        {isNeedPay == false && report.payStatus == true && (
+        {report.payStatus == true && (
           <View className="b-vol-reset">
             <View
               className="b-vol-reset-btn"
@@ -62,7 +57,7 @@ class Index extends Component {
                 Review.resetOrderData();
               }}
             >
-              增加审核次数
+              +增加审核次数
             </View>
           </View>
         )}
