@@ -5,7 +5,8 @@ import {
   GetOrderByType,
   GetRecommend,
   GetHolland,
-  GetContact
+  GetContact,
+  GetOrderDetail
 } from "../request/apis/report";
 
 const review = observable({
@@ -48,7 +49,6 @@ const review = observable({
   },
   get hasPay() {
     return (
-      this.orderStatus.isNeedPay == false ||
       this.orderStatus.report.payStatus == true
     );
   },
@@ -61,12 +61,16 @@ const review = observable({
     });
   },
   getRemSchool() {
+    Taro.showLoading();
     GetRecommend().then((res) => {
+      Taro.hideLoading();
       this.recommendData = res.data
     });
   },
   getHolland() {
+    Taro.showLoading();
     GetHolland().then((res) => {
+      Taro.hideLoading();
       this.holland = res.data;
     });
   },
@@ -76,6 +80,14 @@ const review = observable({
       if (res.data == null) return;
       this.online = res.data
     });
+  },
+  getOrderDetail(id){
+    Taro.showLoading();
+    GetOrderDetail(id).then(res=>{
+      Taro.hideLoading();
+      this.holland = res.data;
+    })
+    this.getRemSchool()
   }
 });
 

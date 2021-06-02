@@ -1,5 +1,5 @@
 import { View } from "@tarojs/components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./index.scss";
 
 function Tabbar({ tabs = [], activeTab = "", onChange = null }) {
@@ -8,6 +8,9 @@ function Tabbar({ tabs = [], activeTab = "", onChange = null }) {
     setActive(target);
     onChange && onChange({ target, index });
   };
+  useEffect(()=>{
+    setActive(activeTab)
+  },[activeTab])
   return (
     <View className="b-tab-bar">
       {tabs.map((t, i) => (

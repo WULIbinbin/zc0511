@@ -3,7 +3,7 @@ import Taro from "@tarojs/taro";
 import {
   PreferenceList,
   GetOrderByType,
-  GetOrderById,
+  GetOrderDetail,
 } from "../request/apis/report";
 
 const review = observable({
@@ -102,6 +102,16 @@ const review = observable({
       type: 3,
     };
   },
+  getOrderDetail(id){
+    Taro.showLoading();
+    GetOrderDetail(id).then(res=>{
+      Taro.hideLoading();
+      if (res.status === 0) {
+        this.orderData = res.data;
+        this.setBatch(this.orderData);
+      }
+    })
+  }
 });
 
 export default review;

@@ -11,7 +11,7 @@ import "./index.scss";
 import SelectNor from "../../../../static/image/select.png";
 import SelectSel from "../../../../static/image/select-sel.png";
 
-function Comp({ hideMajor = false, todo = "", store }) {
+function Comp({ hideMajor = false, todo = "", showIcon = true, store }) {
   const {
     Tutor,
     Tutor: { hollandSubData, hollandTypeWord },
@@ -108,7 +108,7 @@ function Comp({ hideMajor = false, todo = "", store }) {
   return (
     <>
       <View className="b-vol-modal">
-        <MidTitle title="霍兰德职业模型" showIcon={true} goEdit={goto} />
+        <MidTitle title="霍兰德职业模型" showIcon={showIcon} goEdit={goto} />
         {Tutor.hollandTypeList == null ? (
           <View className="b-vol-comp-no-data">
             <View className="b-vol-comp-no-data-desc">

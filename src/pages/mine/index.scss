@@ -15,6 +15,7 @@ $icon:37px;
     width: 100%;
     @include flex-row();
     padding:60px 0;
+    margin-bottom:20px;
     .items{
       flex:1;
       @include flex-column-center-center();

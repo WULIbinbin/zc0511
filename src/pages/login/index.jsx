@@ -87,7 +87,14 @@ class Index extends Component {
       return;
     }
     Account.PhoneLogin(formData).then((res) => {
-      Taro.navigateBack()
+      if (res.status == 0) {
+        Taro.showToast({ title: "登录成功", icon: "none" });
+        setTimeout(() => {
+          Taro.navigateBack();
+        }, 1200);
+      } else {
+        Taro.showToast({ title: "登录失败，请重试", icon: "none" });
+      }
     });
   }
   render() {

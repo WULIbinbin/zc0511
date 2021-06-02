@@ -18,6 +18,13 @@
   }
   &-optiem {
     @include flex-column-center-center();
+    margin:0;
+    background-color: #fff;
+    padding:0;
+    line-height: 40px;
+    &::after{
+      display: none;
+    }
     &-icon {
       height: 100px;
       width: 100px;
@@ -27,6 +34,10 @@
       font-size: 26px;
       color: #333333;
     }
+  }
+  &-qrcode{
+    width: 500px;
+    height: 500px;
   }
   &-list {
     @include flex-column();

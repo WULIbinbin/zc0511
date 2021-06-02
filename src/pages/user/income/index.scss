@@ -37,13 +37,18 @@
       &-desc {
         font-size: 20px;
         color: #ffffff;
-        margin: 50px 0 20px;
+        margin: 30px 0 20px;
       }
       &-money {
         font-size: 60px;
         line-height: 60px;
         font-weight: bold;
         color: #ffffff;
+      }
+      &-desc2{
+        font-size: 26px;
+        color: #ffffff;
+        margin: 20px 0 10px;
       }
       &-withdraw {
         @include flex-row-center-center();
@@ -53,7 +58,7 @@
         border-radius: 25px;
         font-size: 28px;
         color: #ea4438;
-        margin: 50px 0;
+        margin: 40px 0 0;
       }
     }
     &-middle {
@@ -97,6 +102,9 @@
       z-index: 1;
       margin: 25px 25px 120px;
       background-color: $white-color;
+      &-bar{
+        padding:0 120px;
+      }
       &-list {
         @include flex-column();
         width: 100%;

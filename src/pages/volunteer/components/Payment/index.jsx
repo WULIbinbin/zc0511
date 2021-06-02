@@ -18,6 +18,7 @@ function Comp({ store }) {
     Review,
     Review: { orderStatus, orderData, isZNUse },
     Account: { studentInfo },
+    Common
   } = store;
   const [payType, setPayType] = useState(orderStatus.type || 3);
   const [formData, setFormData] = useState({
@@ -28,14 +29,14 @@ function Comp({ store }) {
     {
       name: "专家审核",
       desc: "教育专家审核志愿配置",
-      money: "99",
+      money: Common.professorPrice.value,
       exact: "",
       type: 3,
     },
     {
       name: "智能审核",
       desc: "大数据审核志愿配置",
-      money: "69",
+      money: Common.aiPrice.value,
       exact: "1次提交机会",
       type: 4,
     },

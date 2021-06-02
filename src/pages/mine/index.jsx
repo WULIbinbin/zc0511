@@ -23,16 +23,47 @@ class Index extends Component {
 
   componentDidHide() {}
 
+  handleCopy() {
+    Taro.setClipboardData({
+      data: "szcy_666",
+    }).then(() => {
+      Taro.showToast({
+        title: "复制成功",
+        icon: "none",
+      });
+    });
+  }
+
   handleTo(url) {
+    const {
+      Account: { studentInfo },
+    } = this.props.store;
+    if (!studentInfo.id) {
+      Taro.showModal({
+        title: "您还未登录",
+        content: "请授权手机登录",
+      }).then((res) => {
+        if (res.confirm) {
+          Taro.navigateTo({
+            url: "/pages/login/index",
+          });
+        }
+      })
+      return;
+    }
     Taro.navigateTo({ url });
   }
 
   render() {
+    const {
+      Account: { studentInfo, subjectInfo },
+      Common: { zxCity },
+    } = this.props.store;
     const numbers = [
       {
         num: 0,
         label: "我的推荐",
-        link: "",
+        link: "/pages/recommend/index/index",
       },
       {
         num: 0,
@@ -48,14 +79,11 @@ class Index extends Component {
     };
     const enter2 = {
       text: "我的报告",
-      num: 0,
+      num: studentInfo.report,
       icon: IconReport,
       link: "/pages/vip/report/index",
     };
-    const {
-      Account: { studentInfo, subjectInfo },
-      Common: { zxCity },
-    } = this.props.store;
+
     const infos = [
       {
         label: "成绩:",
@@ -105,11 +133,13 @@ class Index extends Component {
             )}
           </View>
           <View className="b-mine-bottom">
-            <Card
-              label="会员卡绑定"
-              icon={IconVip}
-              accessTo={this.handleTo.bind(this, "/pages/vip/bind/index")}
-            />
+            {!studentInfo.vip && (
+              <Card
+                label="会员卡绑定"
+                icon={IconVip}
+                accessTo={this.handleTo.bind(this, "/pages/vip/bind/index")}
+              />
+            )}
             <Card
               label="录入信息"
               icon={IconSave}
@@ -130,34 +160,36 @@ class Index extends Component {
               )}
             </Card>
 
-            <View className="b-mine-twice-enter">
-              <View
-                className="enter-item"
-                onClick={this.handleTo.bind(this, enter1.link)}
-              >
-                <View className="num">
-                  {enter1.num}
-                  <View className="plus">+</View>
+            {subjectInfo && subjectInfo.length > 0 && (
+              <View className="b-mine-twice-enter">
+                <View
+                  className="enter-item"
+                  onClick={this.handleTo.bind(this, enter1.link)}
+                >
+                  <View className="num">
+                    {enter1.num}
+                    <View className="plus">+</View>
+                  </View>
+                  <View className="label">
+                    <Image className="icon" src={enter1.icon}></Image>
+                    <View className="text">{enter1.text}</View>
+                  </View>
                 </View>
-                <View className="label">
-                  <Image className="icon" src={enter1.icon}></Image>
-                  <View className="text">{enter1.text}</View>
+                <View
+                  className="enter-item"
+                  onClick={this.handleTo.bind(this, enter2.link)}
+                >
+                  <View className="num">{enter2.num}</View>
+                  <View className="label">
+                    <Image className="icon" src={enter2.icon}></Image>
+                    <View className="text">{enter2.text}</View>
+                  </View>
                 </View>
               </View>
-              <View
-                className="enter-item"
-                onClick={this.handleTo.bind(this, enter2.link)}
-              >
-                <View className="num">{enter2.num}</View>
-                <View className="label">
-                  <Image className="icon" src={enter2.icon}></Image>
-                  <View className="text">{enter2.text}</View>
-                </View>
-              </View>
-            </View>
+            )}
           </View>
 
-          <View className="b-mine-contact">
+          <View className="b-mine-contact" onClick={this.handleCopy.bind(this)}>
             联系我们：szcy_666<View className="copy">复制</View>
           </View>
         </View>

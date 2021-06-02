@@ -17,7 +17,10 @@ const whiteList = [
   "/wx/miniprogram/user/phone",
   "/oauth/token",
   "/wx/miniprogram/user/getBanner",
+  "/wx/miniprogram/pay/price",
 ];
+
+let dialogShow = 0;
 
 export function Request({ data = {}, url = "", method = "GET" }) {
   const { baseUrl } = getConfig();
@@ -40,22 +43,25 @@ export function Request({ data = {}, url = "", method = "GET" }) {
         return Promise.resolve(data);
       } else {
         if (statusCode === 401 && !whiteList.includes(url)) {
+          if (dialogShow > 0) return;
           Taro.showModal({
             title: "您还未登录",
             content: "请授权手机登录",
           }).then((res) => {
+            dialogShow = 0;
             if (res.confirm) {
               Taro.navigateTo({
                 url: "/pages/login/index",
               });
             }
           });
+          dialogShow++;
         }
         return Promise.reject(response);
       }
     })
     .catch((error) => {
-      Taro.hideLoading()
+      Taro.hideLoading();
       console.warn("服务器异常===============》》》", error);
       return Promise.reject(error);
     });

@@ -26,11 +26,11 @@ class Index extends Component {
   componentDidHide() {}
 
   handlePay() {
-    const { Tutor, Review,Account } = this.props.store;
+    const { Tutor, Review, Account } = this.props.store;
     WxPay(1).then((res) => {
       console.log(res);
       GetOrderById(res.data.id).then((res) => {
-        Account.GetUserInfo()
+        Account.GetUserInfo();
         Tutor.getOrderStatus();
         Review.getOrderStatus();
       });
@@ -44,19 +44,21 @@ class Index extends Component {
   }
 
   render() {
-    const { Tutor, Review } = this.props.store;
+    const { Tutor, Review, Account, Common } = this.props.store;
     const guideItems = [
       {
         title: "志愿填报辅导",
         desc: "推荐最优院校最适合的专业",
         bg: Tuxing1,
         isLock: !Tutor.hasPay,
+        link: "/pages/volunteer/tutor/index",
       },
       {
         title: "志愿审核服务",
         desc: "分析所填的志愿方案",
         bg: Tuxing2,
         isLock: !Review.hasPay,
+        link: "/pages/volunteer/review/index",
       },
       // {
       //   title: "志愿填报综合报告",
@@ -68,7 +70,16 @@ class Index extends Component {
       <View className="b-guide-page">
         <View className="bg">
           {guideItems.map((n) => (
-            <View className="server-item">
+            <View
+              className="server-item"
+              onClick={() => {
+                if (!n.isLock) {
+                  Taro.navigateTo({
+                    url: n.link,
+                  });
+                }
+              }}
+            >
               <View className="content">
                 {n.isLock && (
                   <View className="right-top">
@@ -82,20 +93,25 @@ class Index extends Component {
             </View>
           ))}
         </View>
-        <View
-          className="b-vol-page-button-group"
-          onClick={this.handlePay.bind(this)}
-        >
-          <View className="b-vol-page-button b-vol-page-button-left">
-            <View className="b-vol-page-button-money">￥</View>299.00
-          </View>
-          <View className="b-vol-page-button b-vol-page-button-right">
-            立即解锁
-          </View>
-        </View>
-        <View className="example" onClick={this.gotoExample}>
-          看看 示例报告
-        </View>
+        {!Account.isVip && (
+          <>
+            <View
+              className="b-vol-page-button-group"
+              onClick={this.handlePay.bind(this)}
+            >
+              <View className="b-vol-page-button b-vol-page-button-left">
+                <View className="b-vol-page-button-money">￥</View>
+                {Common.vipPrice.value}
+              </View>
+              <View className="b-vol-page-button b-vol-page-button-right">
+                立即解锁
+              </View>
+            </View>
+            <View className="example" onClick={this.gotoExample}>
+              看看 示例报告
+            </View>
+          </>
+        )}
       </View>
     );
   }

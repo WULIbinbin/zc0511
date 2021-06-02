@@ -10,11 +10,15 @@ import ZhiDao from "../../static/image/zhidao.png";
 import Tuxing1 from "../../static/image/tuxing1.png";
 import Tuxing2 from "../../static/image/tuxing2.png";
 import Tuxing3 from "../../static/image/tuxing3.png";
-import {GetContact} from '../../request/apis/report'
+import { GetContact } from "../../request/apis/report";
 import { useEffect } from "react";
 
 function HomeServer({ store }) {
-  const { Review, Tutor } = store;
+  const {
+    Review,
+    Tutor,
+    Account: { studentInfo },
+  } = store;
   const items = [
     {
       icon: ShenHe,
@@ -50,15 +54,31 @@ function HomeServer({ store }) {
       link: "/pages/volunteer/online/index",
     },
   ];
+  const handleTo = (n) => {
+    if (!studentInfo.id) {
+      Taro.showModal({
+        title: "您还未登录",
+        content: "请授权手机登录",
+      }).then((res) => {
+        if (res.confirm) {
+          Taro.navigateTo({
+            url: "/pages/login/index",
+          });
+        }
+      });
+      return;
+    }
+    Taro.navigateTo({
+      url: n.link,
+    });
+  };
   return (
     <View className="b-home-server">
       {items.map((n) => (
         <View
           className={`server-item ${n.bgClass}`}
           onClick={() => {
-            Taro.navigateTo({
-              url: n.link,
-            });
+            handleTo(n);
           }}
         >
           <Image className="icon" src={n.icon}></Image>

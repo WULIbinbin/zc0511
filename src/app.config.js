@@ -22,6 +22,8 @@ export default {
         "online/index",
         "batch/index",
         "batchInfo/index",
+        "reviewDetail/index",
+        "tutorDetail/index",
       ],
     },
     {
@@ -42,7 +44,7 @@ export default {
     },
     {
       root: "pages/recommend/",
-      pages: ["index/index", "apply/index"],
+      pages: ["index/index", "list/index"],
     },
     {
       root: "pages/example/",

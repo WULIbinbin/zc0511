@@ -1,46 +1,53 @@
 import { View, Input } from "@tarojs/components";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { FormItem } from "../../../../components/index";
 import { inject, observer } from "mobx-react";
 
 import "./index.scss";
 
-function Comp({ tel = "", wx = "", store, onSubmit = null, onChange = null }) {
-  const {
-    Account: { studentInfo },
-  } = store;
-
+function Comp({ tel = "", wx = "", store, onChange = null,onSubmit=null }) {
   const [formData, setFormData] = useState({
-    wx: "",
-    tel: "",
+    wx: wx,
+    tel: tel,
   });
 
-  const handleChange = useCallback(
-    (key, e) => {
-      const { value } = e.detail;
-      if (key === "tel" && value.length > 11) {
-        return;
-      }
-      setFormData({
-        ...formData,
-        [key]: e.detail.value,
-      });
-      onChange && onChange(formData);
-    },
-    [formData]
-  );
+  // const handleChange = useCallback(
+  //   (key, e) => {
+  //     const { value } = e.detail;
+  //     if (key === "tel" && value.length > 11) {
+  //       return;
+  //     }
+  //     console.log(formData)
+  //     setFormData({
+  //       ...formData,
+  //       [key]: e.detail.value,
+  //     });
+  //     onChange && onChange(formData);
+  //   },
+  //   [formData]
+  // );
+  const handleChange = (key, e) => {
+    const { value } = e.detail;
+    if (key === "tel" && value.length > 11) {
+      return;
+    }
+    setFormData({
+      ...formData,
+      [key]: e.detail.value,
+    });
+    //onChange && onChange(formData);
+  };
 
-  const handleSubmit = useCallback(() => {
-    console.log(formData);
-    onSubmit && onSubmit(formData);
-  });
+  const handleSubmit =()=>{
+    onSubmit&&onSubmit(formData)
+  }
 
   useEffect(() => {
     setFormData({
-      wx: wx || "",
-      tel: tel || studentInfo.tel || "",
+      wx: wx,
+      tel: tel,
     });
-  }, [studentInfo, wx, tel]);
+  }, [wx, tel]);
 
   return (
     <>
@@ -58,10 +65,10 @@ function Comp({ tel = "", wx = "", store, onSubmit = null, onChange = null }) {
                 handleChange("wx", e);
               }}
               onConfirm={(e) => {
-                handleChange("wx", e);
+                handleSubmit();
               }}
               onBlur={(e) => {
-                handleChange("wx", e);
+                handleSubmit();
               }}
               placeholder="输入微信账号"
             ></Input>
@@ -76,19 +83,16 @@ function Comp({ tel = "", wx = "", store, onSubmit = null, onChange = null }) {
                 handleChange("tel", e);
               }}
               onConfirm={(e) => {
-                handleChange("tel", e);
+                handleSubmit();
               }}
               onBlur={(e) => {
-                handleChange("tel", e);
+                handleSubmit();
               }}
               placeholder="请输入11位手机号码"
             ></Input>
           </FormItem>
         </View>
       </View>
-      {/* <View className="b-vol-payment-btn" onClick={handleSubmit}>
-        立即提交
-      </View> */}
     </>
   );
 }

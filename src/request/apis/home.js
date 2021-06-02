@@ -13,3 +13,9 @@ export function GetMySchoolList(type='',params={}) {
     data:params,
   });
 }
+
+export function GetAllPrice(){
+  return Request({
+    url: `/wx/miniprogram/pay/price`,
+  });
+}

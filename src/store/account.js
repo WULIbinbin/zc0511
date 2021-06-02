@@ -8,6 +8,7 @@ import {
   VerifyCode,
 } from "../request/apis/account";
 import { GetStuInfo } from "../request/apis/inform";
+import { BindShare } from "../request/apis/recommend";
 import Subject from "./subject";
 import Common from "./common";
 
@@ -194,6 +195,26 @@ const account = observable({
         subList,
         student,
       };
+      //绑定邀请人
+      const scene = wx.getStorageSync("scene");
+      if (!scene) return;
+      BindShare(scene).then((res) => {
+        if (res.status == 0) {
+          Taro.showToast({
+            title: "成功绑定邀请人",
+            icon: "none",
+            duration: 3000,
+          });
+          wx.removeStorageSync("scene");
+        } else if (res.status == -3) {
+          Taro.showToast({
+            title: "已绑定邀请人",
+            icon: "none",
+            duration: 3000,
+          });
+          wx.removeStorageSync("scene");
+        }
+      });
     });
   },
 });

@@ -75,12 +75,13 @@ class Index extends Component {
       Taro.showToast({ title: "支付成功", icon: "none" });
       GetOrderById(res.data.id).then((res) => {});
       PostContact(formData).then((res) => {});
+      this.getOrderStatus();
     });
   }
 
   render() {
     const { formData, orderStatus } = this.state;
-    console.log(formData)
+    const { Common } = this.props.store;
     return (
       <View className="b-vol-page">
         <View className="b-vol-online-top">
@@ -96,7 +97,7 @@ class Index extends Component {
         <View className="b-vol-page-bottom-desc">
           注：由于该理论1959年提出，有些职业在这几十年间发生了很大的变化，甚至已经消失，我们本着尊重全球性著名专家的原则，并未删除或更改，直接展示给测试者。
         </View>
-        <VolContact {...formData} onChange={this.handleContact.bind(this)} />
+        <VolContact {...formData} onSubmit={this.handleContact.bind(this)} />
         {orderStatus.status == 1 ? (
           <View className="b-vol-online-btn">
             已支付，将会有教育专家与您联系！
@@ -107,7 +108,7 @@ class Index extends Component {
             onClick={this.handlePay.bind(this)}
           >
             <View className="b-vol-page-button b-vol-page-button-left">
-              <View className="b-vol-page-button-money">￥</View>299.00
+              <View className="b-vol-page-button-money">￥</View>{Common.onlinePrice.value}
             </View>
             <View className="b-vol-page-button b-vol-page-button-right">
               立即解锁

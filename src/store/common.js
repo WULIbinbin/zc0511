@@ -1,4 +1,5 @@
 import { observable } from "mobx";
+import { GetAllPrice } from "../request/apis/home";
 
 const common = observable({
   curProv: "北京",
@@ -68,10 +69,36 @@ const common = observable({
   ],
   subtype: ["综合", "文科", "理科"],
   zxCity: ["北京市", "天津市", "上海市", "重庆市"],
+  allPrice: null,
+  get vipPrice() {
+    return (this.allPrice && this.allPrice.find((f) => f.name === "vip")) || {};
+  },
+  get reportPrice() {
+    return (
+      (this.allPrice && this.allPrice.find((f) => f.name === "report")) || {}
+    );
+  },
+  get professorPrice() {
+    return (
+      (this.allPrice && this.allPrice.find((f) => f.name === "professor")) || {}
+    );
+  },
+  get aiPrice() {
+    return (this.allPrice && this.allPrice.find((f) => f.name === "ai")) || {};
+  },
+  get onlinePrice() {
+    return (
+      (this.allPrice && this.allPrice.find((f) => f.name === "online")) || {}
+    );
+  },
   phoneVerify(phone = "") {
     return /^[1][3,4,5,7,8,9][0-9]{9}$/.test(phone);
   },
-  
+  getAllPrice() {
+    GetAllPrice().then((res) => {
+      this.allPrice = res.data;
+    });
+  },
 });
 
 export default common;

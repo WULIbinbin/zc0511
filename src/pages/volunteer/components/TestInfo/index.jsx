@@ -7,6 +7,7 @@ import "./index.scss";
 
 function Comp({
   showMidTitle = true,
+  showIcon=true,
   midTitle = "center",
   tableData = [],
   store,
@@ -66,7 +67,7 @@ function Comp({
     <View className="b-vol-test">
       {showMidTitle &&
         (midTitle === "center" ? (
-          <MidTitle title="我的考试信息" showIcon={true} goEdit={goEdit} />
+          <MidTitle title="我的考试信息" showIcon={showIcon} goEdit={goEdit} />
         ) : (
           midTitle
         ))}

@@ -24,12 +24,22 @@ class Index extends Component {
     params: {
       province: "北京",
     },
+    random:''
   };
   allData = [];
   pageSize = 50;
   componentWillMount() {
-    const { Subject } = this.props.store;
-    Subject.setCurProv("北京");
+    const { Subject,Account:{studentInfo} } = this.props.store;
+    const state = {
+      random:(80+Math.round(Math.random()*16)+Math.ceil(Math.random()*10)/10)
+    }
+    if(!!studentInfo.province){
+      Subject.setCurProv(studentInfo.province);
+      state.curProv = studentInfo.province
+    }else{
+      Subject.setCurProv("北京");
+    }
+    this.setState(state)
     this.getList();
   }
 
@@ -208,6 +218,7 @@ class Index extends Component {
       currentData,
       isGetList,
       majorHistory,
+      random
     } = this.state;
     const {
       Common,
@@ -247,9 +258,11 @@ class Index extends Component {
                       this.stepItem(subject, 3)
                     )}
                   </View>
-                  <View className="sub-desc">
-                    此种选科组合可覆盖85.5%的专业
-                  </View>
+                  {this.isCanSubmit() && (
+                    <View className="sub-desc">
+                      此种选科组合可覆盖{random}%的专业
+                    </View>
+                  )}
                 </View>
               )}
               {subjectFilter.type === "TYPE_2_AND_4" && (
