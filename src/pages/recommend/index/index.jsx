@@ -26,12 +26,12 @@ class Index extends Component {
 
   componentDidMount() {
     const { Recommend } = this.props.store;
-    Taro.hideLoading();
-    this.setState({
-      showPage: true,
-      status: 0,
-    });
-    return;
+    // Taro.hideLoading();
+    // this.setState({
+    //   showPage: true,
+    //   status: 0,
+    // });
+    // return;
     Recommend.getInfo().then((res) => {
       console.log(res);
       if (res.status === 0) {
