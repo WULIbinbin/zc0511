@@ -15,6 +15,7 @@ import {
   PreferenceSave,
   PreferenceList,
 } from "../../../request/apis/report";
+import { debounce } from "../../../utils/tool";
 import "./index.scss";
 
 import PlusPng from "../image/plus.png";
@@ -292,14 +293,15 @@ class Index extends Component {
                     className="b-form-input"
                     value={item.code}
                     placeholder="输入院校代码"
-                    onInput={this.handleChange.bind(this, {
-                      key: "code",
-                      index,
-                    })}
-                    // onBlur={this.handleChange.bind(this, {
-                    //   key: "code",
-                    //   index,
-                    // })}
+                    type="number"
+                    confirm-type="search"
+                    onInput={debounce(
+                      this.handleChange.bind(this, {
+                        key: "code",
+                        index,
+                      }),
+                      1200
+                    )}
                     onConfirm={this.handleChange.bind(this, {
                       key: "code",
                       index,

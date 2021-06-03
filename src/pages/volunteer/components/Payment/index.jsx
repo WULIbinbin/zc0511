@@ -16,11 +16,11 @@ import "./index.scss";
 function Comp({ store }) {
   const {
     Review,
-    Review: { orderStatus, orderData, isZNUse },
+    Review: { orderStatus, orderData },
     Account: { studentInfo },
     Common,
   } = store;
-  const [payType, setPayType] = useState(orderStatus.type || 3);
+  const [payType, setPayType] = useState(null);
   const [formData, setFormData] = useState({
     wx: "",
     tel: "",
@@ -80,11 +80,18 @@ function Comp({ store }) {
     });
   };
   useEffect(() => {
-    console.log(orderStatus, orderStatus.type, payType, isZNUse);
-  }, [formData, orderStatus, orderData, payType]);
+    setPayType(orderStatus.type || 3);
+    if (!!orderData.info) {
+      setFormData({
+        wx: orderData.info.wx,
+        tel: orderData.info.tel,
+      });
+    }
+  }, [orderStatus, orderData]);
 
   return (
     <View className="b-vol-payment-view">
+      {/* 选择支付方式 */}
       {orderStatus.report.payStatus == false && (
         <View className="b-vol-payment">
           {price.map((n, i) => (
@@ -107,14 +114,24 @@ function Comp({ store }) {
           ))}
         </View>
       )}
-      {payType == 3 && orderData.info == null && (
-        <VolContact {...formData} onSubmit={handleContact} />
+      {/* 显示联系方式 */}
+      {payType == 3 && (
+        <>
+          <VolContact {...formData} onSubmit={handleContact} />
+          {orderData.info && (
+            <View className="b-vol-payment-reviewed">
+              已提交，稍后会有教育专家联系
+            </View>
+          )}
+        </>
       )}
+      {/* 专家审核支付显示 */}
       {payType == 3 && orderStatus.report.payStatus == false && (
         <View className="b-vol-payment-btn" onClick={handlePay}>
           立即支付
         </View>
       )}
+      {/* 智能审核支付显示 */}
       {payType == 4 &&
         orderStatus.isNeedPay == true &&
         orderStatus.report.payStatus == false && (
@@ -122,6 +139,7 @@ function Comp({ store }) {
             立即支付
           </View>
         )}
+      {/* 智能审核免费提交机会   */}
       {payType == 4 &&
         studentInfo.vip &&
         orderStatus.report.payStatus == false &&

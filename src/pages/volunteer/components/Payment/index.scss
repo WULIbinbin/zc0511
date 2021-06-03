@@ -73,6 +73,17 @@
     color: #d0ac58;
     text-align: center;
   }
+  &-reviewed{
+    height: 90px;
+    line-height: 90px;
+    text-align: center;
+    background: #d0ac58;
+    border-radius: 20px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 30px 25px 20px;
+  }
 }
 
 .b-vol-contact {

@@ -1,10 +1,12 @@
 import { Component } from "react";
-import { View, Image } from "@tarojs/components";
+import { View, Image, Text } from "@tarojs/components";
 import { observer, inject } from "mobx-react";
 import Taro from "@tarojs/taro";
 import { WxPay } from "../../../request/apis/account";
 import "./index.scss";
 import { GetOrderById } from "../../../request/apis/report";
+import ClosePng from "../../../static/image/close-gray.png";
+import titlePng from "../../../static/image/tihsi.png";
 
 import Lock from "../../../static/image/lock.png";
 
@@ -15,6 +17,10 @@ import Tuxing2 from "../../../static/image/tuxing2-2.png";
 @inject("store")
 @observer
 class Index extends Component {
+  state = {
+    showDialog: false,
+  };
+
   componentWillMount() {}
 
   componentDidMount() {}
@@ -33,6 +39,7 @@ class Index extends Component {
         Account.GetUserInfo();
         Tutor.getOrderStatus();
         Review.getOrderStatus();
+        this.handleToggle();
       });
     });
   }
@@ -43,7 +50,14 @@ class Index extends Component {
     });
   }
 
+  handleToggle() {
+    this.setState({
+      showDialog: !this.state.showDialog,
+    });
+  }
+
   render() {
+    const { showDialog } = this.state;
     const { Tutor, Review, Account, Common } = this.props.store;
     const guideItems = [
       {
@@ -97,7 +111,7 @@ class Index extends Component {
           <>
             <View
               className="b-vol-page-button-group"
-              onClick={this.handlePay.bind(this)}
+              onClick={this.handleToggle.bind(this)}
             >
               <View className="b-vol-page-button b-vol-page-button-left">
                 <View className="b-vol-page-button-money">￥</View>
@@ -111,6 +125,47 @@ class Index extends Component {
               看看 示例报告
             </View>
           </>
+        )}
+        {showDialog && (
+          <View className="b-payment-dialog">
+            <View className="b-payment-dialog-body">
+              <View className="b-payment-dialog-main">
+                <Image
+                  className="b-payment-dialog-close-icon"
+                  src={ClosePng}
+                  onClick={this.handleToggle.bind(this, false)}
+                ></Image>
+                <View className="b-payment-dialog-top">
+                  <Image
+                    className="b-payment-dialog-icon"
+                    src={titlePng}
+                  ></Image>
+                  <View className="b-payment-dialog-top-title">开通VIP</View>
+                  <Image
+                    className="b-payment-dialog-icon"
+                    src={titlePng}
+                  ></Image>
+                </View>
+                <View className="b-payment-dialog-content">
+                  <Text className="b-payment-dialog-money">
+                    ￥
+                    <Text className="b-payment-dialog-moneynum">
+                      {Common.vipPrice.value}
+                    </Text>
+                  </Text>
+                  <Text className="b-payment-dialog-desc">
+                    成为会员后可解锁更多权限
+                  </Text>
+                </View>
+                <View
+                  className="b-payment-dialog-btn"
+                  onClick={this.handlePay.bind(this)}
+                >
+                  立即解锁
+                </View>
+              </View>
+            </View>
+          </View>
         )}
       </View>
     );

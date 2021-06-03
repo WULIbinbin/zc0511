@@ -1,12 +1,12 @@
 import { Component } from "react";
 import Taro from "@tarojs/taro";
-import { View, Input,Image } from "@tarojs/components";
+import { View, Input, Image } from "@tarojs/components";
 import { observer, inject } from "mobx-react";
 import { FormItem } from "../../../components/index";
 import { RemApply } from "../../../request/apis/recommend";
 import "./index.scss";
 
-import ShenhePng from '../image/shenhe.png'
+import ShenhePng from "../image/shenhe.png";
 
 @inject("store")
 @observer
@@ -100,10 +100,10 @@ class Index extends Component {
     });
   }
   render() {
-    const { showPage,status } = this.state;
+    const { showPage, status } = this.state;
     if (showPage) {
-      return (
-        [1,-1].includes(status)?<View className="b-recommend-page">
+      return [1, -1, -3].includes(status) ? (
+        <View className="b-recommend-page">
           <View className="b-recommend-content">
             <View className="b-recommend-title">申请成为推荐官</View>
             <FormItem label="姓名:" labelWidth={80}>
@@ -136,11 +136,17 @@ class Index extends Component {
             </View>
           </View>
         </View>
-        :
-        <View className='b-recommend-review'>
-          <View className='b-recommend-review-body'>
-            <Image src={ShenhePng} className='b-recommend-review-bg' mode='widthFix'></Image>
-            <View className='b-recommend-review-pending'>您已成功申请，正在审核中...</View>
+      ) : (
+        <View className="b-recommend-review">
+          <View className="b-recommend-review-body">
+            <Image
+              src={ShenhePng}
+              className="b-recommend-review-bg"
+              mode="widthFix"
+            ></Image>
+            <View className="b-recommend-review-pending">
+              您已成功申请，正在审核中...
+            </View>
           </View>
         </View>
       );

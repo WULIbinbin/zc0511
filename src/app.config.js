@@ -11,6 +11,7 @@ export default {
     "pages/subject/detail/index",
     "pages/choose/index/index",
     "pages/choose/college/index",
+    "pages/webview/index",
   ],
   subpackages: [
     {

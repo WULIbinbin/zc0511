@@ -199,6 +199,7 @@ page {
   &-dialog {
     @include flex-column-center-center();
     height: 100vh;
+    z-index: 9999;
     position: fixed;
     top: 0;
     left: 0;

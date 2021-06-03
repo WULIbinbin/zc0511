@@ -36,6 +36,7 @@ class Index extends Component {
       Review,
       Review: {
         orderStatus: { isNeedPay, report },
+        orderData: { info },
       },
     } = this.props.store;
     return (

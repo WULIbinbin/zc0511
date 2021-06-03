@@ -10,11 +10,11 @@ function Comp({ store }) {
     Review,
     Review: {
       isPay,
-      orderData: { sortScore, sortList, memo },
+      orderData: { sortScore, sortList, memo, info },
     },
   } = store;
 
-  if (isPay && sortList && sortList.length > 0) {
+  if (isPay && info == null && sortList && sortList.length > 0) {
     const thead = [
       {
         key: "sort",
