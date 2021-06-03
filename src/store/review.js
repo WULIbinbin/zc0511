@@ -94,7 +94,7 @@ const review = observable({
       college: [],
     };
     this.orderStatus = {
-      isNeedPay: true,
+      isNeedPay: this.oldOrderStatus.isNeedPay,
       report: {
         payStatus: false,
         num: "",

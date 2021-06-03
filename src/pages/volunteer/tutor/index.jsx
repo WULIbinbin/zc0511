@@ -2,6 +2,7 @@ import { Component } from "react";
 import { View, ScrollView } from "@tarojs/components";
 import { observer, inject } from "mobx-react";
 import { PageView } from "../../../components/index";
+import Taro from '@tarojs/taro'
 import {
   VolTitle,
   VolTestInfo,
@@ -44,6 +45,12 @@ class Index extends Component {
     });
   }
 
+  handleExample(){
+    Taro.navigateTo({
+      url:'/pages/example/index/index'
+    })
+  }
+
   render() {
     const {
       Tutor,
@@ -73,7 +80,7 @@ class Index extends Component {
             </View>
           </View>
         )}
-        <View className="b-vol-page-bottom-example">看看 示例报告</View>
+        {!isPay && (<View className="b-vol-page-bottom-example" onClick={this.handleExample}>看看 示例报告</View>)}
       </View>
     );
   }

@@ -72,6 +72,7 @@ function HomeServer({ store }) {
       url: n.link,
     });
   };
+  useEffect(()=>{},[studentInfo])
   return (
     <View className="b-home-server">
       {items.map((n) => (

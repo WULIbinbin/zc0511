@@ -30,7 +30,7 @@ function Comp({ store }) {
       name: "专家审核",
       desc: "教育专家审核志愿配置",
       money: Common.professorPrice.value,
-      exact: "",
+      exact: "1次提交机会",
       type: 3,
     },
     {
@@ -87,7 +87,13 @@ function Comp({ store }) {
         tel: orderData.info.tel,
       });
     }
-  }, [orderStatus, orderData]);
+  }, [orderStatus, orderData, studentInfo]);
+
+  const handleExample = () => {
+    Taro.navigateTo({
+      url: "/pages/example/index/index",
+    });
+  };
 
   return (
     <View className="b-vol-payment-view">
@@ -151,6 +157,11 @@ function Comp({ store }) {
             </View>
           </>
         )}
+      {/* {orderStatus.report.payStatus == false && (
+        <View className="b-vol-page-bottom-example" onClick={handleExample}>
+          看看 示例报告
+        </View>
+      )} */}
     </View>
   );
 }

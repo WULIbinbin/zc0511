@@ -46,6 +46,7 @@ class Index extends Component {
         store.Tutor.getOrderStatus();
         store.Tutor.getOnline();
         store.Recommend.getInfo();
+        store.Common.getAllPrice()
       }
     });
     GetBanner().then((res) => {

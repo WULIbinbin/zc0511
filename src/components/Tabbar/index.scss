@@ -1,27 +1,28 @@
-@import '../../styles/mixin.scss';
+@import "../../styles/mixin.scss";
 
-.b-tab-bar{
+.b-tab-bar {
   width: 100%;
-  $tabH:86px;
+  $tabH: 86px;
   @include flex-row-center-between();
   height: $tabH;
-  background: #FFFFFF;
-  .tab-item{
+  background: #ffffff;
+  .tab-item {
     @include flex-row-center-center();
-    padding:0 5px;
-    margin:0 25px;
+    padding: 0 5px;
+    margin: 0 25px;
     height: $tabH;
     line-height: $tabH;
     font-size: 28px;
+    font-weight: 500;
     color: #666666;
     position: relative;
-    &.active{
+    &.active {
       color: #333333;
-      &::after{
+      &::after {
         @include row-line();
         height: 6px;
-        top:53px;
-        background: #EA4438;
+        top: 53px;
+        background: #ea4438;
       }
     }
   }

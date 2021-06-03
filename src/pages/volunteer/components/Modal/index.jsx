@@ -16,7 +16,7 @@ function Comp({ hideMajor = false, todo = "", showIcon = true, store }) {
     Tutor,
     Tutor: { hollandSubData, hollandTypeWord },
   } = store;
-  const [folded, setFold] = useState(true);
+  const [folded, setFold] = useState(false);
   const [activeKey, setActiveKey] = useState("");
   const gaugeChart = useRef(null);
   const defautOption = {
@@ -102,14 +102,14 @@ function Comp({ hideMajor = false, todo = "", showIcon = true, store }) {
   useEffect(() => {
     setActiveKey(mainKey);
     gaugeChart.current && gaugeChart.current.refresh(defautOption);
-  }, [gaugeChart.current]);
+  }, [gaugeChart.current,activeKey]);
 
   console.log(activeKey);
   return (
     <>
       <View className="b-vol-modal">
         <MidTitle title="霍兰德职业模型" showIcon={showIcon} goEdit={goto} />
-        {Tutor.hollandTypeList == null ? (
+        {Tutor.hollandTypeList.length === 0 ? (
           <View className="b-vol-comp-no-data">
             <View className="b-vol-comp-no-data-desc">
               添加后推荐与课程偏好相关专业

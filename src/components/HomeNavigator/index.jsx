@@ -1,6 +1,8 @@
 import { View, Text, Image } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import './index.scss'
+import { observer, inject } from "mobx-react";
+import { useEffect } from 'react';
 
 import Tubiao1 from '../../static/image/tubiao1.png'
 import Tubiao2 from '../../static/image/tubiao2.png'
@@ -9,7 +11,10 @@ import Tubiao4 from '../../static/image/tubiao4.png'
 
 
 
-function HomeNavigator() {
+function HomeNavigator({store}) {
+  const {
+    Account: { studentInfo },
+  } = store;
   const items = [
     {
       icon:Tubiao1,
@@ -35,6 +40,7 @@ function HomeNavigator() {
   const handleTo = (url)=>{
     Taro.navigateTo({url})
   }
+  useEffect(()=>{},[studentInfo])
   return (
     <View className='b-home-navigator'>
       {
@@ -49,4 +55,4 @@ function HomeNavigator() {
   )
 }
 
-export default HomeNavigator
+export default inject("store")(observer(HomeNavigator));

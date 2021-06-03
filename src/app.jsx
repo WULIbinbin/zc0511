@@ -16,7 +16,7 @@ class App extends Component {
     //     Store.Recommend.getInfo();
     //   }
     // })
-    Store.Common.getAllPrice();
+    // Store.Common.getAllPrice();
   }
   componentDidMount() {
     

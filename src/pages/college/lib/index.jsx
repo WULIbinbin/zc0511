@@ -79,7 +79,7 @@ class Index extends Component {
   }
 
   getList() {
-    Taro.showLoading();
+    Taro.showLoading({title:'加载中'});
     this.setState({
       isGetList: false,
     });
