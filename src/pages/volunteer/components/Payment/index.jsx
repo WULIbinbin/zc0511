@@ -18,7 +18,7 @@ function Comp({ store }) {
     Review,
     Review: { orderStatus, orderData, isZNUse },
     Account: { studentInfo },
-    Common
+    Common,
   } = store;
   const [payType, setPayType] = useState(orderStatus.type || 3);
   const [formData, setFormData] = useState({
@@ -108,12 +108,18 @@ function Comp({ store }) {
       {payType == 3 && orderData.info == null && (
         <VolContact onChange={handleContact} />
       )}
-      {/* (payType == 3 || (payType == 4 && isZNUse)) && */}
-      {orderStatus.isNeedPay == true && orderStatus.report.payStatus == false && (
+      {payType == 3 && orderStatus.report.payStatus == false && (
         <View className="b-vol-payment-btn" onClick={handlePay}>
           立即支付
         </View>
       )}
+      {payType == 4 &&
+        orderStatus.isNeedPay == true &&
+        orderStatus.report.payStatus == false && (
+          <View className="b-vol-payment-btn" onClick={handlePay}>
+            立即支付
+          </View>
+        )}
       {payType == 4 &&
         studentInfo.vip &&
         orderStatus.report.payStatus == false &&

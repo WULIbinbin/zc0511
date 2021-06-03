@@ -207,10 +207,24 @@ class Index extends Component {
           });
         } else {
           Taro.showToast({ title: "院校不存在，请重试", icon: "none" });
+          this.setItemData({
+            data: {
+              code: value,
+              schoolName: "",
+            },
+            index,
+          });
         }
       })
       .catch((err) => {
         Taro.showToast({ title: "院校代码错误，请重试", icon: "none" });
+        this.setItemData({
+          data: {
+            code: value,
+            schoolName: "",
+          },
+          index,
+        });
       });
   }
 
@@ -282,10 +296,10 @@ class Index extends Component {
                       key: "code",
                       index,
                     })}
-                    onBlur={this.handleChange.bind(this, {
-                      key: "code",
-                      index,
-                    })}
+                    // onBlur={this.handleChange.bind(this, {
+                    //   key: "code",
+                    //   index,
+                    // })}
                     onConfirm={this.handleChange.bind(this, {
                       key: "code",
                       index,
