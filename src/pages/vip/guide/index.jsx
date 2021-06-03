@@ -64,14 +64,14 @@ class Index extends Component {
         title: "志愿填报辅导",
         desc: "推荐最优院校最适合的专业",
         bg: Tuxing1,
-        isLock: !Tutor.hasPay,
+        isLock: !Tutor.hasPay && !Account.isVip,
         link: "/pages/volunteer/tutor/index",
       },
       {
         title: "志愿审核服务",
         desc: "分析所填的志愿方案",
         bg: Tuxing2,
-        isLock: !Review.hasPay,
+        isLock: !Review.hasPay && !Account.isVip,
         link: "/pages/volunteer/review/index",
       },
       // {

@@ -11,7 +11,7 @@ import "./index.scss";
 import SelectNor from "../../../../static/image/select.png";
 import SelectSel from "../../../../static/image/select-sel.png";
 
-function Comp({ hideMajor = false, todo = "", showIcon = true, store }) {
+function Comp({ hideMajor = false, todo = "/pages/evaluation/readme/index", showIcon = true, store }) {
   const {
     Tutor,
     Tutor: { hollandSubData, hollandTypeWord },

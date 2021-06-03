@@ -17,7 +17,7 @@ function HomeServer({ store }) {
   const {
     Review,
     Tutor,
-    Account: { studentInfo },
+    Account: { studentInfo, isVip },
   } = store;
   const items = [
     {
@@ -28,7 +28,7 @@ function HomeServer({ store }) {
       label: "院校审核",
       bg: Tuxing1,
       bgClass: "linear-bg1",
-      isLock: !Review.hasPay,
+      isLock: !Review.hasPay && !isVip,
       link: "/pages/volunteer/review/index",
     },
     {
@@ -39,7 +39,7 @@ function HomeServer({ store }) {
       label: "智能推荐",
       bg: Tuxing2,
       bgClass: "linear-bg2",
-      isLock: !Tutor.hasPay,
+      isLock: !Tutor.hasPay && !isVip,
       link: "/pages/volunteer/tutor/index",
     },
     {
@@ -72,7 +72,7 @@ function HomeServer({ store }) {
       url: n.link,
     });
   };
-  useEffect(()=>{},[studentInfo])
+  useEffect(() => {}, [studentInfo,isVip]);
   return (
     <View className="b-home-server">
       {items.map((n) => (

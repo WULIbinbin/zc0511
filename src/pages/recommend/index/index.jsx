@@ -25,13 +25,17 @@ class Index extends Component {
   }
 
   componentDidMount() {
+    this.getData();
+  }
+
+  componentWillUnmount() {}
+
+  componentDidShow() {}
+
+  componentDidHide() {}
+
+  getData() {
     const { Recommend } = this.props.store;
-    // Taro.hideLoading();
-    // this.setState({
-    //   showPage: true,
-    //   status: 0,
-    // });
-    // return;
     Recommend.getInfo().then((res) => {
       console.log(res);
       if (res.status === 0) {
@@ -57,12 +61,6 @@ class Index extends Component {
     });
   }
 
-  componentWillUnmount() {}
-
-  componentDidShow() {}
-
-  componentDidHide() {}
-
   handleSubmit() {
     const { Common } = this.props.store;
     const { formData } = this.state;
@@ -78,11 +76,12 @@ class Index extends Component {
     RemApply(formData).then((res) => {
       if (res.status == 0) {
         Taro.showToast({ title: "提交成功", icon: "none" });
-        setTimeout(() => {
-          Taro.redirectTo({
-            url: "/pages/recommend/list/index",
-          });
-        }, 1200);
+        this.getData();
+        // setTimeout(() => {
+        //   Taro.redirectTo({
+        //     url: "/pages/recommend/list/index",
+        //   });
+        // }, 1200);
       } else {
         Taro.showToast({ title: "提交失败，请重试", icon: "none" });
       }
@@ -109,7 +108,7 @@ class Index extends Component {
             <FormItem label="姓名:" labelWidth={80}>
               <Input
                 className="b-recommend-input"
-                type="number"
+                type="text"
                 onInput={this.handleChange.bind(this, "name")}
               ></Input>
             </FormItem>
@@ -124,7 +123,7 @@ class Index extends Component {
             <FormItem label="微信:" labelWidth={80}>
               <Input
                 className="b-recommend-input"
-                type="number"
+                type="text"
                 onInput={this.handleChange.bind(this, "wx")}
               ></Input>
             </FormItem>

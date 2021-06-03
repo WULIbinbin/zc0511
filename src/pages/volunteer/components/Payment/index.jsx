@@ -17,7 +17,7 @@ function Comp({ store }) {
   const {
     Review,
     Review: { orderStatus, orderData },
-    Account: { studentInfo },
+    Account: { studentInfo, subjectInfo },
     Common,
   } = store;
   const [payType, setPayType] = useState(null);
@@ -43,6 +43,10 @@ function Comp({ store }) {
   ];
 
   const handlePay = () => {
+    if (subjectInfo.length === 0 || !studentInfo.id) {
+      Taro.showToast({ title: "请先填写考试信息", icon: "none" });
+      return;
+    }
     if (orderData.school.length >= 10 || orderData.college.length >= 10) {
       if (payType == 3 && (formData.wx == "" || formData.tel == "")) {
         Taro.showToast({ title: "请先填写联系方式", icon: "none" });
@@ -54,9 +58,12 @@ function Comp({ store }) {
       }
       WxPay(payType).then((res) => {
         console.log(res);
-        Taro.showToast({ title: "支付成功", icon: "none" });
         PreferenceSaveInfo({ ...formData, id: res.data.id });
         GetOrderById(res.data.id).then((res) => {
+          Taro.showToast({
+            title: "您的志愿已提交，审核结果在 “我的报告中”查看",
+            icon: "none",
+          });
           Review.getReviewOrder();
           Review.getOrderStatus();
         });
@@ -71,9 +78,20 @@ function Comp({ store }) {
     setFormData(data);
   };
   const handlePayFree = () => {
+    if (subjectInfo.length === 0 || !studentInfo.id) {
+      Taro.showToast({ title: "请先填写考试信息", icon: "none" });
+      return;
+    }
+    if (orderData.school.length < 10 && orderData.college.length < 10) {
+      Taro.showToast({ title: "请先完善志愿填报", icon: "none" });
+      return
+    }
     PayAudit().then((res) => {
       if (res.status == 0) {
-        Taro.showToast({ title: "提交成功", icon: "none" });
+        Taro.showToast({
+          title: "您的志愿已提交，审核结果在 “我的报告中”查看",
+          icon: "none",
+        });
       } else {
         Taro.showToast({ title: "提交成功", icon: "none" });
       }

@@ -131,21 +131,24 @@ class Index extends Component {
         Taro.showModal({
           title: "提示",
           content: "本科批存在未填写项",
-          confirmText: "确认",
+          confirmText: "我知道了",
+          showCancel: false,
         }).then((res) => {});
         return;
       } else if (school.length < 10) {
         Taro.showModal({
           title: "提示",
           content: "至少填写10个志愿",
-          confirmText: "确认",
+          confirmText: "我知道了",
+          showCancel: false,
         }).then((res) => {});
         return;
       } else if (this.isRepeat(school)) {
         Taro.showModal({
           title: "提示",
           content: "本科批存在重复的学校",
-          confirmText: "确认",
+          confirmText: "我知道了",
+          showCancel: false,
         }).then((res) => {});
         return;
       }
@@ -154,14 +157,24 @@ class Index extends Component {
         Taro.showModal({
           title: "提示",
           content: "高职专科批存在未填写项",
-          confirmText: "确认",
+          confirmText: "我知道了",
+          showCancel: false,
         }).then((res) => {});
         return;
       } else if (college.length < 10) {
         Taro.showModal({
           title: "提示",
           content: "至少填写10个志愿",
-          confirmText: "确认",
+          confirmText: "我知道了",
+          showCancel: false,
+        }).then((res) => {});
+        return;
+      } else if (this.isRepeat(college)) {
+        Taro.showModal({
+          title: "提示",
+          content: "高职专科批存在重复的学校",
+          confirmText: "我知道了",
+          showCancel: false,
         }).then((res) => {});
         return;
       }

@@ -5,7 +5,7 @@ import { inject, observer } from "mobx-react";
 
 import "./index.scss";
 
-function Comp({ showIcon = true, todo = "", store }) {
+function Comp({ showIcon = true, todo = "/pages/volunteer/prefer/index", store }) {
   const {
     Account: { subjectInfo },
   } = store;

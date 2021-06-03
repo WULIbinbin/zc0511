@@ -14,6 +14,7 @@ class Index extends Component {
       phoneNum: "",
       code: "",
     },
+    sec: 60,
     type: "auth",
   };
   componentWillMount() {}
@@ -53,6 +54,24 @@ class Index extends Component {
   handleCType(type) {
     this.setState({ type });
   }
+  timer = null;
+  sec60() {
+    let { sec } = this.state;
+    this.timer && clearInterval(this.timer);
+    this.timer = setInterval(() => {
+      if (sec > 0) {
+        sec--;
+        this.setState({
+          sec,
+        });
+      } else {
+        clearInterval(this.timer);
+        this.setState({
+          sec: 60,
+        });
+      }
+    }, 1000);
+  }
   handleSendCode() {
     const {
       formData: { phoneNum },
@@ -60,6 +79,7 @@ class Index extends Component {
     SendCode({ phoneNum })
       .then((res) => {
         if (res.status === 0) {
+          this.sec60();
           Taro.showToast({
             title: "发送成功",
             icon: "none",
@@ -87,18 +107,13 @@ class Index extends Component {
       return;
     }
     Account.PhoneLogin(formData).then((res) => {
-      if (res.status == 0) {
-        Taro.showToast({ title: "登录成功", icon: "none" });
-        setTimeout(() => {
-          Taro.navigateBack();
-        }, 1200);
-      } else {
-        Taro.showToast({ title: "登录失败，请重试", icon: "none" });
-      }
+      setTimeout(() => {
+        Taro.navigateBack();
+      }, 1200);
     });
   }
   render() {
-    const { formData, type } = this.state;
+    const { formData, type, sec } = this.state;
     return (
       <View className="b-login-page">
         <View className="b-login-content">
@@ -124,13 +139,22 @@ class Index extends Component {
                   }}
                   placeholder="请输入手机号码"
                 ></Input>
-                {formData.phoneNum.length === 11 && (
-                  <Text
-                    className="b-login-phonecode"
-                    onClick={this.handleSendCode.bind(this)}
-                  >
-                    发送验证码
-                  </Text>
+                {formData.phoneNum.length === 11 ? (
+                  <>
+                    {sec == 60 && (
+                      <Text
+                        className="b-login-phonecode"
+                        onClick={this.handleSendCode.bind(this)}
+                      >
+                        发送验证码
+                      </Text>
+                    )}
+                    {sec < 60 && (
+                      <Text className="b-login-phonecode">{sec}s</Text>
+                    )}
+                  </>
+                ) : (
+                  <></>
                 )}
               </FormItem>
               <FormItem

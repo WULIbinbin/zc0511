@@ -63,7 +63,7 @@ const account = observable({
                       phoneNumber,
                     };
                     that.loginInfo = loginInfo;
-                    wx.setStorageSync("token", loginInfo);
+                    Taro.setStorageSync("token", loginInfo);
                     that.GetUserInfo();
                     Taro.showToast({
                       title: "登录成功",
@@ -72,6 +72,7 @@ const account = observable({
                     resolve(loginInfo);
                   })
                   .catch((err) => {
+                    console.log(err)
                     Taro.hideLoading();
                     Taro.showToast({
                       title: "登录失败，请重试",
@@ -81,6 +82,8 @@ const account = observable({
                   });
               })
               .catch((err) => {
+                console.log(err)
+                this.loginInfo = {}
                 Taro.hideLoading();
                 Taro.showToast({
                   title: "登录失败，请重试",
@@ -125,7 +128,7 @@ const account = observable({
                       phoneNumber: phoneNum,
                     };
                     that.loginInfo = loginInfo;
-                    wx.setStorageSync("token", loginInfo);
+                    Taro.setStorageSync("token", loginInfo);
                     that.GetUserInfo();
                     Taro.showToast({
                       title: "登录成功",
@@ -134,6 +137,7 @@ const account = observable({
                     resolve(loginInfo);
                   })
                   .catch((err) => {
+                    console.log(err)
                     Taro.hideLoading();
                     Taro.showToast({
                       title: "登录失败，请重试",
@@ -146,6 +150,15 @@ const account = observable({
                 Taro.showToast({ title: "手机验证码错误", icon: "none" });
                 return Promise.reject();
               }
+            }).catch(err=>{
+              console.log(err)
+              that.loginInfo = {}
+              Taro.hideLoading();
+              Taro.showToast({
+                title: "登录失败，请重试",
+                icon: "none",
+              });
+              reject(err);
             });
           })
           .catch((err) => {
@@ -195,7 +208,7 @@ const account = observable({
     const that = this;
     console.log(that, Subject);
     GetStuInfo().then((res) => {
-      wx.setStorageSync("userInfo", res.data);
+      Taro.setStorageSync("userInfo", res.data);
       const { student, subList } = res.data;
       student.sex = student.sex ? "男" : "女";
       student.area = Common.zxCity.includes(student.province)
@@ -206,7 +219,7 @@ const account = observable({
         student,
       };
       //绑定邀请人
-      const scene = wx.getStorageSync("scene");
+      const scene = Taro.getStorageSync("scene");
       if (!scene) return;
       BindShare(scene).then((res) => {
         if (res.status == 0) {
@@ -215,16 +228,18 @@ const account = observable({
             icon: "none",
             duration: 3000,
           });
-          wx.removeStorageSync("scene");
+          Taro.removeStorageSync("scene");
         } else if (res.status == -3) {
           Taro.showToast({
             title: "已绑定邀请人",
             icon: "none",
             duration: 3000,
           });
-          wx.removeStorageSync("scene");
+          Taro.removeStorageSync("scene");
         }
       });
+    }).catch(err=>{
+      console.log(err,222)
     });
   },
 });

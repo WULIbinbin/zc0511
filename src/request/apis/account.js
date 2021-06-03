@@ -25,6 +25,7 @@ export function SendCode(data = {}) {
 export function VerifyCode(data = {}) {
   return Request({
     url: `/student/checkSmsCode`,
+    method:'POST',
     data,
   });
 }
