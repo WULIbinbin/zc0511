@@ -140,7 +140,7 @@ class Index extends Component {
           confirmText: "确认",
         }).then((res) => {});
         return;
-      }else if(this.isRepeat(school)){
+      } else if (this.isRepeat(school)) {
         Taro.showModal({
           title: "提示",
           content: "本科批存在重复的学校",
@@ -173,18 +173,18 @@ class Index extends Component {
     let { value } = e.detail;
     const { key, index } = data;
     if (key === "code") {
-      if (e.mpEvent.type === "confirm") {
-        if (value.length === 5) {
+      if (e.mpEvent.type === "confirm" || e.mpEvent.type === "blur") {
+        if (value.length >= 4) {
           this.getSchoolByCode({ index, value });
         } else {
-          Taro.showToast({ title: "请输入5位数字代码", icon: "none" });
+          Taro.showToast({ title: "请输入4-5位数字代码", icon: "none" });
           return;
         }
       } else {
-        if (value.length === 5) {
+        if (value.length >= 4) {
           this.getSchoolByCode({ index, value });
         } else if (value.length > 5) {
-          Taro.showToast({ title: "请输入5位数字代码", icon: "none" });
+          Taro.showToast({ title: "请输入4-5位数字代码", icon: "none" });
           return;
         }
       }
@@ -279,6 +279,10 @@ class Index extends Component {
                     value={item.code}
                     placeholder="输入院校代码"
                     onInput={this.handleChange.bind(this, {
+                      key: "code",
+                      index,
+                    })}
+                    onBlur={this.handleChange.bind(this, {
                       key: "code",
                       index,
                     })}
