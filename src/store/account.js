@@ -34,6 +34,7 @@ const account = observable({
   },
   WxLogin({ encryptedData, iv, errMsg }) {
     const that = this;
+    Taro.showLoading();
     return new Promise((resolve, reject) => {
       this.CheckCode()
         .then(() => {
@@ -54,6 +55,7 @@ const account = observable({
                 const { phoneNumber } = res.data;
                 GetToken(phoneNumber)
                   .then((res) => {
+                    Taro.hideLoading();
                     console.log(res);
                     const loginInfo = {
                       ...res.data,
@@ -70,6 +72,7 @@ const account = observable({
                     resolve(loginInfo);
                   })
                   .catch((err) => {
+                    Taro.hideLoading();
                     Taro.showToast({
                       title: "登录失败，请重试",
                       icon: "none",
@@ -78,6 +81,7 @@ const account = observable({
                   });
               })
               .catch((err) => {
+                Taro.hideLoading();
                 Taro.showToast({
                   title: "登录失败，请重试",
                   icon: "none",
@@ -87,6 +91,7 @@ const account = observable({
           });
         })
         .catch((err) => {
+          Taro.hideLoading();
           console.log(err);
           Taro.showToast({
             title: "登录失败，请重试",
@@ -98,6 +103,7 @@ const account = observable({
   },
   PhoneLogin({ phoneNum = "", code = "" }) {
     const that = this;
+    Taro.showLoading();
     return new Promise((resolve, reject) => {
       this.CheckCode().then(() => {
         return GetSid({
@@ -111,6 +117,7 @@ const account = observable({
               if (res.status === 0) {
                 GetToken(phoneNum)
                   .then((res) => {
+                    Taro.hideLoading();
                     console.log(res);
                     const loginInfo = {
                       ...res.data,
@@ -127,6 +134,7 @@ const account = observable({
                     resolve(loginInfo);
                   })
                   .catch((err) => {
+                    Taro.hideLoading();
                     Taro.showToast({
                       title: "登录失败，请重试",
                       icon: "none",
@@ -134,12 +142,14 @@ const account = observable({
                     reject(err);
                   });
               } else {
+                Taro.hideLoading();
                 Taro.showToast({ title: "手机验证码错误", icon: "none" });
                 return Promise.reject();
               }
             });
           })
           .catch((err) => {
+            Taro.hideLoading();
             console.log(err);
             Taro.showToast({
               title: "登录失败，请重试",

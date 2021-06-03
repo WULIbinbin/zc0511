@@ -45,7 +45,11 @@ function Comp({ store }) {
   const handlePay = () => {
     if (orderData.school.length >= 10 || orderData.college.length >= 10) {
       if (payType == 3 && (formData.wx == "" || formData.tel == "")) {
-        Taro.showToast({ title: "请先填写微信号码", icon: "none" });
+        Taro.showToast({ title: "请先填写联系方式", icon: "none" });
+        return;
+      }
+      if (payType == 3 && !Common.phoneVerify(formData.tel)) {
+        Taro.showToast({ title: "请填写正确手机号", icon: "none" });
         return;
       }
       WxPay(payType).then((res) => {
@@ -62,12 +66,10 @@ function Comp({ store }) {
     }
   };
 
-  const handleContact = useCallback(
-    (data) => {
-      setFormData(data);
-    },
-    [formData]
-  );
+  const handleContact = (data) => {
+    console.log(data);
+    setFormData(data);
+  };
   const handlePayFree = () => {
     PayAudit().then((res) => {
       if (res.status == 0) {
@@ -106,7 +108,7 @@ function Comp({ store }) {
         </View>
       )}
       {payType == 3 && orderData.info == null && (
-        <VolContact onChange={handleContact} />
+        <VolContact {...formData} onSubmit={handleContact} />
       )}
       {payType == 3 && orderStatus.report.payStatus == false && (
         <View className="b-vol-payment-btn" onClick={handlePay}>
