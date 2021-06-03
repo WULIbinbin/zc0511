@@ -1,5 +1,15 @@
 @import "../../../styles/mixin.scss";
 
-.b-vol-page{
-  
+.b-vol-page {
+  &-free-btn {
+    height: 90px;
+    line-height: 90px;
+    text-align: center;
+    background: #d0ac58;
+    border-radius: 45px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 30px 25px 20px;
+  }
 }

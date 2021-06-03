@@ -40,7 +40,7 @@ class Index extends Component {
       console.log(res);
       if (res.status === 0) {
         Taro.hideLoading();
-        Taro.showToast({ title: "申请审核中", icon: "none", duration: 10000 });
+        Taro.showToast({ title: "申请审核中", icon: "none", duration: 1000 });
       } else if (res.status === 1) {
         Taro.redirectTo({
           url: "/pages/recommend/list/index",

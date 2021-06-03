@@ -313,9 +313,9 @@ class Index extends Component {
                         key: "code",
                         index,
                       }),
-                      1200
+                      1000
                     )}
-                    onConfirm={this.handleChange.bind(this, {
+                    onBlur={this.handleChange.bind(this, {
                       key: "code",
                       index,
                     })}

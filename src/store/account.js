@@ -223,18 +223,18 @@ const account = observable({
       if (!scene) return;
       BindShare(scene).then((res) => {
         if (res.status == 0) {
-          Taro.showToast({
-            title: "成功绑定邀请人",
-            icon: "none",
-            duration: 3000,
-          });
+          // Taro.showToast({
+          //   title: "成功绑定邀请人",
+          //   icon: "none",
+          //   duration: 3000,
+          // });
           Taro.removeStorageSync("scene");
         } else if (res.status == -3) {
-          Taro.showToast({
-            title: "已绑定邀请人",
-            icon: "none",
-            duration: 3000,
-          });
+          // Taro.showToast({
+          //   title: "已绑定邀请人",
+          //   icon: "none",
+          //   duration: 3000,
+          // });
           Taro.removeStorageSync("scene");
         }
       });

@@ -9,12 +9,11 @@ function Comp({ store }) {
   const {
     Review,
     Review: {
-      isPay,
       orderData: { sortScore, sortList, memo, info },
     },
   } = store;
 
-  if (isPay && info == null && sortList && sortList.length > 0) {
+  if (info == null && sortList && sortList.length > 0) {
     const thead = [
       {
         key: "sort",
@@ -61,8 +60,6 @@ function Comp({ store }) {
             <View className="b-vol-report-suggest-desc">依据近几年分数</View>
           </View>
           <View className="b-vol-report-btn">{memo}</View>
-          {/* <View className="b-vol-report-btn">冲刺院校可以再定分数高一点的学校</View>
-      <View className="b-vol-report-btn">保底院校可以再定分数低一点的学校</View> */}
           <View className="b-vol-report-table b-top-line">
             <View className="b-vol-report-table-topdesc">
               仅从历年分数的⻆度来看，建议你志愿排序为：

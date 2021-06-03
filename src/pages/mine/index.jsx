@@ -48,7 +48,7 @@ class Index extends Component {
             url: "/pages/login/index",
           });
         }
-      })
+      });
       return;
     }
     Taro.navigateTo({ url });

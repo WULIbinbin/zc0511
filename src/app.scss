@@ -4,6 +4,9 @@ page {
   background-color: $bg-color;
   height: 100vh;
 }
+view,text,button{
+  font-family: PingFang SC;
+}
 
 .b-left-line {
   position: relative;

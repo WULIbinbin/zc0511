@@ -16,12 +16,14 @@ class Index extends Component {
   state = {};
 
   componentDidMount() {
-    this.getOrderStatus();
+    
   }
 
   componentWillUnmount() {}
 
-  componentDidShow() {}
+  componentDidShow() {
+    this.getOrderStatus();
+  }
 
   componentDidHide() {}
 
@@ -35,8 +37,7 @@ class Index extends Component {
     const {
       Review,
       Review: {
-        orderStatus: { isNeedPay, report },
-        orderData: { info },
+        orderStatus: { report },
       },
     } = this.props.store;
     return (

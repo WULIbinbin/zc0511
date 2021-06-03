@@ -47,30 +47,30 @@ function Comp({ store }) {
       Taro.showToast({ title: "请先填写考试信息", icon: "none" });
       return;
     }
-    if (orderData.school.length >= 10 || orderData.college.length >= 10) {
-      if (payType == 3 && (formData.wx == "" || formData.tel == "")) {
-        Taro.showToast({ title: "请先填写联系方式", icon: "none" });
-        return;
-      }
-      if (payType == 3 && !Common.phoneVerify(formData.tel)) {
-        Taro.showToast({ title: "请填写正确手机号", icon: "none" });
-        return;
-      }
-      WxPay(payType).then((res) => {
-        console.log(res);
-        PreferenceSaveInfo({ ...formData, id: res.data.id });
-        GetOrderById(res.data.id).then((res) => {
-          Taro.showToast({
-            title: "您的志愿已提交，审核结果在 “我的报告中”查看",
-            icon: "none",
-          });
-          Review.getReviewOrder();
-          Review.getOrderStatus();
-        });
-      });
-    } else {
+    if (![orderData.school.length, orderData.college.length].includes(10)) {
       Taro.showToast({ title: "请先完善志愿填报", icon: "none" });
+      return;
     }
+    if (payType == 3 && (formData.wx == "" || formData.tel == "")) {
+      Taro.showToast({ title: "请先填写联系方式", icon: "none" });
+      return;
+    }
+    if (payType == 3 && !Common.phoneVerify(formData.tel)) {
+      Taro.showToast({ title: "请填写正确手机号", icon: "none" });
+      return;
+    }
+    WxPay(payType).then((res) => {
+      console.log(res);
+      PreferenceSaveInfo({ ...formData, id: res.data.id });
+      GetOrderById(res.data.id).then((res) => {
+        Taro.showToast({
+          title: "您的志愿已提交，审核结果在 “我的报告中”查看",
+          icon: "none",
+        });
+        Review.getReviewOrder();
+        Review.getOrderStatus();
+      });
+    });
   };
 
   const handleContact = (data) => {
@@ -78,13 +78,14 @@ function Comp({ store }) {
     setFormData(data);
   };
   const handlePayFree = () => {
+    console.log(orderData.school.slice());
     if (subjectInfo.length === 0 || !studentInfo.id) {
       Taro.showToast({ title: "请先填写考试信息", icon: "none" });
       return;
     }
-    if (orderData.school.length < 10 && orderData.college.length < 10) {
+    if (![orderData.school.length, orderData.college.length].includes(10)) {
       Taro.showToast({ title: "请先完善志愿填报", icon: "none" });
-      return
+      return;
     }
     PayAudit().then((res) => {
       if (res.status == 0) {
@@ -92,6 +93,8 @@ function Comp({ store }) {
           title: "您的志愿已提交，审核结果在 “我的报告中”查看",
           icon: "none",
         });
+        Review.getReviewOrder();
+        Review.getOrderStatus();
       } else {
         Taro.showToast({ title: "提交成功", icon: "none" });
       }

@@ -119,3 +119,10 @@ export function GetOrderDetail(id) {
     method: "GET",
   });
 }
+
+export function PayHolland() {
+  return Request({
+    url: `/student/payHolland`,
+    method: "POST",
+  });
+}

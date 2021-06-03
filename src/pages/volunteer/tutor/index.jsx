@@ -12,7 +12,7 @@ import {
   VolSubject,
 } from "../components/index";
 import { WxPay } from "../../../request/apis/account";
-import { GetOrderById } from "../../../request/apis/report";
+import { GetOrderById, PayHolland } from "../../../request/apis/report";
 
 import "./index.scss";
 
@@ -45,7 +45,6 @@ class Index extends Component {
       Taro.showToast({ title: "请先填写考试信息", icon: "none" });
       return;
     }
-
     if (subjectInfo.findIndex((s) => s.star != null) === -1) {
       Taro.showToast({ title: "请先填写课程偏好", icon: "none" });
       return;
@@ -66,6 +65,36 @@ class Index extends Component {
     });
   }
 
+  handlePayFree() {
+    const {
+      Tutor: { hollandTypeList },
+      Account: { studentInfo, subjectInfo },
+    } = this.props.store;
+    if (subjectInfo.length === 0 || !studentInfo.id) {
+      Taro.showToast({ title: "请先填写考试信息", icon: "none" });
+      return;
+    }
+    if (subjectInfo.findIndex((s) => s.star != null) === -1) {
+      Taro.showToast({ title: "请先填写课程偏好", icon: "none" });
+      return;
+    }
+    if (hollandTypeList.length === 0) {
+      Taro.showToast({ title: "请完成霍兰德测试", icon: "none" });
+      return;
+    }
+    PayHolland().then((res) => {
+      if (res.status == 0) {
+        Taro.showToast({
+          title: "提交成功,可以在 “我的报告中”查看",
+          icon: "none",
+        });
+        this.getOrderStatus();
+      } else {
+        Taro.showToast({ title: "提交失败，请重试", icon: "none" });
+      }
+    });
+  }
+
   handleExample() {
     Taro.navigateTo({
       url: "/pages/example/index/index",
@@ -75,7 +104,7 @@ class Index extends Component {
   render() {
     const {
       Tutor,
-      Tutor: { isPay },
+      Tutor: { isPay, orderStatus },
       Common,
     } = this.props.store;
     return (
@@ -88,7 +117,7 @@ class Index extends Component {
         {isPay && <VolRecommend />}
         <VolPreference showData={false} />
         <VolModal showData={false} />
-        {!isPay && (
+        {!isPay && orderStatus.isNeedPay == true && (
           <View
             className="b-vol-page-button-group"
             onClick={this.handlePay.bind(this)}
@@ -102,6 +131,15 @@ class Index extends Component {
             </View>
           </View>
         )}
+        {orderStatus.isNeedPay == false &&
+          orderStatus.report.payStatus == false && (
+            <View
+              className="b-vol-page-free-btn"
+              onClick={this.handlePayFree.bind(this)}
+            >
+              立即提交
+            </View>
+          )}
         {!isPay && (
           <View
             className="b-vol-page-bottom-example"
