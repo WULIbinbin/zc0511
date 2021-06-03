@@ -48,6 +48,7 @@ class Index extends Component {
     const {
       Tutor,
       Tutor: { isPay },
+      Common
     } = this.props.store;
     return (
       <View className="b-vol-page">
@@ -65,7 +66,7 @@ class Index extends Component {
             onClick={this.handlePay.bind(this)}
           >
             <View className="b-vol-page-button b-vol-page-button-left">
-              <View className="b-vol-page-button-money">￥</View>99.00
+              <View className="b-vol-page-button-money">￥</View>{Common.reportPrice.value}
             </View>
             <View className="b-vol-page-button b-vol-page-button-right">
               单项解锁

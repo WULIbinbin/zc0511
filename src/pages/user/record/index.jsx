@@ -263,7 +263,7 @@ class Index extends Component {
               <View className="main">
                 <FormItem contentWidth={400} label="地区：">
                   <Picker
-                    //disabled={!!studentInfo.province}
+                    disabled={!!studentInfo.province}
                     mode="region"
                     value={region}
                     onChange={this.handleChangeProv.bind(this)}
