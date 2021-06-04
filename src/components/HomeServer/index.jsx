@@ -28,18 +28,18 @@ function HomeServer({ store }) {
       label: "院校审核",
       bg: Tuxing1,
       bgClass: "linear-bg1",
-      isLock: !Review.hasPay && !isVip,
+      //isLock: !Review.hasPay && !isVip,
       link: "/pages/volunteer/review/index",
     },
     {
       icon: TianBao,
       title: "志愿填报辅导",
       desc:
-        "根据近几年高考数据和最新高考政策，结合全国就业趋势，利用大数据和人工智能算法、霍兰德职业模型、MBTI职业性格模型，帮您一键推荐最优院校、最适合的专业！",
+        "根据近几年高考数据和最新高考政策，结合全国就业趋势，利用大数据和人工智能算法、霍兰德职业模型，帮您一键推荐最优院校、最适合的专业！",
       label: "智能推荐",
       bg: Tuxing2,
       bgClass: "linear-bg2",
-      isLock: !Tutor.hasPay && !isVip,
+      //isLock: !Tutor.hasPay && !isVip,
       link: "/pages/volunteer/tutor/index",
     },
     {

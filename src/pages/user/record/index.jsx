@@ -16,9 +16,16 @@ import FemaleSel from "../../../static/image/female.png";
 class Index extends Component {
   state = {
     checked: "个人信息",
+    canIUseGetUserProfile: false,
   };
 
-  componentWillMount() {}
+  componentWillMount() {
+    if (wx.getUserProfile) {
+      this.setState({
+        canIUseGetUserProfile: true,
+      });
+    }
+  }
 
   componentDidMount() {
     Taro.showLoading();
@@ -175,6 +182,21 @@ class Index extends Component {
     return false;
   }
 
+  getUserProfile() {
+    console.log("getUserProfile");
+    const that = this;
+    wx.getUserProfile({
+      desc: "用于完善会员资料",
+      success: (res) => {
+        console.log(res);
+        that.handleSubmit({ detail: res });
+      },
+      fail(err) {
+        console.log(err);
+      },
+    });
+  }
+
   handleSubmit(e) {
     const {
       userInfo: { avatarUrl, nickName },
@@ -234,7 +256,7 @@ class Index extends Component {
       Subject: { subjectFilter, showSubList, formData },
       Account: { studentInfo },
     } = this.props.store;
-    const { checked } = this.state;
+    const { checked, canIUseGetUserProfile } = this.state;
     const region =
       (formData.province && [
         formData.province,
@@ -379,13 +401,24 @@ class Index extends Component {
                 <View className="text">确定</View>
               </View>
             ) : (
-              <Button
-                className={`btn can-click`}
-                openType="getUserInfo"
-                onGetUserInfo={this.handleSubmit.bind(this)}
-              >
-                <View className="text">确定</View>
-              </Button>
+              <>
+                {!canIUseGetUserProfile ? (
+                  <Button
+                    className={`btn can-click`}
+                    openType="getUserInfo"
+                    onGetUserInfo={this.handleSubmit.bind(this)}
+                  >
+                    <View className="text">确定</View>
+                  </Button>
+                ) : (
+                  <Button
+                    className={`btn can-click`}
+                    onClick={this.getUserProfile.bind(this)}
+                  >
+                    <View className="text">确定</View>
+                  </Button>
+                )}
+              </>
             )}
           </View>
         )}
