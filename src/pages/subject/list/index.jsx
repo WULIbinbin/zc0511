@@ -26,10 +26,11 @@ class Index extends Component {
     const {
       options: { subjectName, categoryName, type },
     } = getCurrentPages()[getCurrentPages().length - 1];
-    Taro.showLoading();
+    Taro.showLoading({title:'加载中'});
     GetSubjectList({
-      categoryId: categoryName,
+      // categoryId: categoryName,
       majorName: subjectName,
+      categoryName,
     }).then((res) => {
       Taro.hideLoading();
       this.setState({

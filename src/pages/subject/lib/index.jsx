@@ -21,7 +21,7 @@ class Index extends Component {
   componentWillMount() {}
 
   componentDidMount() {
-    Taro.showLoading();
+    Taro.showLoading({title:'加载中'});
     GetSubjectTypeList().then((res) => {
       Taro.hideLoading();
       this.allSubject = res.data.c;

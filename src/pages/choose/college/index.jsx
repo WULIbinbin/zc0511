@@ -25,7 +25,7 @@ class Index extends Component {
     const {
       options: { subStr, fromProvince, schoolName, majorName },
     } = getCurrentPages()[getCurrentPages().length - 1];
-    Taro.showLoading();
+    Taro.showLoading({title:'加载中'});
     const obj = {};
     const params = {
       pageNum: 1,
@@ -111,7 +111,7 @@ class Index extends Component {
 
   getList() {
     let { params, tbody } = this.state;
-    Taro.showLoading();
+    Taro.showLoading({title:'加载中'});
     SearchSubject(params)
       .then((res) => {
         Taro.hideLoading();

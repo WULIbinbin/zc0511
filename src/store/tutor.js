@@ -61,14 +61,14 @@ const review = observable({
     });
   },
   getRemSchool() {
-    Taro.showLoading();
+    Taro.showLoading({title:'加载中'});
     GetRecommend().then((res) => {
       Taro.hideLoading();
       this.recommendData = res.data
     });
   },
   getHolland() {
-    Taro.showLoading();
+    Taro.showLoading({title:'加载中'});
     GetHolland().then((res) => {
       Taro.hideLoading();
       this.holland = res.data;
@@ -82,7 +82,7 @@ const review = observable({
     });
   },
   getOrderDetail(id){
-    Taro.showLoading();
+    Taro.showLoading({title:'加载中'});
     GetOrderDetail(id).then(res=>{
       Taro.hideLoading();
       this.holland = res.data;

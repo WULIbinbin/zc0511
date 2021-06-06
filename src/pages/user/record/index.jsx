@@ -28,7 +28,7 @@ class Index extends Component {
   }
 
   componentDidMount() {
-    Taro.showLoading();
+    Taro.showLoading({title:'加载中'});
     setTimeout(() => {
       Taro.hideLoading();
       const {

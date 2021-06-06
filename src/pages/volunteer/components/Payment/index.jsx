@@ -47,7 +47,8 @@ function Comp({ store }) {
       Taro.showToast({ title: "请先填写考试信息", icon: "none" });
       return;
     }
-    if (![orderData.school.length, orderData.college.length].includes(10)) {
+    console.log([orderData.school.length, orderData.college.length]);
+    if (orderData.school.length < 10 && orderData.college.length < 10) {
       Taro.showToast({ title: "请先完善志愿填报", icon: "none" });
       return;
     }
@@ -83,7 +84,7 @@ function Comp({ store }) {
       Taro.showToast({ title: "请先填写考试信息", icon: "none" });
       return;
     }
-    if (![orderData.school.length, orderData.college.length].includes(10)) {
+    if (orderData.school.length < 10 && orderData.college.length < 10) {
       Taro.showToast({ title: "请先完善志愿填报", icon: "none" });
       return;
     }

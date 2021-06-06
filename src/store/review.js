@@ -64,7 +64,7 @@ const review = observable({
     this.batch = batch;
   },
   getReviewOrder() {
-    Taro.showLoading();
+    Taro.showLoading({title:'加载中'});
     PreferenceList().then((res) => {
       console.log("==========================>获取审核服务数据", res.data);
       Taro.hideLoading();
@@ -103,7 +103,7 @@ const review = observable({
     };
   },
   getOrderDetail(id){
-    Taro.showLoading();
+    Taro.showLoading({title:'加载中'});
     GetOrderDetail(id).then(res=>{
       Taro.hideLoading();
       if (res.status === 0) {

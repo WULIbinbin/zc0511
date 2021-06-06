@@ -21,7 +21,7 @@ class Index extends Component {
     showCode: false,
   };
   componentWillMount() {
-    Taro.showLoading();
+    Taro.showLoading({title:'加载中'});
   }
 
   componentDidMount() {

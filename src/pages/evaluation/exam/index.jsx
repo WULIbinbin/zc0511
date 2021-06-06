@@ -21,7 +21,7 @@ class Index extends Component {
   componentWillMount() {}
 
   componentDidMount() {
-    Taro.showLoading();
+    Taro.showLoading({title:'加载中'});
     GetQuestion().then((res) => {
       Taro.hideLoading();
       this.setState({

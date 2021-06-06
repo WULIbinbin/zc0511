@@ -34,7 +34,7 @@ const account = observable({
   },
   WxLogin({ encryptedData, iv, errMsg }) {
     const that = this;
-    Taro.showLoading();
+    Taro.showLoading({title:'加载中'});
     return new Promise((resolve, reject) => {
       this.CheckCode()
         .then(() => {
@@ -106,7 +106,7 @@ const account = observable({
   },
   PhoneLogin({ phoneNum = "", code = "" }) {
     const that = this;
-    Taro.showLoading();
+    Taro.showLoading({title:'加载中'});
     return new Promise((resolve, reject) => {
       this.CheckCode().then(() => {
         return GetSid({

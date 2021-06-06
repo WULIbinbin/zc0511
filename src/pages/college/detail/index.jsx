@@ -58,7 +58,7 @@ class Index extends Component {
     const {
       options: { name },
     } = getCurrentPages()[getCurrentPages().length - 1];
-    Taro.showLoading()
+    Taro.showLoading({title:'加载中'})
     GetCollegeDetail(name).then((res) => {
       Taro.hideLoading()
       let { CollegeTags } = res.data;

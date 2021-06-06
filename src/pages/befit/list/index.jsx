@@ -54,7 +54,7 @@ class Index extends Component {
 
   getList() {
     const { type } = this.state;
-    Taro.showLoading();
+    Taro.showLoading({ title: "加载中" });
     let { params, currentData } = this.state;
     const { pageSize, pageNum } = this;
     GetMySchoolList(type, { ...params, pageNum, pageSize }).then((res) => {

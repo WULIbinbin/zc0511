@@ -9,11 +9,12 @@ function Comp({ store }) {
   const {
     Review,
     Review: {
+      orderStatus: { type },
       orderData: { sortScore, sortList, memo, info },
     },
   } = store;
 
-  if (info == null && sortList && sortList.length > 0) {
+  if (type == 4 && sortList && sortList.length > 0) {
     const thead = [
       {
         key: "sort",

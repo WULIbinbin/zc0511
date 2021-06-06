@@ -123,7 +123,7 @@ class Index extends Component {
   }
 
   getList() {
-    Taro.showLoading();
+    Taro.showLoading({title:'加载中'});
     let majorHistory = Taro.getStorageSync("majorHistory") || [];
     this.setState({
       isGetList: false,

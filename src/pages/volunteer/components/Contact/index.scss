@@ -30,5 +30,9 @@
   }
   &-content {
     padding: 30px 0 50px;
+    .b-form-item{
+      justify-content: center;
+      padding-right: 90px;
+    }
   }
 }
