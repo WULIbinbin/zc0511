@@ -97,7 +97,7 @@ class Index extends Component {
     }
     console.log(params);
     this.pageNum = 1;
-    this.setState({ params }, () => {
+    this.setState({ params, currentData: [], isGetList: false }, () => {
       this.getList();
     });
   }
@@ -110,6 +110,7 @@ class Index extends Component {
         params: {},
         type: e.index + 1,
         total: 0,
+        isGetList: false,
       },
       () => {
         this.pageNum = 1;
@@ -194,7 +195,14 @@ class Index extends Component {
     const {
       Common: { province, category },
     } = this.props.store;
-    const { activeTab, currentData, type, total, showDialog } = this.state;
+    const {
+      activeTab,
+      currentData,
+      type,
+      total,
+      showDialog,
+      isGetList,
+    } = this.state;
     const pickers = [
       {
         label: "地区",
@@ -234,13 +242,17 @@ class Index extends Component {
           onScrollToLower={this.addListData.bind(this)}
           lowerThreshold={100}
         >
-          {currentData.map((n) => {
-            const labels = (n.college_category && [n.college_category]) || [];
-            !!n.tag1 && labels.push("双一流");
-            !!n.tag2 && labels.push("985");
-            !!n.tag3 && labels.push("211");
-            return this.collegeItem(n, labels, type);
-          })}
+          {currentData.length > 0 &&
+            currentData.map((n) => {
+              const labels = (n.college_category && [n.college_category]) || [];
+              !!n.tag1 && labels.push("双一流");
+              !!n.tag2 && labels.push("985");
+              !!n.tag3 && labels.push("211");
+              return this.collegeItem(n, labels, type);
+            })}
+          {isGetList && currentData.length === 0 && (
+            <View className="b-befit-list-nodata">暂无结果</View>
+          )}
         </ScrollView>
         {/* {activeTab === tabs[0] && (
           <ScrollView

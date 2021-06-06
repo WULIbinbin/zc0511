@@ -1,12 +1,16 @@
 import Taro, { request } from "@tarojs/taro";
 
-export const Environment = "DEV";
+export const Environment = "PROD";
 
 export const getConfig = () => {
   const config = {
     DEV: {
       appId: "wx2671abc7f83d2f0c",
       baseUrl: "https://r16754555n.51mypc.cn",
+    },
+    PROD: {
+      appId: "wx2671abc7f83d2f0c",
+      baseUrl: "https://www.szscysd.com",
     },
   };
   return config[Environment];

@@ -35,8 +35,8 @@
     position: relative;
     background-color: $white-color;
     padding: 50px 30px;
-    &:last-of-type{
-      margin-bottom:80px;
+    &:last-of-type {
+      margin-bottom: 80px;
     }
     &-left {
       width: 90px;
@@ -119,5 +119,11 @@
         background-color: #ef9034;
       }
     }
+  }
+  &-nodata {
+    font-size: 30px;
+    color: #666;
+    margin: 400px auto 0;
+    text-align: center;
   }
 }
