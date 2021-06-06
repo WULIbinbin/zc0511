@@ -10,8 +10,7 @@
     @include flex-column();
     flex: 1;
     padding: 50px 38px;
-    background-color: #000;
-    color: #e5cea1;
+    background-color: #eee;
     border-radius: 20px;
     &:nth-of-type(1) {
       margin-right: 20px;
@@ -20,6 +19,7 @@
       font-size: 32px;
       font-weight: 800;
       margin-bottom: 16px;
+      color: #d0ac58;
     }
     &-desc {
       font-size: 26px;
@@ -30,14 +30,14 @@
       @include flex-row-center();
       font-size: 58px;
       font-weight: bold;
-      color: #e5cea1;
+      color: #d0ac58;
       line-height: 58px;
     }
     &-money {
       margin-top: 8px;
       font-size: 28px;
       font-weight: 400;
-      color: #e5cea1;
+      color: #d0ac58;
     }
     &-exact {
       font-size: 24px;
@@ -47,10 +47,13 @@
   &-item.actived {
     color: #333333;
     background: linear-gradient(140deg, #ebd9b4, #e2c998);
+    box-shadow: 5px 9px 20px 0px rgba(208, 172, 88, 0.2);
+    border-radius: 20px;
     .b-vol-payment-item-desc,
     .b-vol-payment-item-exact {
       color: #666;
     }
+    .b-vol-payment-item-name,
     .b-vol-payment-item-price,
     .b-vol-payment-item-money {
       color: #333333;
@@ -73,7 +76,7 @@
     color: #d0ac58;
     text-align: center;
   }
-  &-reviewed{
+  &-reviewed {
     height: 90px;
     line-height: 90px;
     text-align: center;

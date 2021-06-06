@@ -21,7 +21,10 @@ class Index extends Component {
     showDialog: false,
   };
 
-  componentWillMount() {}
+  componentWillMount() {
+    const { Common } = this.props.store;
+    Common.getAllPrice();
+  }
 
   componentDidMount() {}
 

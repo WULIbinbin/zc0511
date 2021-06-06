@@ -15,6 +15,8 @@ import { WxPay } from "../../request/apis/account";
 import "./index.scss";
 
 import HomeBanner2Png from "../../static/image/home-banner2.png";
+import ShareBgPng from "../../static/image/share-bg.png";
+
 
 @inject("store")
 @observer
@@ -93,8 +95,9 @@ class Index extends Component {
       Account: { studentInfo },
     } = this.props.store;
     return {
-      title: "邀请推荐官",
+      title: "高考志愿填报指导系统",
       path: `/pages/home/index?scene=${studentInfo.id}`,
+      imageUrl: ShareBgPng,
     };
   }
 

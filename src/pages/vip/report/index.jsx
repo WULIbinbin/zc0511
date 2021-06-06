@@ -49,7 +49,7 @@ class Index extends Component {
     const { list } = this.state;
     return (
       <View className="b-vip-report-page">
-        {list.map((item) => (
+        {list.length>0&&list.map((item) => (
           <View
             className="b-vip-report-item"
             onClick={() => {
@@ -72,6 +72,9 @@ class Index extends Component {
             ></Image>
           </View>
         ))}
+        {
+          list.length===0&&<View className='b-vip-report-nodata'>暂无报告</View>
+        }
       </View>
     );
   }

@@ -1,6 +1,6 @@
 import Taro, { request } from "@tarojs/taro";
 
-export const Environment = "DEV";
+export const Environment = "PROD";
 
 export const getConfig = () => {
   const config = {

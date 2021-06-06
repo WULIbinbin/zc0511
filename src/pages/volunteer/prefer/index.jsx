@@ -58,6 +58,7 @@ class Index extends Component {
             id: n.id,
             name: n.subject,
             icon: Stars[n.subject],
+            star:n.star
           };
         });
         this.selected = selected;

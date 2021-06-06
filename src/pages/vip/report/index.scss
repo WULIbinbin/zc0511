@@ -10,11 +10,11 @@
     @include shadow-radius();
     margin: 20px 25px 0;
     background-color: $white-color;
-    padding:50px 10px 50px 36px;
+    padding: 50px 10px 50px 36px;
     &-icon {
       height: 48px;
       width: 48px;
-      margin:0 9px 36px 0;
+      margin: 0 9px 36px 0;
     }
     &-info {
       @include flex-column();
@@ -30,9 +30,15 @@
       font-size: 24px;
       color: #666666;
     }
-    &-access{
+    &-access {
       height: 38px;
       width: 38px;
     }
+  }
+  &-nodata {
+    margin: 600px auto 0;
+    text-align: center;
+    font-size: 30px;
+    color: #666;
   }
 }

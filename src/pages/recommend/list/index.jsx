@@ -11,6 +11,7 @@ import QrcodePng from "../image/erweima.png";
 import SharePng from "../image/fenxiang.png";
 
 import ClosePng from "../../../static/image/close-gray.png";
+import ShareBgPng from "../../../static/image/share-bg.png";
 
 @inject("store")
 @observer
@@ -21,7 +22,7 @@ class Index extends Component {
     showCode: false,
   };
   componentWillMount() {
-    Taro.showLoading({title:'加载中'});
+    Taro.showLoading({ title: "加载中" });
   }
 
   componentDidMount() {
@@ -53,10 +54,10 @@ class Index extends Component {
     });
   }
 
-  handlePreivew(){
+  handlePreivew() {
     Taro.previewImage({
-      urls:[this.state.code]
-    })
+      urls: [this.state.code],
+    });
   }
 
   onShareAppMessage() {
@@ -64,8 +65,9 @@ class Index extends Component {
       Account: { studentInfo },
     } = this.props.store;
     return {
-      title: "邀请推荐官",
+      title: "高考志愿填报指导系统",
       path: `/pages/home/index?scene=${studentInfo.id}`,
+      imageUrl: ShareBgPng,
     };
   }
 

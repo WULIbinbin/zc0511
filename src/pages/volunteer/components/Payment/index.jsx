@@ -102,7 +102,8 @@ function Comp({ store }) {
     });
   };
   useEffect(() => {
-    setPayType(orderStatus.type || 3);
+    //已支付过，默认显示专家支付
+    setPayType(!!orderStatus.isNeedPay ? 3 : orderStatus.type || 3);
     if (!!orderData.info) {
       setFormData({
         wx: orderData.info.wx,
