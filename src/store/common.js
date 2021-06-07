@@ -1,5 +1,5 @@
 import { observable } from "mobx";
-import { GetAllPrice } from "../request/apis/home";
+import { GetAllPrice, GetWxReviewStatus } from "../request/apis/home";
 
 const common = observable({
   curProv: "北京",
@@ -70,6 +70,7 @@ const common = observable({
   subtype: ["综合", "文科", "理科"],
   zxCity: ["北京市", "天津市", "上海市", "重庆市"],
   allPrice: null,
+  reviewStatus: null,
   get vipPrice() {
     return (this.allPrice && this.allPrice.find((f) => f.name === "vip")) || {};
   },
@@ -91,12 +92,21 @@ const common = observable({
       (this.allPrice && this.allPrice.find((f) => f.name === "online")) || {}
     );
   },
+  get isReviewing() {
+    const { model } = wx.getSystemInfoSync();
+    return model.indexOf("iPhone") > -1 && this.reviewStatus == 1;
+  },
   phoneVerify(phone = "") {
     return /^[1][3,4,5,7,8,9][0-9]{9}$/.test(phone);
   },
   getAllPrice() {
     GetAllPrice().then((res) => {
       this.allPrice = res.data;
+    });
+  },
+  getReviewStatus() {
+    GetWxReviewStatus().then((res) => {
+      this.reviewStatus = res.data;
     });
   },
 });

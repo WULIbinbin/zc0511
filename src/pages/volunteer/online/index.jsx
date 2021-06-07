@@ -89,7 +89,7 @@ class Index extends Component {
     }
     WxPay(5).then((res) => {
       console.log(res);
-      Taro.showToast({title:'支付成功',icon:'none'})
+      Taro.showToast({ title: "支付成功", icon: "none" });
       GetOrderById(res.data.id).then((res) => {});
       PostContact(formData).then((res) => {});
       this.getOrderStatus();
@@ -120,6 +120,20 @@ class Index extends Component {
         {orderStatus.status == 1 ? (
           <View className="b-vol-online-btn">
             已支付，将会有教育专家与您联系！
+          </View>
+        ) : !!Common.isReviewing ? (
+          <View
+            className="b-vol-page-button-group"
+            onClick={() => {
+              Taro.showToast({
+                title: "苹果用户暂时无法解锁，请稍后",
+                icon: "none",
+              });
+            }}
+          >
+            <View className="b-vol-page-button b-vol-page-button-lock">
+              立即解锁
+            </View>
           </View>
         ) : (
           <View

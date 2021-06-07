@@ -73,9 +73,10 @@ class Index extends Component {
   }
 
   addListData() {
-    const { Account } = this.props.store;
+    const { Account, Common } = this.props.store;
     console.log("是不是vip", !!Account.isVip);
     if (!Account.isVip) {
+      if (!!Common.isReviewing) return;
       this.setState({
         showDialog: true,
       });

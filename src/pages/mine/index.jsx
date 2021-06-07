@@ -61,12 +61,12 @@ class Index extends Component {
     } = this.props.store;
     const numbers = [
       {
-        num: 0,
+        num: studentInfo.recommend || 0,
         label: "我的推荐",
         link: "/pages/recommend/index/index",
       },
       {
-        num: 0,
+        num: studentInfo.earnings || 0,
         label: "我的收益",
         link: "/pages/user/income/index",
       },

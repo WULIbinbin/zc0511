@@ -4,7 +4,9 @@ page {
   background-color: $bg-color;
   height: 100vh;
 }
-view,text,button{
+view,
+text,
+button {
   font-family: PingFang SC;
 }
 
@@ -163,6 +165,14 @@ view,text,button{
     font-size: 28px;
     color: #333333;
     text-align: center;
+  }
+  &-button-lock {
+    height: 100px;
+    line-height: 100px;
+    color: #888;
+    font-weight: bold;
+    font-size: 32px;
+    background: #e2e2e2;
   }
 }
 

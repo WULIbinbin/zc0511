@@ -118,74 +118,94 @@ function Comp({ store }) {
     });
   };
 
-  return (
-    <View className="b-vol-payment-view">
-      {/* 选择支付方式 */}
-      {orderStatus.report.payStatus == false && (
-        <View className="b-vol-payment">
-          {price.map((n, i) => (
-            <View
-              className={`b-vol-payment-item ${
-                n.type === payType && "actived"
-              }`}
-              onClick={() => {
-                setPayType(n.type);
-              }}
-            >
-              <View className="b-vol-payment-item-name">{n.name}</View>
-              <View className="b-vol-payment-item-desc">{n.desc}</View>
-              <View className="b-vol-payment-item-price">
-                <Text className="b-vol-payment-item-money">￥</Text>
-                {n.money}
+  if (!!Common.isReviewing) {
+    return (
+      <View className="b-vol-payment-view">
+        <View
+          className="b-vol-page-button-group"
+          onClick={() => {
+            Taro.showToast({
+              title: "苹果用户暂时无法解锁，请稍后",
+              icon: "none",
+            });
+          }}
+        >
+          <View className="b-vol-page-button b-vol-page-button-lock">
+            立即解锁
+          </View>
+        </View>
+      </View>
+    );
+  } else {
+    return (
+      <View className="b-vol-payment-view">
+        {/* 选择支付方式 */}
+        {orderStatus.report.payStatus == false && (
+          <View className="b-vol-payment">
+            {price.map((n, i) => (
+              <View
+                className={`b-vol-payment-item ${
+                  n.type === payType && "actived"
+                }`}
+                onClick={() => {
+                  setPayType(n.type);
+                }}
+              >
+                <View className="b-vol-payment-item-name">{n.name}</View>
+                <View className="b-vol-payment-item-desc">{n.desc}</View>
+                <View className="b-vol-payment-item-price">
+                  <Text className="b-vol-payment-item-money">￥</Text>
+                  {n.money}
+                </View>
+                <View className="b-vol-payment-item-exact">{n.exact}</View>
               </View>
-              <View className="b-vol-payment-item-exact">{n.exact}</View>
-            </View>
-          ))}
-        </View>
-      )}
-      {/* 显示联系方式 */}
-      {payType == 3 && (
-        <>
-          <VolContact {...formData} onSubmit={handleContact} />
-          {orderData.info && (
-            <View className="b-vol-payment-reviewed">
-              已提交，稍后会有教育专家联系
-            </View>
-          )}
-        </>
-      )}
-      {/* 专家审核支付显示 */}
-      {payType == 3 && orderStatus.report.payStatus == false && (
-        <View className="b-vol-payment-btn" onClick={handlePay}>
-          立即支付
-        </View>
-      )}
-      {/* 智能审核支付显示 */}
-      {payType == 4 &&
-        orderStatus.isNeedPay == true &&
-        orderStatus.report.payStatus == false && (
+            ))}
+          </View>
+        )}
+        {/* 显示联系方式 */}
+        {payType == 3 && (
+          <>
+            <VolContact {...formData} onSubmit={handleContact} />
+            {orderData.info && (
+              <View className="b-vol-payment-reviewed">
+                已提交，稍后会有教育专家联系
+              </View>
+            )}
+          </>
+        )}
+        {/* 专家审核支付显示 */}
+        {payType == 3 && orderStatus.report.payStatus == false && (
           <View className="b-vol-payment-btn" onClick={handlePay}>
             立即支付
           </View>
         )}
-      {/* 智能审核免费提交机会   */}
-      {payType == 4 &&
-        studentInfo.vip &&
-        orderStatus.report.payStatus == false &&
-        orderStatus.isNeedPay == false && (
-          <>
-            <View className="b-vol-payment-chance">您有一次智能审核机会</View>
-            <View className="b-vol-payment-btn" onClick={handlePayFree}>
-              立即提交
+        {/* 智能审核支付显示 */}
+        {payType == 4 &&
+          orderStatus.isNeedPay == true &&
+          orderStatus.report.payStatus == false && (
+            <View className="b-vol-payment-btn" onClick={handlePay}>
+              立即支付
             </View>
-          </>
-        )}
-      {/* {orderStatus.report.payStatus == false && (
+          )}
+        {/* 智能审核免费提交机会   */}
+        {payType == 4 &&
+          studentInfo.vip &&
+          orderStatus.report.payStatus == false &&
+          orderStatus.isNeedPay == false && (
+            <>
+              <View className="b-vol-payment-chance">您有一次智能审核机会</View>
+              <View className="b-vol-payment-btn" onClick={handlePayFree}>
+                立即提交
+              </View>
+            </>
+          )}
+        {/* {orderStatus.report.payStatus == false && (
         <View className="b-vol-page-bottom-example" onClick={handleExample}>
           看看 示例报告
         </View>
       )} */}
-    </View>
-  );
+      </View>
+    );
+  }
 }
 export default inject("store")(observer(Comp));

@@ -15,9 +15,7 @@ import "./index.scss";
 class Index extends Component {
   state = {};
 
-  componentDidMount() {
-    
-  }
+  componentDidMount() {}
 
   componentWillUnmount() {}
 
@@ -35,6 +33,7 @@ class Index extends Component {
 
   render() {
     const {
+      Common,
       Review,
       Review: {
         orderStatus: { report },
@@ -51,7 +50,7 @@ class Index extends Component {
         <VolTable />
         <VolPayment />
         <VolReport />
-        {report.payStatus == true && (
+        {!Common.isReviewing && report.payStatus == true && (
           <View className="b-vol-reset">
             <View
               className="b-vol-reset-btn"

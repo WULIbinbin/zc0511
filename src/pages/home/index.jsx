@@ -17,7 +17,6 @@ import "./index.scss";
 import HomeBanner2Png from "../../static/image/home-banner2.png";
 import ShareBgPng from "../../static/image/share-bg.png";
 
-
 @inject("store")
 @observer
 class Index extends Component {
@@ -44,11 +43,12 @@ class Index extends Component {
     store.Account.CheckCode().then(() => {
       if (storage && storage.access_token && storage.phoneNumber) {
         store.Account.GetUserInfo();
+        store.Common.getAllPrice();
+        store.Common.getReviewStatus();
         store.Review.getOrderStatus();
         store.Tutor.getOrderStatus();
         store.Tutor.getOnline();
         store.Recommend.getInfo();
-        store.Common.getAllPrice()
       }
     });
     GetBanner().then((res) => {

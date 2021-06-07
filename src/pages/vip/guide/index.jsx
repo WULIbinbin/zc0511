@@ -110,7 +110,7 @@ class Index extends Component {
             </View>
           ))}
         </View>
-        {!Account.isVip && (
+        {!Common.isReviewing && !Account.isVip && (
           <>
             <View
               className="b-vol-page-button-group"
@@ -121,6 +121,23 @@ class Index extends Component {
                 {Common.vipPrice.value}
               </View>
               <View className="b-vol-page-button b-vol-page-button-right">
+                立即解锁
+              </View>
+            </View>
+            <View className="example" onClick={this.gotoExample}>
+              看看 示例报告
+            </View>
+          </>
+        )}
+        {Common.isReviewing && !Account.isVip && (
+          <>
+            <View
+              className="b-vol-page-button-group"
+              onClick={()=>{
+                Taro.showToast({title:'苹果用户暂时无法解锁，请稍后',icon:'none'})
+              }}
+            >
+              <View className="b-vol-page-button b-vol-page-button-lock">
                 立即解锁
               </View>
             </View>

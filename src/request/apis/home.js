@@ -19,3 +19,10 @@ export function GetAllPrice(){
     url: `/wx/miniprogram/pay/price`,
   });
 }
+
+export function GetWxReviewStatus(){
+  return Request({
+    url: `/student/status`,
+  });
+}
+
